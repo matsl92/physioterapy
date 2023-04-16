@@ -1,0 +1,2 @@
+This is a little decomposed version. The project uses an easy and common structure
+as well as recent version dependencies (at least the ones from PyPI).
