@@ -4,10 +4,10 @@ from django.template import loader
 from django import template
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
+from .forms import PatientForm
 
 @login_required
 def index(request):
-    print('*'*30)
     context = {'segment': 'index'}
     return render(request, 'home/index.html', context)
 
@@ -42,3 +42,8 @@ def example(request):
     context = {}
     context['segment'] = 'example'
     return render(request, 'home/example.html', context)
+
+def form_view(request):
+    form = PatientForm()
+    context = {'segment': 'form', 'form': form}
+    return render(request, 'home/form.html', context)

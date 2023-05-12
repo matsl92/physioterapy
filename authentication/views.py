@@ -6,7 +6,6 @@ from .forms import LoginForm, SignUpForm
 
 def login_view(request):
     form = LoginForm(request.POST or None)
-    print('_'*30)
     msg = None
 
     if request.method == "POST":
@@ -50,6 +49,5 @@ def register_user(request):
     return render(request, "accounts/register.html", {"form": form, "msg": msg, "success": success})
 
 def logout_view(request):
-    print('het')
     logout(request)
     return redirect('authentication:login')
