@@ -37,3 +37,8 @@ def pages(request):
         
         html_template = loader.get_template('home/page-500.html')
         return HttpResponse(html_template.render(context, request))
+
+def example(request):
+    context = {}
+    context['segment'] = 'example'
+    return render(request, 'home/example.html', context)

@@ -1,5 +1,9 @@
 {% load static %}
     <div class="sidebar" data-color="purple" data-background-color="white" data-image={% static "/assets/img/sidebar-1.jpg" %}>
+      <!--
+        Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+        Tip 2: you can also add an image using data-image tag
+      -->
       <div class="logo">
         <a href={% url 'home:home' %} class="simple-text logo-normal">Home</a>
       </div>
@@ -47,6 +51,12 @@
             <a class="nav-link" href="/ui-notifications.html">
               <i class="material-icons">notifications</i>
               <p>Notifications</p>
+            </a>
+          </li>
+          <li class="nav-item {% if 'example' in segment %} active {% endif %}">
+            <a class="nav-link" href="{% url 'home:example' %}" >
+              <i class="material-icons">directions_run</i>
+              <p>Example</p>
             </a>
           </li>
           <li class="nav-item ">
