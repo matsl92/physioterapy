@@ -11,22 +11,22 @@
         <ul class="nav">
         {% if request.user.is_authenticated %}
 
-          <li class="nav-item {% if 'form' in segment %} active {% endif %}">
-            <a class="nav-link" href="{% url 'home:form' %}" >
-              <i class="material-icons">content_paste</i>
-              <p>Formulario</p>
-            </a>
-          </li>
+        <li class="nav-item {% if 'patient_list' in segment %} active {% endif %}">
+          <a class="nav-link" href={% url 'home:patient_list' %}>
+            <i class="material-icons">person</i>
+            <p>Lista de pacientes</p>
+          </a>
+        </li>
+        <li class="nav-item {% if 'form' in segment %} active {% endif %}">
+          <a class="nav-link" href="{% url 'home:create_patient' %}" >
+            <i class="material-icons">content_paste</i>
+            <p>Añadir paciente</p>
+          </a>
+        </li>
           <li class="nav-item {% if 'index' in segment %} active {% endif %}">
             <a class="nav-link" href="/">
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
-            </a>
-          </li>
-          <li class="nav-item {% if 'page-user' in segment %} active {% endif %}">
-            <a class="nav-link" href="/page-user.html">
-              <i class="material-icons">person</i>
-              <p>User Profile</p>
             </a>
           </li>
           <li class="nav-item {% if 'ui-tables' in segment %} active {% endif %}">
@@ -59,12 +59,12 @@
               <p>Notifications</p>
             </a>
           </li>
-          <li class="nav-item ">
+          {% comment %} <li class="nav-item ">
             <a class="nav-link" href="{% url 'authentication:logout' %}" >
               <i class="material-icons">directions_run</i>
               <p>Logout</p>
             </a>
-          </li>
+          </li> {% endcomment %}
 
           <li class="nav-item active-pro ">
             <a class="nav-link" 

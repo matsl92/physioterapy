@@ -2,3 +2,28 @@ TO DO
 
 DONE
 
+Fetch for diagnostic as well as selecting and adding in diagnostic options
+
+OTHER
+
+
+
+Diagnostic
+
+    select 
+
+    create
+
+
+Evolucion    optional
+
+    create  display form
+
+
+Patient Test         optional
+
+    create  display form
+
+    select and create
+
+    create and create

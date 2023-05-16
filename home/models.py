@@ -1,6 +1,9 @@
 from django.db import models
 from django.utils import timezone
 from datetime import datetime, timedelta
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+
 
 OCUPACION_OPCIONES = [
     ('empleado','Empleado'),
@@ -24,6 +27,31 @@ TEST_RESPONSE_TYPE = [
     ('bool','Campo positivo o negativo'),
 ]
 
+class Diagnostico(models.Model):
+    code = models.CharField('Código', max_length=20)
+    description = models.CharField('Descripción', max_length=200)
+    created_at = models.DateField('Fecha de creación', auto_now_add=True)
+    is_active = models.BooleanField('Activo', default=True)
+    
+    """
+    foranea a diagnostico
+    
+    cie-10 tabla nacional de diagnosticos para pacientes. estandariza
+    
+    codigo
+    descripcion
+    cresated_at
+    activo bool mostrar solo activos
+    str codigo-descrpcion
+    """
+    
+    def __str__(self):
+        return f"{self.code} - {self.description}"
+    
+    class Meta:
+        verbose_name = 'Diagnóstico médico'
+        verbose_name_plural = 'Diagnósticos médicos'
+
 class Paciente(models.Model):
     cedula = models.CharField('Cédula', max_length=10, primary_key=True)
     fecha_ingreso = models.DateTimeField(auto_now_add=True)
@@ -39,8 +67,8 @@ class Paciente(models.Model):
     ocupacion = models.CharField('Ocupación', max_length=60, choices = OCUPACION_OPCIONES)
     profesion = models.CharField('Profesión', max_length=120, blank=True, null=True)
     seguridad_social = models.CharField(max_length=240)
-    diagnostico_medico = models.TextField()
-    motivo_consulta = models.TextField()
+    diagnostico = models.ForeignKey(Diagnostico, on_delete=models.SET_DEFAULT, default=None, blank=True, null=True, verbose_name='Diagnóstico médico')
+    motivo_consulta = models.TextField('Motivo de consulta')
     cronologia_de_patologia = models.TextField('Cronología de la patología')
     actividad_fisica = models.BooleanField('Actividad física', default = False)
     tipo_actividad_fisica = models.CharField('Tipo de actividad física', max_length=240, blank=True, null=True)
@@ -65,19 +93,19 @@ class Paciente(models.Model):
 
     def __str__(self):
         return f'{self.nombre} - {self.cedula}'
-   
+
     def save(self, *args, **kwargs):
         self.get_edad()
         super(Paciente, self).save(*args, **kwargs)
 
 class Evolucion(models.Model):
     paciente = models.ForeignKey(Paciente, on_delete = models.CASCADE)
-    evolucion = models.TextField()
+    evolucion = models.TextField('Evolución')
     created_at = models.DateTimeField(auto_now_add=True, editable=False, verbose_name='Fecha de creación')
 
     def __str__(self):
-        return f'{self.paciente} - {self.created_at}'
-    
+        return f"{self.paciente} - {timezone.localtime(self.created_at).strftime('%Y/%m/%d - %H:%M')}"
+
     class Meta:
         verbose_name = "Evolución"
         verbose_name_plural = "Evoluciones"
@@ -87,6 +115,10 @@ class Categoria(models.Model):
 
     def __str__(self):
         return f'{self.nombre}'
+    
+    class Meta:
+        verbose_name = 'categoría'
+        verbose_name_plural = 'categorías'
 
 class Test(models.Model):
     nombre = models.CharField(max_length=120)
@@ -102,7 +134,32 @@ class PacienteTest(models.Model):
     paciente = models.ForeignKey(Paciente, on_delete = models.CASCADE)
     test = models.ForeignKey(Test, on_delete = models.CASCADE)
     resultado = models.TextField()
-   
 
     def __str__(self):
         return f'{self.test} - {self.resultado}'
+
+
+class Person(models.Model):
+    name = models.CharField(max_length=128)
+
+
+class Group(models.Model):
+    name = models.CharField(max_length=128)
+    members = models.ManyToManyField(Person, through="Membership")
+
+
+class Membership(models.Model):
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    date_joined = models.DateField()
+    invite_reason = models.CharField(max_length=64)
+    
+class Image(models.Model):
+    image = models.ImageField(upload_to="images")
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey("content_type", "object_id")
+
+
+class Product(models.Model):
+    name = models.CharField(max_length=100)

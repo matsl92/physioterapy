@@ -1,0 +1,17 @@
+{% extends 'layouts/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<h1>Pacientes</h1>
+
+{% for patient in object_list %}
+
+<div>
+    {{ patient }}
+</div>
+
+{% endfor %}
+
+{% endblock content %}
