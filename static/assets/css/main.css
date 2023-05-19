@@ -1,0 +1,169 @@
+.content {
+    height: calc(100vh - 68px);
+}
+
+.card-body.main-card {
+    min-height: calc(62vh - 0px);
+    position: relative;
+}
+
+.card-body form {
+    height: 100%;
+}
+
+.tab-content {
+    height: 100%;
+}
+
+.card-body form .tab-pane {
+    /* min-height: 60vh; */
+    color: aliceblue;
+}
+
+.form-section-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: rgb(248, 248, 182);
+    min-height: 41vh;
+    margin-top: 20px;
+}
+
+.fetch-form {
+    /* position: relative;
+    border: 1px solid black;
+    padding: 60px 15px 0 15px;
+    background-color: thistle;
+    border-radius: 9px; */
+
+    height: 37vh;
+}
+
+.fetch-form-header {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: -22px;
+    left: 33px;
+    width: 210px;
+    height: 45px;
+    background-color: aqua;
+    color: black;
+    border-radius: 6px;
+    border: 1px solid black;
+}
+
+.fetch-form-header h6 {
+    text-align: center;
+    margin: auto 0;
+}
+
+.fetch-form .card-body {
+    max-height: 30vh;
+}
+
+.fetch-control-button {
+    display: inline-block;
+    width: 113px;
+    height: 30px;
+    border: none;
+    border-radius: 4px;
+    margin: 10px 19px;
+}
+
+.danger {
+    background-color: rgb(87, 64, 218);
+}
+
+.success {
+    background-color: rgb(90, 69, 182);
+}
+
+.form-field {
+    background-color: rgba(156, 39, 176, 0);
+    height: 60px;
+    display: flex;
+    align-items: end;
+    position: relative;
+}
+
+.form-field input,
+.form-field textarea,
+.form-field select {
+    background: transparent;
+    margin-bottom: 8px;
+    border: none;
+    border-bottom: 2px solid rgba(156, 39, 176, 0.9);
+    width: 100%;
+}
+
+.form-field:has(textarea) {
+    height: 80px;
+    margin-top: 30px;
+    background-color: aliceblue;
+}
+
+.form-field:has(textarea) label {
+    bottom: 63px;
+}
+
+/* .form-field select {
+    background: transparent;
+    margin-bottom: 8px;
+    border: none;
+    border-bottom: 2px solid rgba(156, 39, 176, 0.9);
+    width: 100%;
+} */
+
+.form-field label {
+    position: absolute;
+    padding: 0 3px;
+    bottom: 6px;
+    transition: .5s;
+    transform: translateY(-90%);
+}
+
+.form-field input:focus ~ label{
+    transform: translateY(-90%);
+}
+
+.submitting-button {
+    position: absolute;
+    bottom: 0;
+    right: 14px;
+}
+
+.plus-button {
+    border: none;
+    height: 40px;
+    width: 40px;
+    border-radius: 4px;
+    background-color: rgb(211 211 211);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.plus-button:hover {
+    background-color: rgb(230, 230, 230);
+}
+
+.add-accordion-field-button {
+    border: 1px solid rgb(229 229 229);
+    border-radius: 0 0 4px 4px;
+    background-color: transparent;
+    height: 52px;
+}
+
+.add-accordion-field-button:hover {
+    background-color: rgb(200 229 247);
+    border-color: #b2e3e9;
+    border-width: 3px;
+}
+
+.abort-evolution-button {
+    border: none;
+    width: 300px;
+    border-radius: 4px;
+}

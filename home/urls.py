@@ -9,6 +9,7 @@ urlpatterns = [
     path('paciente/actualizar/<int:id>', views.update_patient, name="update_patient"),
     
     path('diagnostico/crear', views.create_diagnostic, name='create_diagnostic'),
+    path('test/crear', views.create_test, name="create_test"),
     
     path('example', views.example, name='example'),
     # Matches any html file

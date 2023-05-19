@@ -51,12 +51,14 @@ def create_patient(request):
         diagnostic_form = DiagnosticForm()
         evolution_form = EvolutionForm()
         patient_test_form = PatientTestForm()
+        test_form = TestForm()
         context = {
             'segment': 'form', 
             'patient_form': patient_form, 
             'diagnostic_form': diagnostic_form,
             'evolution_form': evolution_form,
             'patient_test_form': patient_test_form,
+            'test_form': test_form,
             'evolution_records': None,
             'js_variables': {'diagnostic_form': diagnostic_form}
         }
@@ -65,21 +67,26 @@ def create_patient(request):
         patient_form = PatientForm(request.POST, request.FILES)
         if patient_form.is_valid():
             patient = patient_form.save()
-            
-            evolution_form = EvolutionForm({**request.POST.dict(), **{'paciente': patient}})
-            if evolution_form.is_valid():
-                evolution_form.save()
-                return HttpResponse('Forms were saved.')
+            print(request.POST.get('evolucion'))
+            if request.POST.get('evolucion') != '':
+                evolution_form = EvolutionForm({
+                    **request.POST.dict(), 
+                    **{'paciente': patient}
+                })
+                if evolution_form.is_valid():
+                    evolution_form.save()
+                    return HttpResponse('Both forms were saved.')
+                else:
+                    return HttpResponse([
+                        evolution_form.errors.as_json()
+                    ])
             else:
-                return HttpResponse([
-                    evolution_form.errors.as_json()
-                ])
+                return HttpResponse("Patient was saved! Evolution wasn't given")
         else:
             return HttpResponse([
                 patient_form.errors.as_json()
             ])
-    
-    
+       
 def update_patient(request, id):
     patient = Paciente.objects.get(pk=id)
     evolution_records = Evolucion.objects.filter(paciente__pk=id)
@@ -121,9 +128,6 @@ def patient_list(request):
 
 def create_diagnostic(request):
     if request.method == 'POST':
-        print(request.POST)
-        print(request.body)
-        print(json.loads(request.body.decode('utf-8')))
         diagnostic_form = DiagnosticForm(json.loads(request.body.decode('utf-8')))
         if diagnostic_form.is_valid():
             diagnostic = diagnostic_form.save()
@@ -135,3 +139,20 @@ def create_diagnostic(request):
             })
         else:
             return JsonResponse(diagnostic_form.errors.as_json(), safe=False)
+        
+def create_test(request):
+    if request.method == 'POST':
+        test_form = TestForm(json.loads(request.body.decode('utf-8')))
+        if test_form.is_valid():
+            test = test_form.save()
+            return JsonResponse({
+                'id': test.id,
+                'nombre': test.nombre,
+                'descripcion': test.descripcion,
+                'categoria': test.categoria.nombre,
+                'subcategoria': test.subcategoria,
+                'tipo_resultado': test.tipo_resultado
+            })
+        else:
+            return JsonResponse(test_form.errors.as_json(), safe=False)
+        

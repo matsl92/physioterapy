@@ -1,12 +1,14 @@
 TO DO
 
+Finish evolution section and go on to tests
+
+Submit button should execute a function which validates all fields to be sent
+so the form wont be rejected. If one of them isn't valid it should point the 
+user to that specific section and highlight the invalid input.
+
 DONE
 
-Fetch for diagnostic as well as selecting and adding in diagnostic options
-
-OTHER
-
-
+Specify a height for the patient form 
 
 Diagnostic
 
@@ -27,3 +29,10 @@ Patient Test         optional
     select and create
 
     create and create
+
+Fetch for diagnostic as well as selecting and adding in diagnostic options
+
+OTHER
+
+
+

@@ -10,7 +10,7 @@
           <h4 class="card-title">Historia clínica</h4>
           <p class="card-category">Completa la historia clínica</p>
         </div>
-        <div class="card-body">
+        <div class="card-body main-card">
 
           <div class="d-flex justify-content-center">
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -42,229 +42,540 @@
             {% csrf_token %}
             <div class="tab-content" id="pills-tabContent">
               <div class="tab-pane fade show active" id="pills-demograficos" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
-                <div class="row mt-4">
-
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label for={{ patient_form.cedula.id_for_label }} class="bmd-label-floating">{{ patient_form.cedula.label }}</label>
-                      {{ patient_form.cedula }}
-                    </div>
-                  </div>
-    
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label for={{ patient_form.nombre.id_for_label }} class="bmd-label-floating">{{ patient_form.nombre.label }}</label>
-                      {{ patient_form.nombre }}
-                    </div>
-                  </div>
-    
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label for={{ patient_form.apellidos.id_for_label }} class="bmd-label-floating">{{ patient_form.apellidos.label }}</label>
-                      {{ patient_form.apellidos }}
-                    </div>
-                  </div>
-    
-                </div>
-    
-    
-                <div class="row mt-4">
-    
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label for={{ patient_form.fecha_nacimiento.id_for_label }} class="bmd-label-static">{{ patient_form.fecha_nacimiento.label }}</label>
-                      {{ patient_form.fecha_nacimiento }}
-                    </div>
-                  </div>
-    
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label for={{ patient_form.telefono.id_for_label }} class="bmd-label-floating">{{ patient_form.telefono.label }}</label>
-                      {{ patient_form.telefono }}
-                    </div>
-                  </div>
-    
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label for={{ patient_form.email.id_for_label }} class="bmd-label-floating">{{ patient_form.email.label }}</label>
-                      {{ patient_form.email }}
-                    </div>
-                  </div>
-    
-                </div>
-
-    
-                <div class="row mt-4">
-    
-                  <div class="col-md-4">
-                    <div class="form-group bmd-form-group">
-                      <label for={{ patient_form.ocupacion.id_for_label }} class="bmd-label-static">{{ patient_form.ocupacion.label }}</label>
-                      {{ patient_form.ocupacion }}
-                    </div>
-                  </div>
-    
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label for={{ patient_form.profesion.id_for_label }} class="bmd-label-floating">{{ patient_form.profesion.label }}</label>
-                      {{ patient_form.profesion }}
-                    </div>
-                  </div>
-    
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label for={{ patient_form.seguridad_social.id_for_label }} class="bmd-label-floating">{{ patient_form.seguridad_social.label }}</label>
-                      {{ patient_form.seguridad_social }}
-                    </div>
-                  </div>
-    
-                </div>
-              </div>
-              <div class="tab-pane fade" id="pills-acompanante" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
-                <div class="row">
-    
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label for={{ patient_form.acompanante.id_for_label }} class="bmd-label-floating">{{ patient_form.acompanante.label }}</label>
-                      {{ patient_form.acompanante }}
-                    </div>
-                  </div>
-    
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label for={{ patient_form.parentesco.id_for_label }} class="bmd-label-floating">{{ patient_form.parentesco.label }}</label>
-                      {{ patient_form.parentesco }}
-                    </div>
-                  </div>
-    
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label for={{ patient_form.telefono_acompanante.id_for_label }} class="bmd-label-floating">{{ patient_form.telefono_acompanante.label }}</label>
-                      {{ patient_form.telefono_acompanante }}
-                    </div>
-                  </div>
-    
-                </div>
-              </div>
-              <div class="tab-pane fade" id="pills-habitos" role="tabpanel" aria-labelledby="pills-contact-tab" tabindex="0">
-                <div class="row">
-
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label for={{ patient_form.actividad_fisica.id_for_label }} class="bmd-label-floating">{{ patient_form.actividad_fisica.label }}</label>
-                      {{ patient_form.actividad_fisica }}
-                    </div>
-                  </div>
-    
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label for={{ patient_form.tipo_actividad_fisica.id_for_label }} class="bmd-label-floating">{{ patient_form.tipo_actividad_fisica.label }}</label>
-                      {{ patient_form.tipo_actividad_fisica }}
-                    </div>
-                  </div>
-    
-                  <div class="col-md-4">
-                    <div class="form-group bmd-form-group">
-                      <label for={{ patient_form.frecuencia_actividad_fisica.id_for_label }} class="bmd-label-static">{{ patient_form.frecuencia_actividad_fisica.label }}</label>
-                      {{ patient_form.frecuencia_actividad_fisica }}
-                    </div>
-                  </div>
-    
-                </div>
-              </div>
-              <div class="tab-pane fade" id="pills-clinica" role="tabpanel" aria-labelledby="pills-disabled-tab" tabindex="0">
-                <div class="row">
-
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for={{ patient_form.motivo_consulta.id_for_label }} class="bmd-label-floating">{{ patient_form.motivo_consulta.label }}</label>
-                      {{ patient_form.motivo_consulta }}
-                    </div>
-                  </div>
-
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for={{ patient_form.cronologia_de_patologia.id_for_label }} class="bmd-label-floating">{{ patient_form.cronologia_de_patologia.label }}</label>
-                      {{ patient_form.cronologia_de_patologia }}
-                    </div>
-                  </div>
-
-                </div>
-
-                <div class="row">
+                
+                <div class="form-section-container">
             
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for={{ patient_form.conclusion.id_for_label }} class="bmd-label-floating">{{ patient_form.conclusion.label }}</label>
-                      {{ patient_form.conclusion }}
-                    </div>
-                  </div>
+                  <div class="row">
 
-                  <div class="col-md-6">
-                    <label for={{ patient_form.adjuntar_documento.id_for_label }} for={{ patient_form.adjuntar_documento.id_for_label }}>{{ patient_form.adjuntar_documento.label }}</label>
-                    {{ patient_form.adjuntar_documento }}
-                  </div>
-
-                </div>
-              </div>
-              <div class="tab-pane fade" id="pills-diagnostico" role="tabpanel" aria-labelledby="pills-disabled-tab" tabindex="0">
-                <div class="row">
-
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for={{ patient_form.diagnostico.id_for_label }} class="bmd-label-floating">{{ patient_form.diagnostico.label }}</label>
-                      {{ patient_form.diagnostico }}
-                    </div>
-                  </div>
-
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <button id="diagnostic-form-adder">
-                        Crear diagnóstico
-                      </button>
-                      <div>
-                        {{ diagnostic_form }}
+                    <div class="col-md-4">
+                      <div class="form-field">
+                        <label for={{ patient_form.cedula.id_for_label }}>{{ patient_form.cedula.label }}</label>
+                        {{ patient_form.cedula }}
                       </div>
                     </div>
+      
+                    <div class="col-md-4">
+                      <div class="form-field">
+                        <label for={{ patient_form.nombre.id_for_label }}>{{ patient_form.nombre.label }}</label>
+                        {{ patient_form.nombre }}
+                      </div>
+                    </div>
+      
+                    <div class="col-md-4">
+                      <div class="form-field">
+                        <label for={{ patient_form.apellidos.id_for_label }}>{{ patient_form.apellidos.label }}</label>
+                        {{ patient_form.apellidos }}
+                      </div>
+                    </div>
+      
+                  </div>
+      
+      
+                  <div class="row">
+      
+                    <div class="col-md-4">
+                      <div class="form-field">
+                        <label for={{ patient_form.fecha_nacimiento.id_for_label }}>{{ patient_form.fecha_nacimiento.label }}</label>
+                        {{ patient_form.fecha_nacimiento }}
+                      </div>
+                    </div>
+      
+                    <div class="col-md-4">
+                      <div class="form-field">
+                        <label for={{ patient_form.telefono.id_for_label }}>{{ patient_form.telefono.label }}</label>
+                        {{ patient_form.telefono }}
+                      </div>
+                    </div>
+      
+                    <div class="col-md-4">
+                      <div class="form-field">
+                        <label for={{ patient_form.email.id_for_label }}>{{ patient_form.email.label }}</label>
+                        {{ patient_form.email }}
+                      </div>
+                    </div>
+      
+                  </div>
+
+      
+                  <div class="row">
+      
+                    <div class="col-md-4">
+                      <div class="form-field">
+                        <label for={{ patient_form.ocupacion.id_for_label }}>{{ patient_form.ocupacion.label }}</label>
+                        {{ patient_form.ocupacion }}
+                      </div>
+                    </div>
+      
+                    <div class="col-md-4">
+                      <div class="form-field">
+                        <label for={{ patient_form.profesion.id_for_label }}>{{ patient_form.profesion.label }}</label>
+                        {{ patient_form.profesion }}
+                      </div>
+                    </div>
+      
+                    <div class="col-md-4">
+                      <div class="form-field">
+                        <label for={{ patient_form.seguridad_social.id_for_label }}>{{ patient_form.seguridad_social.label }}</label>
+                        {{ patient_form.seguridad_social }}
+                      </div>
+                    </div>
+      
                   </div>
 
                 </div>
+
+              </div>
+              <div class="tab-pane fade" id="pills-acompanante" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
+                
+                <div class="form-section-container">
+
+                  <div class="row">
+      
+                    <div class="col-md-4">
+                      <div class="form-field">
+                        <label for={{ patient_form.acompanante.id_for_label }}>{{ patient_form.acompanante.label }}</label>
+                        {{ patient_form.acompanante }}
+                      </div>
+                    </div>
+      
+                    <div class="col-md-4">
+                      <div class="form-field">
+                        <label for={{ patient_form.parentesco.id_for_label }}>{{ patient_form.parentesco.label }}</label>
+                        {{ patient_form.parentesco }}
+                      </div>
+                    </div>
+      
+                    <div class="col-md-4">
+                      <div class="form-field">
+                        <label for={{ patient_form.telefono_acompanante.id_for_label }}>{{ patient_form.telefono_acompanante.label }}</label>
+                        {{ patient_form.telefono_acompanante }}
+                      </div>
+                    </div>
+      
+                  </div>
+
+                </div>
+
+              </div>
+              <div class="tab-pane fade" id="pills-habitos" role="tabpanel" aria-labelledby="pills-contact-tab" tabindex="0">
+                
+                <div class="form-section-container">
+
+                  <div class="row">
+
+                    <div class="col-md-4">
+                      <div class="form-field">
+                        <label for={{ patient_form.actividad_fisica.id_for_label }}>{{ patient_form.actividad_fisica.label }}</label>
+                        {{ patient_form.actividad_fisica }}
+                      </div>
+                    </div>
+      
+                    <div class="col-md-4">
+                      <div class="form-field">
+                        <label for={{ patient_form.tipo_actividad_fisica.id_for_label }}>{{ patient_form.tipo_actividad_fisica.label }}</label>
+                        {{ patient_form.tipo_actividad_fisica }}
+                      </div>
+                    </div>
+      
+                    <div class="col-md-4">
+                      <div class="form-field">
+                        <label for={{ patient_form.frecuencia_actividad_fisica.id_for_label }}>{{ patient_form.frecuencia_actividad_fisica.label }}</label>
+                        {{ patient_form.frecuencia_actividad_fisica }}
+                      </div>
+                    </div>
+      
+                  </div>
+                
+                </div>
+
+              </div>
+              <div class="tab-pane fade" id="pills-clinica" role="tabpanel" aria-labelledby="pills-disabled-tab" tabindex="0">
+                
+                <div class="form-section-container">
+
+                  <div class="row">
+
+                    <div class="col-md-6">
+                      <div class="form-field">
+                        <label for={{ patient_form.motivo_consulta.id_for_label }}>{{ patient_form.motivo_consulta.label }}</label>
+                        {{ patient_form.motivo_consulta }}
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-field">
+                        <label for={{ patient_form.cronologia_de_patologia.id_for_label }}>{{ patient_form.cronologia_de_patologia.label }}</label>
+                        {{ patient_form.cronologia_de_patologia }}
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="row">
+              
+                    <div class="col-md-6">
+                      <div class="form-field">
+                        <label for={{ patient_form.conclusion.id_for_label }}>{{ patient_form.conclusion.label }}</label>
+                        {{ patient_form.conclusion }}
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <label for={{ patient_form.adjuntar_documento.id_for_label }} for={{ patient_form.adjuntar_documento.id_for_label }}>{{ patient_form.adjuntar_documento.label }}</label>
+                      {{ patient_form.adjuntar_documento }}
+                    </div>
+
+                  </div>
+                
+                </div>
+
+              </div>
+              <div class="tab-pane fade" id="pills-diagnostico" role="tabpanel" aria-labelledby="pills-disabled-tab" tabindex="0">
+
+                <div class="form-section-container">
+
+                  <div id="diagnostic-home-page">
+                    
+                    <div class="row">
+
+                      <div class="col-md-3">
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="row">
+
+                          <div class="col-md-10">
+                            <div class="form-field">
+                              <label for={{ patient_form.diagnostico.id_for_label }}>{{ patient_form.diagnostico.label }}</label>
+                              {{ patient_form.diagnostico }}
+                            </div>
+                          </div>
+    
+                          <div class="col-md-2 d-flex align-items-center">
+                            <button id="diagnostic-form-displayer" class="plus-button">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" fill="rgb(255, 255, 255)">
+                                <path d="M19 11H13V5a1 1 0 0 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2z"/>
+                              </svg>
+                            </button>
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="col-md-3">
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                  <div id="diagnostic-form-page" class="d-none">
+
+                    <div class="card fetch-form">
+
+                      <div class="card-header card-header-primary">
+                        <h4 class="card-title">
+                          Nuevo diagnóstico
+                        </h4>
+                        <p class="card-category">
+                          completa el dorm
+                        </p>
+
+                      </div>
+                      <div class="card-body">
+
+                        <div class="row">
+                      
+                          <div class="col-md-3">
+                            <div class="form-field">
+                              <label for={{ diagnostic_form.code.id_for_label }}>{{ diagnostic_form.code.label }}</label>
+                              {{ diagnostic_form.code }}
+                            </div>
+                          </div>
+    
+                          <div class="col-md-6">
+                            <div class="form-field">
+                              <label for={{ diagnostic_form.description.id_for_label }}>{{ diagnostic_form.description.label }}</label>
+                              {{ diagnostic_form.description }}
+                            </div>
+                          </div>
+    
+                          <div class="col-md-3">
+                            <div class="form-field">
+                              <label for={{ diagnostic_form.is_active.id_for_label }}>{{ diagnostic_form.is_active.label }}</label>
+                              {{ diagnostic_form.is_active }}
+                            </div>
+                          </div>
+    
+                        </div>
+
+                        <div class="row">
+
+                          <div class="col-md-6">
+                          </div>
+    
+                          <div class="col-md-6">
+                            <div class="d-flex justify-content-center mt-4">
+                                <button id="diagnostic-form-hider" class="fetch-control-button danger">
+                                  Cancelar
+                                </button>
+                                <button id="diagnostic-form-submitter" class="fetch-control-button success">
+                                  Guardar
+                                </button>
+                            </div>
+                          </div>
+                          
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div>  
+
               </div>
               <div class="tab-pane fade" id="pills-evolucion" role="tabpanel" aria-labelledby="pills-disabled-tab" tabindex="0">
-                <div class="row">
+                
+                <div class="form-section-container">
 
-                  
+                  <div id="evolution-home-page">
+
+                    <div class="row">
+
+                      <div class="col-md-12">
+  
+                        <div class="accordion" id="accordionExample">
+                          {% for record in evolution_records %}
+                          <div class="accordion-item">
+                            <h2 class="accordion-header">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapseOne">
+                                {{ record }}
+                              </button>
+                            </h2>
+                            <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                              <div class="accordion-body">
+                                {{ record.evolucion }}
+                              </div>
+                            </div>
+                          </div>
+                          {% endfor %}
+                        </div>
+                      
+                      </div>
+                      
+                    </div>
+
+                    <div class="row">
+
+                      <div class="col-md-12">
+  
+                        <button id="evolution-form-displayer" class="w-100 add-accordion-field-button">
+                          Agregar evolución
+                        </button>
+  
+                      </div>
+  
+                    </div>
+
+                  </div>
+
+                  <div id="evolution-form-page" class="d-none">
+
+                    <div class="row">
+                      <div class="col-md-2"></div>
+                      <div class="col-md-8">
+                          <div class="form-field">
+                            <label for={{ evolution_form.evolucion.id_for_label }}>{{ evolution_form.evolucion.label }}</label>
+                            {% comment %} {{ evolution_form.evolucion }} {% endcomment %}
+                            <textarea name="evolucion" id="id_evolucion" cols="30" rows="3"></textarea>
+                          </div>
+                      </div>
+                      <div class="col-md-2"></div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-2"></div>
+                      <div class="col-md-8 d-flex justify-content-end mt-4">
+                        <button id="evolution-form-hider" class="abort-evolution-button danger">
+                          No agregar evolución
+                        </button>
+                      </div>
+                      <div class="col-md-2"></div>
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+              <div class="tab-pane fade" id="pills-test" role="tabpanel" aria-labelledby="pills-disabled-tab" tabindex="0">
+
+                <div id="test-home-page">
 
                   <div class="accordion" id="accordionExample">
-                    {% for record in evolution_records %}
+                    {% for patient_test in patient_tests %}
                     <div class="accordion-item">
                       <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapseOne">
-                          {{ record }}
+                          {{ patient_test }}
                         </button>
                       </h2>
                       <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                         <div class="accordion-body">
-                          {{ record.evolucion }}
+                          {{ patient_test.result }}
                         </div>
                       </div>
                     </div>
                     {% endfor %}
                   </div>
 
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <button id="evolution-form-adder">
-                        Agregar evolución
+                  <div class="row">
+                    <div class="col-md-3">
+                      <button id="patient-test-form-displayer">
+                        Agregar test
                       </button>
-                      {% comment %} <label for={{ evolution_form.evolucion.id_for_label }} class="bmd-label-floating">{{ evolution_form.evolucion.label }}</label>
-                      {{ evolution_form.evolucion }} {% endcomment %}
                     </div>
                   </div>
 
                 </div>
-              </div>
-              <div class="tab-pane fade" id="pills-test" role="tabpanel" aria-labelledby="pills-disabled-tab" tabindex="0">
-                <div class="row">
+
+                <div id="patient-test-form-page" class="d-none">
+
+                  <div class="row">
+
+                    <div class="col-md-4">
+
+                      <div class="row">
+
+                        <div class="col-md-10">
+
+                          <div class="form-field">
+                            <label for={{ patient_test_form.test.id_for_label }}>{{ patient_test_form.test.label }}</label>
+                            {{ patient_test_form.test }}
+                          </div>
+
+                        </div>
+
+                        <div class="col-md-2">
+                          <button id="test-form-displayer">
+                            +
+                          </button>
+                        </div>
+
+                      </div>
+                    </div>
+                      
+                    <div class="col-md-8">
+                      <div class="form-field">
+                        <label for={{ patient_test_form.resultado.id_for_label }}>{{ patient_test_form.resultado.label }}</label>
+                        {{ patient_test_form.resultado }}
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-9">
+
+                    </div>
+
+                    <div class="col-md-3">
+                      <button id="patient-test-form-hider">
+                        No agregar
+                      </button>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div id="test-form-page" class="d-none">
+
+                  <div class="row">
+
+                    <div class="col-md-4">
+
+                      <div class="form-field">
+                        <label for={{ test_form.nombre.id_for_label }}>{{ test_form.nombre.label }}</label>
+                        {{ test_form.nombre }}
+                      </div>
+
+                    </div>
+
+                    <div class="col-md-8">
+
+                      <div class="form-field">
+                        <label for={{ test_form.descripcion.id_for_label }}>{{ test_form.descripcion.label }}</label>
+                        {{ test_form.descripcion }}
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                  <div class="row">
+
+                    <div class="col-md-4">
+
+                      <div class="form-field">
+                        <label for={{ test_form.categoria.id_for_label }}>{{ test_form.categoria.label }}</label>
+                        {{ test_form.categoria }}
+                      </div>
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                      <div class="form-field">
+                        <label for={{ test_form.subcategoria.id_for_label }}>{{ test_form.subcategoria.label }}</label>
+                        {{ test_form.subcategoria }}
+                      </div>
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                      <div class="form-field">
+                        <label for={{ test_form.tipo_resultado.id_for_label }}>{{ test_form.tipo_resultado.label }}</label>
+                        {{ test_form.tipo_resultado }}
+                      </div>
+
+                    </div>
+                    
+                  </div>
+
+                  <div class="row">
+
+                    <div class="col-md-7">
+
+                    </div>
+
+                    <div class="col-md-5">
+
+                      <div class="row">
+
+                        <div class="col-md-6">
+                          <button id="test-form-hider">
+                            Cancelar
+                          </button>
+                        </div>
+
+                        <div class="col-md-6">
+                          <button id="test-form-submitter">
+                            Guardar
+                          </button>
+                        </div>
+
+                      </div>
+
+                    </div>
+                    
+                  </div>
+
+                </div>
+
+
+                {% comment %} <div class="row">
 
                   <div class="accordion" id="accordionExample">
                     {% for patient_test in patient_tests %}
@@ -285,20 +596,96 @@
 
                   <div class="col-md-12">
                     
-                    <div class="form-group">
-                      <button id="test-form-adder">
-                        Agregar test
+                    <div class="form-field">
+                      <button id="patient-test-form-displayer">
+                        Agregar test hehe
                       </button>
-                      {% comment %} <label for={{ form.diagnostico.id_for_label }} class="bmd-label-floating">{{ form.diagnostico.label }}</label>
-                      {{ form.diagnostico }} {% endcomment %}
+                      <label for={{ form.diagnostico.id_for_label }}>{{ form.diagnostico.label }}</label>
+                      {{ form.diagnostico }}
                     </div>
                   </div>
 
-                </div>
+                  <div id="patient-test-form-container" class="d-none">
+
+                    <div class="row">
+
+                      <div class="col-md-6">
+
+                        <div class="form-field">
+                          <label for={{ patient_test_form.test.id_for_label }}>{{ patient_test_form.test.label }}</label>
+                          {{ patient_test_form.test }}
+                        </div>
+
+                        <button id="test-form-displayer">
+                          Crear test
+                        </button>
+
+                        <div id="test-form-container">
+
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="form-field">
+                                <label for={{ test_form.nombre.id_for_label }}>{{ test_form.nombre.label }}</label>
+                                {{ test_form.nombre }}
+                              </div>
+
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-field">
+                                <label for={{ test_form.tipo_resultado.id_for_label }}>{{ test_form.tipo_resultado.label }}</label>
+                                {{ test_form.tipo_resultado }}
+                              </div>
+                              
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="form-field">
+                                <label for={{ test_form.descripcion.id_for_label }}>{{ test_form.descripcion.label }}</label>
+                                {{ test_form.descripcion }}
+                              </div>
+
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="form-field">
+                                <label for={{ test_form.categoria.id_for_label }}>{{ test_form.categoria.label }}</label>
+                                {{ test_form.categoria }}
+                              </div>
+
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label for={{ test_form.subcategoria.id_for_label }}>{{ test_form.subcategoria.label }}</label>
+                                {{ test_form.subcategoria }}
+                              </div>
+                              
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for={{ patient_test_form.resultado.id_for_label }}>{{ patient_test_form.resultado.label }}</label>
+                          {{ patient_test_form.resultado }}
+                        </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div> {% endcomment %}
+                
               </div>
             </div>
               
-            <button type="submit" class="btn btn-primary pull-right">Guardar</button>
+            <button id="patient-form-submitter" type="submit" class="submitting-button btn btn-primary pull-right">Guardar</button>
             <div class="clearfix"></div>
           </form>
 
