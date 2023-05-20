@@ -130,6 +130,10 @@ button.success {
     width: 100%;
 }
 
+input[type="file"] {
+    color: black;
+}
+
 .form-field:has(textarea) {
     height: 80px;
     margin-top: 30px;

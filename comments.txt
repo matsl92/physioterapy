@@ -1,12 +1,40 @@
 TO DO
 
-Finish evolution section and go on to tests
+messages
+
+date format
+
+Organize sidebar
+
+Remove useless elements
+
+Table with diagnostic options
+
+Search bar for diagnostic
+
+
+
+DONE
+
+Translated models and add unique names to the fields so they won't be miss recognized
+
+Validate patient form:
+    This might require to get a list of inputs with more than the ones from the patient form
+
+Finish Backend:
+    create patient   GET POST redirect user to patient list page
+    update patient   GET POST
+    list patient     GET
+
+Front for patient list
+
+display submit button after fetch
 
 Submit button should execute a function which validates all fields to be sent
 so the form wont be rejected. If one of them isn't valid it should point the 
 user to that specific section and highlight the invalid input.
 
-DONE
+Finish evolution section and go on to tests
 
 Specify a height for the patient form 
 
@@ -80,11 +108,6 @@ if not invalid input:
     submit --> break
 
     
-
-
-
-
-form-tags should be something like django-patient-form
 
 In the backend I shouldn't take in to account fetch forms
 

@@ -1,17 +1,77 @@
-{% extends 'layouts/base.html' %}
+{% extends "layouts/base.html" %}
 
-{% load static %}
+{% block title %} Lista de pacientes {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
 
-<h1>Pacientes</h1>
+        <div class="row">
+            <div class="col-md-12">
+              <div class="card card-plain">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title mt-0">Lista de pacientes</h4>
+                  <p class="card-category">Orden por nombre</p>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead class="">
+                        <th>
+                            Cédula
+                        </th>
+                        <th>
+                            Nombre
+                        </th>
+                        <th>
+                            Apellidos
+                        </th>
+                        <th>
+                            Teléfono
+                        </th>
+                        <th>
+                            Última actualización
+                        </th>
+                        <th>
+                            Link
+                        </th>
+                      </thead>
+                      <tbody>
+                        {% for patient in object_list %}
+                        <tr>
+                            <td>
+                                {{ patient.cedula }}
+                            </td>
+                            <td>
+                                {{ patient.nombre }}
+                            </td>
+                            <td>
+                                {{ patient.apellidos }}
+                            </td>
+                            <td>
+                                {{ patient.telefono }}
+                            </td>
+                            <td>
+                                {{ patient.updated_at }}
+                            </td>
+                            <th>
+                                <a href={% url 'home:update_patient' patient.cedula %}>Ver</a>
+                            </th>
+                        </tr>
+                        {% endfor %}
 
-{% for patient in object_list %}
 
-<div>
-    {{ patient }}
-</div>
-
-{% endfor %}
+                        
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
 
 {% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

@@ -1,8 +1,6 @@
 from django.db import models
 from django.utils import timezone
 from datetime import datetime, timedelta
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.contrib.contenttypes.models import ContentType
 
 
 OCUPACION_OPCIONES = [
@@ -27,56 +25,49 @@ TEST_RESPONSE_TYPE = [
     ('bool','Campo positivo o negativo'),
 ]
 
-class Diagnostico(models.Model):
-    code = models.CharField('Código', max_length=20)
-    description = models.CharField('Descripción', max_length=200)
-    created_at = models.DateField('Fecha de creación', auto_now_add=True)
-    is_active = models.BooleanField('Activo', default=True)
+class Diagnostic(models.Model):
+    diagnostic_code = models.CharField('código', max_length=20)
+    diagnostic_description = models.CharField('descripción', max_length=200)
+    created_at = models.DateField('fecha de creación', auto_now_add=True)
+    is_active = models.BooleanField('activo', default=True)
     
     """
     foranea a diagnostico
-    
-    cie-10 tabla nacional de diagnosticos para pacientes. estandariza
-    
-    codigo
-    descripcion
-    cresated_at
     activo bool mostrar solo activos
-    str codigo-descrpcion
     """
     
     def __str__(self):
-        return f"{self.code} - {self.description}"
+        return f"{self.diagnostic_code} - {self.diagnostic_description}"
     
     class Meta:
         verbose_name = 'Diagnóstico médico'
         verbose_name_plural = 'Diagnósticos médicos'
 
-class Paciente(models.Model):
-    cedula = models.CharField('Cédula', max_length=10, primary_key=True)
-    fecha_ingreso = models.DateTimeField(auto_now_add=True)
+class Patient(models.Model):
+    cedula = models.CharField('cédula', max_length=10, primary_key=True)
+    fecha_ingreso = models.DateTimeField('fecha de ingreso', auto_now_add=True)
     nombre = models.CharField(max_length=60)
     apellidos = models.CharField(max_length=120)
-    fecha_nacimiento = models.DateField('Fecha de nacimiento')
+    fecha_nacimiento = models.DateField('fecha de nacimiento')
     edad = models.IntegerField(default=0, editable=False)
-    telefono = models.CharField('Teléfono', max_length=15)
+    telefono = models.CharField('teléfono', max_length=15)
     email = models.EmailField(blank=True, null=True)
-    acompanante = models.CharField('Nombre del acompañante', max_length=120, blank=True, null=True)
+    acompanante = models.CharField('nombre del acompañante', max_length=120, blank=True, null=True)
     parentesco = models.CharField(max_length=60, blank=True, null=True)
-    telefono_acompanante = models.CharField('Teléfono del acompañante', max_length=15, blank=True, null=True)
-    ocupacion = models.CharField('Ocupación', max_length=60, choices = OCUPACION_OPCIONES)
-    profesion = models.CharField('Profesión', max_length=120, blank=True, null=True)
+    telefono_acompanante = models.CharField('teléfono del acompañante', max_length=15, blank=True, null=True)
+    ocupacion = models.CharField('ocupación', max_length=60, choices = OCUPACION_OPCIONES)
+    profesion = models.CharField('profesión', max_length=120, blank=True, null=True)
     seguridad_social = models.CharField(max_length=240)
-    diagnostico = models.ForeignKey(Diagnostico, on_delete=models.SET_DEFAULT, default=None, blank=True, null=True, verbose_name='Diagnóstico médico')
-    motivo_consulta = models.TextField('Motivo de consulta')
-    cronologia_de_patologia = models.TextField('Cronología de la patología')
-    actividad_fisica = models.BooleanField('Actividad física', default = False)
-    tipo_actividad_fisica = models.CharField('Tipo de actividad física', max_length=240, blank=True, null=True)
-    frecuencia_actividad_fisica = models.CharField('Frecuencia de la actividad física', max_length=60, choices = FRECUENCIA_ACTIVIDAD_FISICA_OPCIONES, default = 'no')
+    diagnostico = models.ForeignKey(Diagnostic, on_delete=models.SET_DEFAULT, default=None, blank=True, null=True, verbose_name='diagnóstico médico')
+    motivo_consulta = models.TextField('motivo de consulta')
+    cronologia_de_patologia = models.TextField('cronología de la patología')
+    actividad_fisica = models.BooleanField('actividad física', default = False)
+    tipo_actividad_fisica = models.CharField('tipo de actividad física', max_length=240, blank=True, null=True)
+    frecuencia_actividad_fisica = models.CharField('frecuencia de la actividad física', max_length=60, choices = FRECUENCIA_ACTIVIDAD_FISICA_OPCIONES, default = 'no')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     deleted_at = models.DateTimeField(blank=True, null=True, editable=False)
-    conclusion  = models.TextField('Conclusión', null=True, blank=True)
+    conclusion  = models.TextField('conclusión', null=True, blank=True)
 
     def get_edad(self):
         age = datetime.now().date() - (self.fecha_nacimiento + timedelta(days = +7))
@@ -88,7 +79,7 @@ class Paciente(models.Model):
     def user_directory_path(instance, filename):
         return 'paciente_{0}/{1}'.format(instance.get_cedula(), filename)
 
-    adjuntar_documento = models.FileField(upload_to=user_directory_path, blank=True, null=True)
+    documento_adjunto = models.FileField('Adjuntar documento', upload_to=user_directory_path, blank=True, null=True)
 
 
     def __str__(self):
@@ -96,70 +87,53 @@ class Paciente(models.Model):
 
     def save(self, *args, **kwargs):
         self.get_edad()
-        super(Paciente, self).save(*args, **kwargs)
+        super(Patient, self).save(*args, **kwargs)
+        
+    class Meta:
+        verbose_name = 'Paciente'
+        verbose_name_plural = 'Pacientes'
 
-class Evolucion(models.Model):
-    paciente = models.ForeignKey(Paciente, on_delete = models.CASCADE)
-    evolucion = models.TextField('Evolución')
+class Evolution(models.Model):
+    patient = models.ForeignKey(Patient, on_delete = models.CASCADE, verbose_name='Paciente')
+    evolution_record = models.TextField('Evolución')
     created_at = models.DateTimeField(auto_now_add=True, editable=False, verbose_name='Fecha de creación')
 
     def __str__(self):
-        return f"{self.paciente} - {timezone.localtime(self.created_at).strftime('%Y/%m/%d - %H:%M')}"
+        return f"{self.patient} - {timezone.localtime(self.created_at).strftime('%Y/%m/%d - %I:%M %p')}"
 
     class Meta:
         verbose_name = "Evolución"
         verbose_name_plural = "Evoluciones"
 
-class Categoria(models.Model):
-    nombre = models.CharField(max_length=120)
+class Category(models.Model):
+    category_name = models.CharField('nombre',max_length=120)
 
     def __str__(self):
-        return f'{self.nombre}'
+        return f'{self.category_name}'
     
     class Meta:
         verbose_name = 'categoría'
         verbose_name_plural = 'categorías'
 
 class Test(models.Model):
-    nombre = models.CharField(max_length=120)
-    descripcion = models.TextField(blank=True,null=True)
-    categoria = models.ForeignKey(Categoria, on_delete = models.CASCADE)
-    subcategoria = models.CharField(max_length=120)
-    tipo_resultado = models.CharField(max_length=60, choices = TEST_RESPONSE_TYPE, default = 'bool')
+    test_name = models.CharField('nombre', max_length=120)
+    test_description = models.TextField('descripción', blank=True, null=True)
+    category = models.ForeignKey(Category, on_delete = models.CASCADE, verbose_name='categoría')
+    subcategory = models.CharField('subcategoría', max_length=120)
+    result_type = models.CharField('tipo de resultado', max_length=60, choices = TEST_RESPONSE_TYPE, default = 'bool')
 
     def __str__(self):
-        return f'{self.categoria} - {self.subcategoria} - {self.nombre}'
+        return f'{self.category} - {self.subcategory} - {self.test_name}'
 
-class PacienteTest(models.Model):
-    paciente = models.ForeignKey(Paciente, on_delete = models.CASCADE)
+class PatientTest(models.Model):
+    patient = models.ForeignKey(Patient, on_delete = models.CASCADE, verbose_name='paciente')
     test = models.ForeignKey(Test, on_delete = models.CASCADE)
-    resultado = models.TextField()
+    result = models.TextField('resultado')
 
     def __str__(self):
-        return f'{self.test} - {self.resultado}'
-
-
-class Person(models.Model):
-    name = models.CharField(max_length=128)
-
-
-class Group(models.Model):
-    name = models.CharField(max_length=128)
-    members = models.ManyToManyField(Person, through="Membership")
-
-
-class Membership(models.Model):
-    person = models.ForeignKey(Person, on_delete=models.CASCADE)
-    group = models.ForeignKey(Group, on_delete=models.CASCADE)
-    date_joined = models.DateField()
-    invite_reason = models.CharField(max_length=64)
+        return f'{self.test} - {self.result}'
     
-class Image(models.Model):
-    image = models.ImageField(upload_to="images")
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey("content_type", "object_id")
+    class Meta:
+        verbose_name = 'test de paciente'
+        verbose_name_plural = 'tests de pacientes'
 
-
-class Product(models.Model):
-    name = models.CharField(max_length=100)

@@ -1,28 +1,34 @@
 from django import forms
 from .models import (
-    Paciente,
-    Diagnostico,
-    Evolucion,
+    Patient,
+    Diagnostic,
+    Evolution,
     Test,
-    PacienteTest,
-    Categoria,
+    PatientTest,
+    Category,
     FRECUENCIA_ACTIVIDAD_FISICA_OPCIONES,
     OCUPACION_OPCIONES,
     TEST_RESPONSE_TYPE
 )
 
 def get_diagnosis_options():
-    return Diagnostico.objects.filter(is_active = True)
+    return Diagnostic.objects.filter(is_active = True)
 
 def get_category_options():
-    return Categoria.objects.all()
+    return Category.objects.all()
 
 def get_test_options():
     return Test.objects.all()
 
 class PatientForm(forms.ModelForm):
+    
+    # fecha_nacimiento = forms.DateField(
+    #     widget=forms.DateInput(attrs={'type': 'date', 'class': 'django-patient-form'}),
+    #     input_formats=['%Y-%m/%d']  # Specify the desired date format here
+    # )
+    
     class Meta:
-        model = Paciente
+        model = Patient
         fields = '__all__'
         widgets = {
             'cedula': forms.TextInput(attrs={
@@ -36,7 +42,8 @@ class PatientForm(forms.ModelForm):
             }),
             'fecha_nacimiento': forms.DateInput(attrs={
                 'type': 'date',
-                'class': 'django-patient-form'
+                'class': 'django-patient-form',
+                'value': "2000-05-02",
             }),
             'telefono': forms.TextInput(attrs={
                 'class': 'django-patient-form'
@@ -92,23 +99,23 @@ class PatientForm(forms.ModelForm):
                 'rows': "3",
                 'class': 'django-patient-form'    
             }),
-            'adjuntar_documento': forms.FileInput(attrs={
+            'documento_adjunto': forms.FileInput(attrs={
                 'class': 'django-patient-form',
             })
             
         }
 
-class DiagnosticForm(forms.ModelForm):
+class DiagnosticForm(forms.ModelForm):  # Fetch
     class Meta:
-        model = Diagnostico
+        model = Diagnostic
         fields = '__all__'
         widgets = {
-            'code': forms.TextInput(
+            'diagnostic_code': forms.TextInput(
                 attrs={
                     'class': 'django-diagnostic-form'
                 }
             ),
-            'description': forms.TextInput(
+            'diagnostic_description': forms.TextInput(
                 attrs={
                     'class': 'django-diagnostic-form'
                 }
@@ -117,16 +124,16 @@ class DiagnosticForm(forms.ModelForm):
         
 class EvolutionForm(forms.ModelForm):
     class Meta: 
-        model = Evolucion
+        model = Evolution
         fields = '__all__'
         widgets = {
-            'paciente': forms.HiddenInput(
+            'patient': forms.HiddenInput(
                 attrs={
                     'required': False,
                     'class': 'django-evolution-form'
                 }
             ),
-            'evolucion': forms.Textarea(
+            'evolution_record': forms.Textarea(
                 attrs={
                     'rows': '3',
                     'class': 'django-evolution-form'
@@ -134,45 +141,12 @@ class EvolutionForm(forms.ModelForm):
             )
         }
         
-class TestForm(forms.ModelForm):
-    class Meta:
-        model = Test
-        fields = '__all__'
-        widgets = {
-            'nombre': forms.TextInput(
-                attrs={
-                    'id': 'id_test_nombre',
-                    'class': 'django-test-form'
-                }
-            ),
-            'descripcion': forms.Textarea(
-                attrs={
-                    'rows': '3',
-                    'id': 'id_test_descripcion',
-                    'class': 'django-test-form'
-                }
-            ),
-            'categoria': forms.Select(
-                choices=get_category_options(),
-                attrs={
-                    'class': 'django-test-form'
-                }
-            ),
-            'subcategoria': forms.TextInput(),
-            'tipo_resultado': forms.Select(
-                choices=TEST_RESPONSE_TYPE,
-                attrs={
-                    'class': 'django-test-form'
-                }
-            )
-        }
-
 class PatientTestForm(forms.ModelForm):
     class Meta:
-        model = PacienteTest
+        model = PatientTest
         fields = '__all__'
         widgets = {
-            'paciente': forms.HiddenInput(
+            'patient': forms.HiddenInput(
                 attrs={
                     'required': False,
                     'class': 'django-patient-test-form'
@@ -184,8 +158,49 @@ class PatientTestForm(forms.ModelForm):
                     'class': 'django-patient-test-form'
                 }
             ),
-            'resultado': forms.Textarea(attrs={
+            'result': forms.Textarea(attrs={
                 'rows': '3',
                 'class': 'django-patient-test-form'
             })
         }
+      
+class TestForm(forms.ModelForm):    # Fetch
+    class Meta:
+        model = Test
+        fields = '__all__'
+        widgets = {
+            'test_name': forms.TextInput(
+                attrs={
+                    'class': 'django-test-form'
+                }
+            ),
+            'test_description': forms.Textarea(
+                attrs={
+                    'rows': '3',
+                    'class': 'django-test-form'
+                }
+            ),
+            'category': forms.Select(
+                choices=get_category_options(),
+                attrs={
+                    'class': 'django-test-form'
+                }
+            ),
+            'subcategory': forms.TextInput(
+                attrs={
+                    'class': 'django-test-form'
+                }),
+            'result_type': forms.Select(
+                choices=TEST_RESPONSE_TYPE,
+                attrs={
+                    'class': 'django-test-form'
+                }
+            )
+        }
+
+# class PatientForm(forms.ModelForm):
+#     fecha_nacimiento = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), input_formats=['%Y-%m-%d'])
+
+#     class Meta:
+#         model = Patient
+#         fields = '__all__'
