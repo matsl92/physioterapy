@@ -4,6 +4,7 @@
 {% block content %}
 
   <div class="row">
+    <button id="test-button">test</button>
     <div class="col-md-12">
       <div class="card">
         <div class="card-header card-header-primary">
@@ -12,7 +13,7 @@
         </div>
         <div class="card-body main-card">
 
-          <div class="d-flex justify-content-center">
+          {% comment %} <div class="d-flex justify-content-center">
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
               <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-demograficos" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Demográficos</button>
@@ -36,12 +37,39 @@
                 <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-test" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Test</button>
               </li>
             </ul>
+          </div> {% endcomment %}
+
+
+          <div class="d-flex justify-content-center">
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pills-demograficos-tab" data-bs-toggle="pill" data-bs-target="#pills-demograficos" type="button" role="tab" aria-controls="pills-demograficos" aria-selected="true">Demográficos</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-acompanante-tab" data-bs-toggle="pill" data-bs-target="#pills-acompanante" type="button" role="tab" aria-controls="pills-acompanante" aria-selected="false">Acompañante</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-habitos-tab" data-bs-toggle="pill" data-bs-target="#pills-habitos" type="button" role="tab" aria-controls="pills-habitos" aria-selected="false">Hábitos</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-clinica-tab" data-bs-toggle="pill" data-bs-target="#pills-clinica" type="button" role="tab" aria-controls="pills-clinica" aria-selected="false">Historia clínica</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-diagnostico-tab" data-bs-toggle="pill" data-bs-target="#pills-diagnostico" type="button" role="tab" aria-controls="pills-diagnostico" aria-selected="false">Diagnóstico</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-evolucion-tab" data-bs-toggle="pill" data-bs-target="#pills-evolucion" type="button" role="tab" aria-controls="pills-evolucion" aria-selected="false">Evolución</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-test-tab" data-bs-toggle="pill" data-bs-target="#pills-test" type="button" role="tab" aria-controls="pills-test" aria-selected="false">Test</button>
+              </li>
+            </ul>
           </div>
 
           <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="tab-content" id="pills-tabContent">
-              <div class="tab-pane fade show active" id="pills-demograficos" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+              <div class="tab-pane fade show active" id="pills-demograficos" role="tabpanel" aria-labelledby="pills-demograficos-tab" tabindex="0">
                 
                 <div class="form-section-container">
             
@@ -125,7 +153,7 @@
                 </div>
 
               </div>
-              <div class="tab-pane fade" id="pills-acompanante" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
+              <div class="tab-pane fade" id="pills-acompanante" role="tabpanel" aria-labelledby="pills-acompanante-tab" tabindex="0">
                 
                 <div class="form-section-container">
 
@@ -157,27 +185,27 @@
                 </div>
 
               </div>
-              <div class="tab-pane fade" id="pills-habitos" role="tabpanel" aria-labelledby="pills-contact-tab" tabindex="0">
+              <div class="tab-pane fade" id="pills-habitos" role="tabpanel" aria-labelledby="pills-habitos-tab" tabindex="0">
                 
                 <div class="form-section-container">
 
                   <div class="row">
 
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                       <div class="form-field">
                         <label for={{ patient_form.actividad_fisica.id_for_label }}>{{ patient_form.actividad_fisica.label }}</label>
                         {{ patient_form.actividad_fisica }}
                       </div>
                     </div>
       
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                       <div class="form-field">
                         <label for={{ patient_form.tipo_actividad_fisica.id_for_label }}>{{ patient_form.tipo_actividad_fisica.label }}</label>
                         {{ patient_form.tipo_actividad_fisica }}
                       </div>
                     </div>
       
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                       <div class="form-field">
                         <label for={{ patient_form.frecuencia_actividad_fisica.id_for_label }}>{{ patient_form.frecuencia_actividad_fisica.label }}</label>
                         {{ patient_form.frecuencia_actividad_fisica }}
@@ -189,7 +217,7 @@
                 </div>
 
               </div>
-              <div class="tab-pane fade" id="pills-clinica" role="tabpanel" aria-labelledby="pills-disabled-tab" tabindex="0">
+              <div class="tab-pane fade" id="pills-clinica" role="tabpanel" aria-labelledby="pills-clinica-tab" tabindex="0">
                 
                 <div class="form-section-container">
 
@@ -230,7 +258,7 @@
                 </div>
 
               </div>
-              <div class="tab-pane fade" id="pills-diagnostico" role="tabpanel" aria-labelledby="pills-disabled-tab" tabindex="0">
+              <div class="tab-pane fade" id="pills-diagnostico" role="tabpanel" aria-labelledby="pills-diagnostico-tab" tabindex="0">
 
                 <div class="form-section-container">
 
@@ -238,20 +266,20 @@
                     
                     <div class="row">
 
-                      <div class="col-md-3">
+                      <div class="col-md-2">
                       </div>
 
-                      <div class="col-md-6">
+                      <div class="col-md-8">
                         <div class="row">
 
-                          <div class="col-md-10">
+                          <div class="col-md-10 col-sm-10 col-9">
                             <div class="form-field">
                               <label for={{ patient_form.diagnostico.id_for_label }}>{{ patient_form.diagnostico.label }}</label>
                               {{ patient_form.diagnostico }}
                             </div>
                           </div>
     
-                          <div class="col-md-2 d-flex align-items-center">
+                          <div class="col-md-2 col-sm-2 col-3 d-flex align-items-center justify-content-center9">
                             <button id="diagnostic-form-displayer" class="plus-button">
                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" fill="rgb(255, 255, 255)">
                                 <path d="M19 11H13V5a1 1 0 0 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2z"/>
@@ -262,7 +290,7 @@
                         </div>
                       </div>
 
-                      <div class="col-md-3">
+                      <div class="col-md-2">
                       </div>
 
                     </div>
@@ -277,10 +305,6 @@
                         <h4 class="card-title">
                           Nuevo diagnóstico
                         </h4>
-                        <p class="card-category">
-                          completa el dorm
-                        </p>
-
                       </div>
                       <div class="card-body">
 
@@ -293,36 +317,35 @@
                             </div>
                           </div>
     
-                          <div class="col-md-6">
+                          <div class="col-md-9">
                             <div class="form-field">
                               <label for={{ diagnostic_form.description.id_for_label }}>{{ diagnostic_form.description.label }}</label>
                               {{ diagnostic_form.description }}
                             </div>
                           </div>
     
-                          <div class="col-md-3">
+                          {% comment %} <div class="col-md-3">
                             <div class="form-field">
                               <label for={{ diagnostic_form.is_active.id_for_label }}>{{ diagnostic_form.is_active.label }}</label>
+                              <input type="hidden" name='is_active'>
                               {{ diagnostic_form.is_active }}
                             </div>
-                          </div>
+                          </div> {% endcomment %}
     
                         </div>
 
                         <div class="row">
 
-                          <div class="col-md-6">
-                          </div>
-    
-                          <div class="col-md-6">
-                            <div class="d-flex justify-content-center mt-4">
-                                <button id="diagnostic-form-hider" class="fetch-control-button danger">
-                                  Cancelar
-                                </button>
-                                <button id="diagnostic-form-submitter" class="fetch-control-button success">
-                                  Guardar
-                                </button>
-                            </div>
+                          <div class="col-md-12 d-flex justify-content-center mt-4">
+
+                            <button id="diagnostic-form-hider" class="fetch-control-button secondary">
+                              Cancelar
+                            </button>
+
+                            <button id="diagnostic-form-submitter" class="fetch-control-button primary">
+                              Guardar
+                            </button>
+
                           </div>
                           
                         </div>
@@ -336,7 +359,7 @@
                 </div>  
 
               </div>
-              <div class="tab-pane fade" id="pills-evolucion" role="tabpanel" aria-labelledby="pills-disabled-tab" tabindex="0">
+              <div class="tab-pane fade" id="pills-evolucion" role="tabpanel" aria-labelledby="pills-evolucion-tab" tabindex="0">
                 
                 <div class="form-section-container">
 
@@ -383,25 +406,37 @@
 
                   <div id="evolution-form-page" class="d-none">
 
+
                     <div class="row">
+
                       <div class="col-md-2"></div>
+
                       <div class="col-md-8">
-                          <div class="form-field">
-                            <label for={{ evolution_form.evolucion.id_for_label }}>{{ evolution_form.evolucion.label }}</label>
-                            {% comment %} {{ evolution_form.evolucion }} {% endcomment %}
-                            <textarea name="evolucion" id="id_evolucion" cols="30" rows="3"></textarea>
+
+                        <div class="row">
+
+                          <div class="col-md-12">
+                            <div class="form-field">
+                              <label for={{ evolution_form.evolucion.id_for_label }}>{{ evolution_form.evolucion.label }}</label>
+                              {{ evolution_form.evolucion }}
+                              {% comment %} <textarea name="evolucion" id="id_evolucion" cols="30" rows="3"></textarea> {% endcomment %}
+                            </div>
                           </div>
+  
+  
+                          <div class="col-md-12 d-flex justify-content-center mt-3">
+                            <button id="evolution-form-hider" class="abort-accordion-field-button secondary">
+                              No agregar
+                            </button>
+                          </div>
+  
+  
+                        </div>
+
                       </div>
+
                       <div class="col-md-2"></div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-2"></div>
-                      <div class="col-md-8 d-flex justify-content-end mt-4">
-                        <button id="evolution-form-hider" class="abort-evolution-button danger">
-                          No agregar evolución
-                        </button>
-                      </div>
-                      <div class="col-md-2"></div>
+
                     </div>
 
                   </div>
@@ -409,170 +444,196 @@
                 </div>
 
               </div>
-              <div class="tab-pane fade" id="pills-test" role="tabpanel" aria-labelledby="pills-disabled-tab" tabindex="0">
+              <div class="tab-pane fade" id="pills-test" role="tabpanel" aria-labelledby="pills-test-tab" tabindex="0">
 
-                <div id="test-home-page">
+                <div class="form-section-container">
 
-                  <div class="accordion" id="accordionExample">
-                    {% for patient_test in patient_tests %}
-                    <div class="accordion-item">
-                      <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapseOne">
-                          {{ patient_test }}
-                        </button>
-                      </h2>
-                      <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                        <div class="accordion-body">
-                          {{ patient_test.result }}
+                  <div id="test-home-page">
+
+                    <div class="row">
+  
+                      <div class="col-md-12">
+  
+                        <div class="accordion" id="accordionExample">
+                          {% for patient_test in patient_tests %}
+                          <div class="accordion-item">
+                            <h2 class="accordion-header">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapseOne">
+                                {{ patient_test }}
+                              </button>
+                            </h2>
+                            <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                              <div class="accordion-body">
+                                {{ patient_test.resultado }}
+                              </div>
+                            </div>
+                          </div>
+                          {% endfor %}
                         </div>
+  
+                      </div>
+  
+                    </div>
+  
+                    <div class="row">
+                      <div class="col-md-12">
+                        <button id="patient-test-form-displayer" class="w-100 add-accordion-field-button">
+                          Agregar test
+                        </button>
                       </div>
                     </div>
-                    {% endfor %}
+  
                   </div>
+  
+                  <div id="patient-test-form-page" class="d-none">
+  
+                    <div class="row">
 
-                  <div class="row">
-                    <div class="col-md-3">
-                      <button id="patient-test-form-displayer">
-                        Agregar test
-                      </button>
-                    </div>
-                  </div>
+                      <div class="col-md-2"></div>
 
-                </div>
+                      <div class="col-md-8">
 
-                <div id="patient-test-form-page" class="d-none">
+                        <div class="row">
+  
+                          <div class="col-md-10 col-sm-10 col-9">
+  
+                            <div class="form-field">
+                              <label for={{ patient_test_form.test.id_for_label }}>{{ patient_test_form.test.label }}</label>
+                              {{ patient_test_form.test }}
+                            </div>
+  
+                          </div>
+  
+                          <div class="col-md-2 col-sm-2 col-3 d-flex align-items-center justify-content-center">
+                            <button id="test-form-displayer" class="plus-button">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" fill="rgb(255, 255, 255)">
+                                <path d="M19 11H13V5a1 1 0 0 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2z"/>
+                              </svg>
+                            </button>
+                          </div>
+  
+                        </div>
 
-                  <div class="row">
+                        <div class="row">
 
-                    <div class="col-md-4">
+                          <div class="col-md-12">
 
-                      <div class="row">
+                            <div class="form-field">
+                              <label for={{ patient_test_form.resultado.id_for_label }}>{{ patient_test_form.resultado.label }}</label>
+                              {{ patient_test_form.resultado }}
+                            </div>
 
-                        <div class="col-md-10">
-
-                          <div class="form-field">
-                            <label for={{ patient_test_form.test.id_for_label }}>{{ patient_test_form.test.label }}</label>
-                            {{ patient_test_form.test }}
                           </div>
 
                         </div>
 
-                        <div class="col-md-2">
-                          <button id="test-form-displayer">
-                            +
-                          </button>
+                        <div class="row">
+
+                          <div class="col-md-12 d-flex justify-content-center mt-3">
+                            <button id="patient-test-form-hider" class="abort-accordion-field-button secondary">
+                              No agregar
+                            </button>
+                          </div>
+
                         </div>
 
                       </div>
-                    </div>
+
+                      <div class="col-md-2"></div>
                       
-                    <div class="col-md-8">
-                      <div class="form-field">
-                        <label for={{ patient_test_form.resultado.id_for_label }}>{{ patient_test_form.resultado.label }}</label>
-                        {{ patient_test_form.resultado }}
-                      </div>
                     </div>
-
+  
                   </div>
+  
+                  <div id="test-form-page" class="d-none">
+  
+                    <div class="card fetch-form">
 
-                  <div class="row">
-                    <div class="col-md-9">
+                      <div class="card-header card-header-primary">
+                        <h4 class="card-title">
+                          Nuevo test
+                        </h4>
+                      </div>
+                      <div class="card-body">
 
+                        <div class="row">
+  
+                          <div class="col-md-4">
+      
+                            <div class="form-field">
+                              <label for={{ test_form.nombre.id_for_label }}>{{ test_form.nombre.label }}</label>
+                              {{ test_form.nombre }}
+                            </div>
+      
+                          </div>
+      
+                          <div class="col-md-8">
+      
+                            <div class="form-field">
+                              <label for={{ test_form.descripcion.id_for_label }}>{{ test_form.descripcion.label }}</label>
+                              {{ test_form.descripcion }}
+                            </div>
+      
+                          </div>
+      
+                        </div>
+      
+                        <div class="row">
+      
+                          <div class="col-md-4">
+      
+                            <div class="form-field">
+                              <label for={{ test_form.categoria.id_for_label }}>{{ test_form.categoria.label }}</label>
+                              {{ test_form.categoria }}
+                            </div>
+      
+                          </div>
+      
+                          <div class="col-md-4">
+      
+                            <div class="form-field">
+                              <label for={{ test_form.subcategoria.id_for_label }}>{{ test_form.subcategoria.label }}</label>
+                              {{ test_form.subcategoria }}
+                            </div>
+      
+                          </div>
+      
+                          <div class="col-md-4">
+      
+                            <div class="form-field">
+                              <label for={{ test_form.tipo_resultado.id_for_label }}>{{ test_form.tipo_resultado.label }}</label>
+                              {{ test_form.tipo_resultado }}
+                            </div>
+      
+                          </div>
+                          
+                        </div>
+
+                        <div class="row">
+
+                          <div class="col-md-12 d-flex justify-content-center mt-3">
+
+                            <button id="test-form-hider" class="fetch-control-button secondary">
+                              Cancelar
+                            </button>
+
+                            <button id="test-form-submitter" class="fetch-control-button primary">
+                              Guardar
+                            </button>
+
+                          </div>
+                          
+                        </div>
+
+                      </div>
+                    
                     </div>
-
-                    <div class="col-md-3">
-                      <button id="patient-test-form-hider">
-                        No agregar
-                      </button>
-                    </div>
+  
                   </div>
 
                 </div>
 
-                <div id="test-form-page" class="d-none">
-
-                  <div class="row">
-
-                    <div class="col-md-4">
-
-                      <div class="form-field">
-                        <label for={{ test_form.nombre.id_for_label }}>{{ test_form.nombre.label }}</label>
-                        {{ test_form.nombre }}
-                      </div>
-
-                    </div>
-
-                    <div class="col-md-8">
-
-                      <div class="form-field">
-                        <label for={{ test_form.descripcion.id_for_label }}>{{ test_form.descripcion.label }}</label>
-                        {{ test_form.descripcion }}
-                      </div>
-
-                    </div>
-
-                  </div>
-
-                  <div class="row">
-
-                    <div class="col-md-4">
-
-                      <div class="form-field">
-                        <label for={{ test_form.categoria.id_for_label }}>{{ test_form.categoria.label }}</label>
-                        {{ test_form.categoria }}
-                      </div>
-
-                    </div>
-
-                    <div class="col-md-4">
-
-                      <div class="form-field">
-                        <label for={{ test_form.subcategoria.id_for_label }}>{{ test_form.subcategoria.label }}</label>
-                        {{ test_form.subcategoria }}
-                      </div>
-
-                    </div>
-
-                    <div class="col-md-4">
-
-                      <div class="form-field">
-                        <label for={{ test_form.tipo_resultado.id_for_label }}>{{ test_form.tipo_resultado.label }}</label>
-                        {{ test_form.tipo_resultado }}
-                      </div>
-
-                    </div>
-                    
-                  </div>
-
-                  <div class="row">
-
-                    <div class="col-md-7">
-
-                    </div>
-
-                    <div class="col-md-5">
-
-                      <div class="row">
-
-                        <div class="col-md-6">
-                          <button id="test-form-hider">
-                            Cancelar
-                          </button>
-                        </div>
-
-                        <div class="col-md-6">
-                          <button id="test-form-submitter">
-                            Guardar
-                          </button>
-                        </div>
-
-                      </div>
-
-                    </div>
-                    
-                  </div>
-
-                </div>
+                
 
 
                 {% comment %} <div class="row">

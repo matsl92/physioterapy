@@ -25,40 +25,76 @@ class PatientForm(forms.ModelForm):
         model = Paciente
         fields = '__all__'
         widgets = {
-            'cedula': forms.TextInput(),
-            'nombre': forms.TextInput(),
-            'apellidos': forms.TextInput(),
-            'fecha_nacimiento': forms.DateInput(attrs={
-                'type': 'date'
+            'cedula': forms.TextInput(attrs={
+                'class': 'django-patient-form'
             }),
-            'telefono': forms.TextInput(),
-            'email': forms.EmailInput(),
-            'acompanante': forms.TextInput(),
-            'parentesco': forms.TextInput(),
-            'telefono_acompanante': forms.TextInput(),
+            'nombre': forms.TextInput(attrs={
+                'class': 'django-patient-form'
+            }),
+            'apellidos': forms.TextInput(attrs={
+                'class': 'django-patient-form'
+            }),
+            'fecha_nacimiento': forms.DateInput(attrs={
+                'type': 'date',
+                'class': 'django-patient-form'
+            }),
+            'telefono': forms.TextInput(attrs={
+                'class': 'django-patient-form'
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'django-patient-form'
+            }),
+            'acompanante': forms.TextInput(attrs={
+                'class': 'django-patient-form'
+            }),
+            'parentesco': forms.TextInput(attrs={
+                'class': 'django-patient-form'
+            }),
+            'telefono_acompanante': forms.TextInput(attrs={
+                'class': 'django-patient-form'
+            }),
             'ocupacion': forms.Select(
                 choices=OCUPACION_OPCIONES,
-                ),
-            'profesion': forms.TextInput(),
-            'seguridad_social': forms.TextInput(),
+                attrs={
+                'class': 'django-patient-form'
+            }),
+            'profesion': forms.TextInput(attrs={
+                'class': 'django-patient-form'
+            }),
+            'seguridad_social': forms.TextInput(attrs={
+                'class': 'django-patient-form'
+            }),
             'diagnostico': forms.Select(
                 choices=[get_diagnosis_options()],
-                ),
+                attrs={
+                'class': 'django-patient-form'
+            }),
             'motivo_consulta': forms.Textarea(attrs={
-                'rows': "3"
+                'rows': "3",
+                'class': 'django-patient-form'
             }),
             'cronologia_de_patologia': forms.Textarea(attrs={
-                'rows': "3"
+                'rows': "3",
+                'class': 'django-patient-form'
             }),
-            'actividad_fisica': forms.CheckboxInput(),
-            'tipo_actividad_fisica': forms.TextInput(),
+            'actividad_fisica': forms.CheckboxInput(attrs={
+                'class': 'django-patient-form'
+            }),
+            'tipo_actividad_fisica': forms.TextInput(attrs={
+                'class': 'django-patient-form'
+            }),
             'frecuencia_actividad_fisica': forms.Select(
-                choices=FRECUENCIA_ACTIVIDAD_FISICA_OPCIONES
-            ),
-            'conclusion': forms.Textarea(attrs={
-                'rows': "3"    
+                choices=FRECUENCIA_ACTIVIDAD_FISICA_OPCIONES,
+                attrs={
+                'class': 'django-patient-form'
             }),
-            'adjuntar_documento': forms.FileInput()
+            'conclusion': forms.Textarea(attrs={
+                'rows': "3",
+                'class': 'django-patient-form'    
+            }),
+            'adjuntar_documento': forms.FileInput(attrs={
+                'class': 'django-patient-form',
+            })
             
         }
 
@@ -66,6 +102,18 @@ class DiagnosticForm(forms.ModelForm):
     class Meta:
         model = Diagnostico
         fields = '__all__'
+        widgets = {
+            'code': forms.TextInput(
+                attrs={
+                    'class': 'django-diagnostic-form'
+                }
+            ),
+            'description': forms.TextInput(
+                attrs={
+                    'class': 'django-diagnostic-form'
+                }
+            )
+        }
         
 class EvolutionForm(forms.ModelForm):
     class Meta: 
@@ -74,13 +122,14 @@ class EvolutionForm(forms.ModelForm):
         widgets = {
             'paciente': forms.HiddenInput(
                 attrs={
-                    'class': 'form-control',
-                    'required': False
+                    'required': False,
+                    'class': 'django-evolution-form'
                 }
             ),
             'evolucion': forms.Textarea(
                 attrs={
-                    'class': 'form-control'
+                    'rows': '3',
+                    'class': 'django-evolution-form'
                 }
             )
         }
@@ -93,29 +142,27 @@ class TestForm(forms.ModelForm):
             'nombre': forms.TextInput(
                 attrs={
                     'id': 'id_test_nombre',
-                    'class': 'form-control',
+                    'class': 'django-test-form'
                 }
             ),
             'descripcion': forms.Textarea(
                 attrs={
-                    'class': 'form-control'
+                    'rows': '3',
+                    'id': 'id_test_descripcion',
+                    'class': 'django-test-form'
                 }
             ),
             'categoria': forms.Select(
                 choices=get_category_options(),
                 attrs={
-                    'class': 'form-control'
+                    'class': 'django-test-form'
                 }
             ),
-            'subcategoria': forms.TextInput(
-                attrs={
-                    'class': 'form-control'
-                }
-            ),
+            'subcategoria': forms.TextInput(),
             'tipo_resultado': forms.Select(
                 choices=TEST_RESPONSE_TYPE,
                 attrs={
-                    'class': 'form-control'
+                    'class': 'django-test-form'
                 }
             )
         }
@@ -128,18 +175,17 @@ class PatientTestForm(forms.ModelForm):
             'paciente': forms.HiddenInput(
                 attrs={
                     'required': False,
-                    'class': 'form-control'
+                    'class': 'django-patient-test-form'
                 }
             ),
             'test': forms.Select(
                 choices=get_test_options(),
                 attrs={
-                    'class': 'form-control'
+                    'class': 'django-patient-test-form'
                 }
             ),
-            'resultado': forms.Textarea(
-                attrs={
-                    'class': 'form-control'
-                }
-            )
+            'resultado': forms.Textarea(attrs={
+                'rows': '3',
+                'class': 'django-patient-test-form'
+            })
         }

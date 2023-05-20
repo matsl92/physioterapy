@@ -35,4 +35,56 @@ Fetch for diagnostic as well as selecting and adding in diagnostic options
 OTHER
 
 
+submitting fetch forms:
+
+The submitting function will check the specific fields. If they are valid, they 
+will be sumbitted. Otherwise, the first invalid related input will be highlighted
+
+
+Submitting Evolution
+
+There is only one field so it shouldn't be forgotten, therefore the required attribute 
+could be removed
+
+
+Submitting patient form
+
+Since this would be the last action, once the specific fields are validated, the 
+required attribute should be removed from all the other fields to allow the form to be 
+submitted
+
+
+
+
+
+function validateInputs('form-tag-class') {
+
+}
+
+get list of specific inputs
+
+check for an invalid input to execute the alert function over it
+
+    alert function:
+
+    select the message to be displayed  <---
+
+    add and remove classes to take the user to that specific section  <---
+
+    display message over the invalid input
+
+if not invalid input:
+
+    remove required attribute ---> not always 
+
+    submit --> break
+
+    
+
+
+
+
+form-tags should be something like django-patient-form
+
+In the backend I shouldn't take in to account fetch forms
 

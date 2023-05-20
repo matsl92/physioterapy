@@ -5,7 +5,7 @@ from django import template
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from .forms import PatientForm, DiagnosticForm, EvolutionForm, TestForm, PatientTestForm
-from .models import Paciente, Evolucion
+from .models import Paciente, Evolucion, PacienteTest
 import json
 
 @login_required
@@ -47,22 +47,23 @@ def example(request):
 
 def create_patient(request):
     if request.method == 'GET': 
-        patient_form = PatientForm()
-        diagnostic_form = DiagnosticForm()
-        evolution_form = EvolutionForm()
-        patient_test_form = PatientTestForm()
-        test_form = TestForm()
+        # patient_form = PatientForm()
+        # diagnostic_form = DiagnosticForm()
+        # evolution_form = EvolutionForm()
+        # patient_test_form = PatientTestForm()
+        # test_form = TestForm()
         context = {
             'segment': 'form', 
-            'patient_form': patient_form, 
-            'diagnostic_form': diagnostic_form,
-            'evolution_form': evolution_form,
-            'patient_test_form': patient_test_form,
-            'test_form': test_form,
+            'patient_form': PatientForm(), 
+            'diagnostic_form': DiagnosticForm(),
+            'evolution_form': EvolutionForm(),
+            'patient_test_form': PatientTestForm(),
+            'test_form': TestForm(),
             'evolution_records': None,
-            'js_variables': {'diagnostic_form': diagnostic_form}
+            'patient_tests': None,
         }
         return render(request, 'home/form.html', context)
+    
     if request.method == 'POST':
         patient_form = PatientForm(request.POST, request.FILES)
         if patient_form.is_valid():
@@ -89,16 +90,25 @@ def create_patient(request):
        
 def update_patient(request, id):
     patient = Paciente.objects.get(pk=id)
-    evolution_records = Evolucion.objects.filter(paciente__pk=id)
     if request.method == 'GET': 
         patient_form = PatientForm(instance=patient)
         evolution_form = EvolutionForm()
         context = {
-            'segment': 'form',
-            'patient_tests': '', 
-            'form': patient_form, 
-            'evolution_form': evolution_form,
-            'evolution_records': evolution_records
+            # 'segment': 'form',
+            # 'patient_tests': '', 
+            # 'form': patient_form, 
+            # 'evolution_form': evolution_form,
+            # 'evolution_records': evolution_records,
+            # 'patient_tests': PacienteTest.objects.filter(paciente=patient),
+            
+            'segment': 'form', 
+            'patient_form': PatientForm(instance=patient), 
+            'diagnostic_form': DiagnosticForm(),
+            'evolution_form': EvolutionForm(),
+            'patient_test_form': PatientTestForm(),
+            'test_form': TestForm(),
+            'evolution_records': Evolucion.objects.filter(paciente=patient),
+            'patient_tests': PacienteTest.objects.filter(paciente=patient)
         }
         return render(request, 'home/form.html', context)
     
