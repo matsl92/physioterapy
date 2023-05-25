@@ -1,5 +1,7 @@
 {% extends "layouts/base.html" %}
 
+{% load static %}
+
 {% block title %} Lista de pacientes {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
@@ -9,69 +11,88 @@
 
         <div class="row">
             <div class="col-md-12">
-              <div class="card card-plain">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title mt-0">Lista de pacientes</h4>
-                  <p class="card-category">Orden por nombre</p>
-                </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="table table-hover">
-                      <thead class="">
-                        <th>
-                            Cédula
-                        </th>
-                        <th>
-                            Nombre
-                        </th>
-                        <th>
-                            Apellidos
-                        </th>
-                        <th>
-                            Teléfono
-                        </th>
-                        <th>
-                            Última actualización
-                        </th>
-                        <th>
-                            Link
-                        </th>
-                      </thead>
-                      <tbody>
-                        {% for patient in object_list %}
-                        <tr>
-                            <td>
-                                {{ patient.cedula }}
-                            </td>
-                            <td>
-                                {{ patient.nombre }}
-                            </td>
-                            <td>
-                                {{ patient.apellidos }}
-                            </td>
-                            <td>
-                                {{ patient.telefono }}
-                            </td>
-                            <td>
-                                {{ patient.updated_at }}
-                            </td>
-                            <th>
-                                <a href={% url 'home:update_patient' patient.cedula %}>Ver</a>
-                            </th>
-                        </tr>
-                        {% endfor %}
+                <div class="card card-plain">
+                    <div class="card-header card-header-primary">
+                        <h4 class="card-title mt-0">Lista de pacientes</h4>
+                        <p class="card-category">Orden por nombre</p>
+                    </div>
+                    <div class="card-body patient-list-container">
+                        <div class="table-responsive">
 
+                            <div class="tab-content" id="pills-tabContent">
+                                {% comment %} <div class="tab-pane fade show active d-none" id="pills-100" role="tabpanel" aria-labelledby="pills-100-tab" tabindex="0"> {% endcomment %}
+                                  
+                                    <table class="table table-hover mb-0">
+                                        <thead>
+                                            <th>
+                                                Cédula
+                                            </th>
+                                            <th>
+                                                Nombre
+                                            </th>
+                                            <th>
+                                                Apellidos
+                                            </th>
+                                            <th>
+                                                Teléfono
+                                            </th>
+                                            <th>
+                                                Última actualización
+                                            </th>
+                                            <th>
+                                                Link
+                                            </th>
+                                        </thead>
 
-                        
-                      </tbody>
-                    </table>
-                  </div>
+                                    </table>
+                    
+                            
+                            </div>
+                            
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
         </div>
+
+
+
+        <nav id="paginate-navbar" class="" aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+
+            
+                </ul>
+            </ul>
+        </nav>
+
+
+
+        <div class="components d-none">
+
+            <li class="page-item arrow-paginator previous">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+
+            <li class="page-item arrow-paginator next">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+
+        </div>
+
+
 
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+<!-- Page specific JavaScript -->
+<script type="text/javascript" src={% static 'assets/js/patientList.js' %}></script>
+{% endblock javascripts %}

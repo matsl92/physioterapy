@@ -9,11 +9,15 @@ from .forms import PatientForm, DiagnosticForm, EvolutionForm, TestForm, Patient
 from .models import Patient, Evolution, PatientTest
 import json
 
+
+from bs4 import BeautifulSoup
+import requests
+from .models import Diagnostic
+
 @login_required
 def index(request):
     context = {'segment': 'index'}
     return render(request, 'home/index.html', context)
-
 
 @login_required
 def pages(request):
@@ -92,14 +96,13 @@ def create_patient(request):
                 errors.append({'patient_test_form': patient_test_form.errors.as_json()})
                 
             # return JsonResponse([msg, errors], safe=False)
-            return redirect('home:patient_list')
+            return redirect('home:patients')
         
         else:
             msg += "Patient form was't saved."
             # return JsonResponse([msg, patient_form.errors.as_json()], safe=False)
-            return redirect('home:patient_list')
-            
-       
+            return redirect('home:patients')
+                  
 def update_patient(request, id):
     patient = Patient.objects.get(pk=id)
     if request.method == 'GET': 
@@ -146,12 +149,12 @@ def update_patient(request, id):
                 errors.append({'patient_test_form': patient_test_form.errors.as_json()})
                 
             # return JsonResponse([msg, errors], safe=False)
-            return redirect('home:patient_list')
+            return redirect('home:patients')
         
         else:
             msg += "Patient form was't saved."
             # return JsonResponse([msg, patient_form.errors.as_json()], safe=False)
-            return redirect('home:patient_list')
+            return redirect('home:patients')
         
         
         # patient_form = PatientForm(request.POST, request.FILES, instance=patient)
@@ -206,4 +209,68 @@ def create_test(request):
             })
         else:
             return JsonResponse(test_form.errors.as_json(), safe=False)
+  
+def get_patient_list(request):
+    data = [
+        {
+            'cedula': patient.cedula,
+            'nombre': patient.nombre,
+            'apellidos': patient.apellidos,
+            'telefono': patient.telefono,
+            'updated_at': patient.updated_at
+        }
+    for patient in list(Patient.objects.all().order_by('-updated_at'))]
+    return JsonResponse(data, safe=False)   
+
+def populatate_database(request):
+    url = "https://es.wikipedia.org/wiki/Anexo:CIE-10_Cap%C3%ADtulo_XIII:_Enfermedades_del_sistema_osteomuscular_y_del_tejido_conectivo"
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, "html.parser")
+    content = soup.find("div",{"id":"mw-content-text"})
+    first_level_uls = [item for item in content.find_all("ul")]
+
+    all_second_level_lis = []
+    
+    for first_level_ul in first_level_uls:
+        if first_level_ul.find_all('li') is not None:
+
+            first_level_lis = [li for li in first_level_ul.find_all('li')]
+            for first_level_li in first_level_lis:
+                if first_level_li.find_all('ul') is not None:
+
+                    second_level_uls = [ul for ul in first_level_li.find_all('ul')]
+                    for second_level_ul in second_level_uls:
+                        if second_level_ul.find_all('li') is not None:
+
+                            second_level_lis = [li for li in second_level_ul.find_all('li')]
+                            for li in second_level_lis:
+                                all_second_level_lis.append(li)
+    
+    for li in all_second_level_lis:
+        string = li.get_text().strip()
+        chars = [char for char in string]
+        code = ''.join(chars[0:7]).strip('()')
+        description = ''.join(chars[7:]).strip()
         
+        diagnostic = Diagnostic.objects.create(
+            diagnostic_code=code, 
+            diagnostic_description=description, 
+            is_active=True
+        )
+
+        diagnostic.save()
+        
+    data = [
+        {
+            'code': diagnostic.diagnostic_code,
+            'description': diagnostic.diagnostic_description
+        }
+    for diagnostic in list(Diagnostic.objects.all())]
+    return JsonResponse(data, safe=False)
+        
+
+
+
+
+
+

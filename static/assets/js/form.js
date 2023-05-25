@@ -289,7 +289,26 @@ testFormSubmitter.addEventListener('click', (e) => {
     submitTestData();
 })
 
+// ----------------------------------- Search input ------------------------------------------
 
+
+// const diagnosticInput = document.querySelector('#id_diagnostico');
+
+// diagnosticInput.addEventListener('mousedown', (e) => {
+//     e.preventDefault();
+//     console.log('click!');
+//     diagnosticInput.value = ""
+// })
+
+const optionContainer = document.querySelector('.option-container ul');
+const options = optionContainer.querySelectorAll('li');
+const buttonText = document.querySelector('.select-search-wrapper div:nth-child(1) button div');
+options.forEach(li => {
+    li.addEventListener('click', (e) => {
+        console.log(e.target.textContent);
+        buttonText.textContent = e.target.textContent;
+    })
+})
 
 
 

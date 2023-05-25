@@ -12,7 +12,7 @@
         {% if request.user.is_authenticated %}
 
         <li class="nav-item {% if 'patient_list' in segment %} active {% endif %}">
-          <a class="nav-link" href={% url 'home:patient_list' %}>
+          <a class="nav-link" href={% url 'home:patients' %}>
             <i class="material-icons">person</i>
             <p>Lista de pacientes</p>
           </a>
