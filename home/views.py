@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.template import loader
 from django import template
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -13,6 +14,40 @@ import json
 from bs4 import BeautifulSoup
 import requests
 from .models import Diagnostic
+
+# def get_errors_with_format(errors):
+#     if len(errors.items()) > 0:
+#         error_msg = "ERRORES\n"
+#         for key, value in errors.items():
+#             error_msg += f"\n{key.capitalize().replace('_', ' ')}\n"
+#             for inner_key, inner_value in value.items():
+#                 error_msg += f"   Campo {inner_key}: "
+#                 field_errors = []
+#                 for err in inner_value:
+#                     field_errors.append(err.strip('.').casefold())
+#                 error_msg += f"{', '.join(field_errors).capitalize()}.\n"
+#         return error_msg
+#     else:
+#         return ""
+
+def get_errors_with_format(errors):
+    if len(errors.items()) > 0:
+        error_msg = "No se guardaron todos los campos. "
+        for key, value in errors.items():
+            error_msg += f"\n{key.capitalize().replace('_', ' ')}\n"
+            for inner_key, inner_value in value.items():
+                error_msg += f"   Campo {inner_key}: "
+                field_errors = []
+                for err in inner_value:
+                    field_errors.append(err.strip('.').casefold())
+                error_msg += f"{', '.join(field_errors).capitalize()}.\n"
+        return error_msg
+    else:
+        return ""
+   
+def get_messages_with_format(msgs):
+    normalized_messages = [msg.strip('.').casefold() for msg in msgs]
+    return f"{', '.join(normalized_messages).capitalize()}."
 
 @login_required
 def index(request):
@@ -50,6 +85,7 @@ def example(request):
     context['segment'] = 'example'
     return render(request, 'home/example.html', context)
 
+@login_required
 def create_patient(request):
     if request.method == 'GET': 
         context = {
@@ -67,42 +103,49 @@ def create_patient(request):
     
     if request.method == 'POST':
         patient_form = PatientForm(request.POST, request.FILES)
-        msg = ""
-        errors = []
+        msgs = []
+        errors = {}
         if patient_form.is_valid():
             patient = patient_form.save()
-            msg += "Patient form was saved."
+            msgs.append("Se guardó el nuevo paciente.")
             
-            evolution_form = EvolutionForm({
-                **request.POST.dict(),
-                **{'patient': patient}
-            })
-            if evolution_form.is_valid():
-                evolution_form.save()
-                
-            else:
-                msg += "Evolution form wasn't saved."
-                errors.append({'evolution_form': evolution_form.errors.as_json()})
+            if request.POST.get('evolution_record') != '':
+                evolution_form = EvolutionForm({
+                    **request.POST.dict(),
+                    **{'patient': patient}
+                })
+                if evolution_form.is_valid():
+                    evolution_form.save()
+                    msgs.append("Se añadió una evolución al paciente.")
+                else:
+                    errors['formulario_de_evolución'] = evolution_form.errors
             
-            patient_test_form = PatientTestForm({
-                **request.POST.dict(),
-                **{'patient': patient}
-            })
-            if patient_test_form.is_valid():
-                patient_test_form.save()
-                
-            else:
-                msg += "Patient test form wasn't saved."
-                errors.append({'patient_test_form': patient_test_form.errors.as_json()})
-                
-            # return JsonResponse([msg, errors], safe=False)
+            if request.POST.get('test') != '' or request.POST.get('result') != '':
+                patient_test_form = PatientTestForm({
+                    **request.POST.dict(),
+                    **{'patient': patient}
+                })
+                if patient_test_form.is_valid():
+                    patient_test_form.save()
+                    msgs.append("Se añadió un test al paciente.")
+                else:
+                    errors['formulario_de_test_del_paciente'] = patient_test_form.errors
+            
+            if len(errors.items()) > 0:
+                messages.warning(request, get_errors_with_format(errors))        
+                        
+            messages.success(request, get_messages_with_format(msgs))
             return redirect('home:patients')
         
         else:
-            msg += "Patient form was't saved."
-            # return JsonResponse([msg, patient_form.errors.as_json()], safe=False)
+            errors['formulario_de_paciente'] = patient_form.errors
+            msgs.append("No se guardó el nuevo paciente.")
+            messages.warning(request, get_messages_with_format(msgs))
+            messages.warning(request, get_errors_with_format(errors))
+            
             return redirect('home:patients')
-                  
+
+@login_required                  
 def update_patient(request, id):
     patient = Patient.objects.get(pk=id)
     if request.method == 'GET': 
@@ -120,59 +163,49 @@ def update_patient(request, id):
     
     if request.method == 'POST':
         patient_form = PatientForm(request.POST, request.FILES, instance=patient)
-        msg = ""
-        errors = []
+        msgs = []
+        errors = {}
         if patient_form.is_valid():
             patient = patient_form.save()
-            msg += "Patient form was saved."
+            msgs.append("Se actualizaron los datos del paciente.")
             
-            evolution_form = EvolutionForm({
-                **request.POST.dict(),
-                **{'patient': patient}
-            })
-            if evolution_form.is_valid():
-                evolution_form.save()
-                
-            else:
-                msg += "Evolution form wasn't saved."
-                errors.append({'evolution_form': evolution_form.errors.as_json()})
+            if request.POST.get('evolution_record') != '':
+                evolution_form = EvolutionForm({
+                    **request.POST.dict(),
+                    **{'patient': patient}
+                })
+                if evolution_form.is_valid():
+                    evolution_form.save()
+                    msgs.append("Se añadió una evolución al paciente.")
+                else:
+                    errors["Formulario_de_evolución: "] = evolution_form.errors
             
-            patient_test_form = PatientTestForm({
-                **request.POST.dict(),
-                **{'patient': patient}
-            })
-            if patient_test_form.is_valid():
-                patient_test_form.save()
+            if request.POST.get('test') != '' or request.POST.get('result') != '':
+                patient_test_form = PatientTestForm({
+                    **request.POST.dict(),
+                    **{'patient': patient}
+                })
+                if patient_test_form.is_valid():
+                    patient_test_form.save()
+                    msgs.append("Se añadió un test al paciente.")
+                else:
+                    errors["formulario_de_test:"] = patient_test_form.errors
+                    
+            if len(errors.items()) > 0:
+                messages.warning(request, get_errors_with_format(errors))
                 
-            else:
-                msg += "Patient test form wasn't saved."
-                errors.append({'patient_test_form': patient_test_form.errors.as_json()})
-                
-            # return JsonResponse([msg, errors], safe=False)
+            messages.success(request, get_messages_with_format(msgs))
             return redirect('home:patients')
         
         else:
-            msg += "Patient form was't saved."
-            # return JsonResponse([msg, patient_form.errors.as_json()], safe=False)
-            return redirect('home:patients')
-        
-        
-        # patient_form = PatientForm(request.POST, request.FILES, instance=patient)
-        # if patient_form.is_valid():
-        #     patient = patient_form.save()
-        #     evolution_form = EvolutionForm({**request.POST.dict(), **{'paciente': patient}})
-        #     if evolution_form.is_valid():
-        #         evolution_form.save()
-        #         return HttpResponse('Forms were saved.')
-        #     else:
-        #         return HttpResponse([
-        #             evolution_form.errors.as_json()
-        #         ])
-        # else:
-        #     return HttpResponse([
-        #         patient_form.errors.as_json()
-        #     ])
+            errors["formulario_de_paciente"] = patient_form.errors
+            msgs.append("No se actualizaron los datos del paciente.")
+            messages.warning(request, get_messages_with_format(msgs))
+            messages.warning(request, get_errors_with_format(errors))
             
+            return redirect('home:patients')
+
+@login_required            
 def patient_list(request):
     context = {
         'object_list': Patient.objects.all().order_by('nombre', 'apellidos'),
@@ -187,9 +220,8 @@ def create_diagnostic(request):
             diagnostic = diagnostic_form.save()
             return JsonResponse({
                 'id': diagnostic.id,
-                'diagnostic_code': diagnostic.diagnostic_code,
-                'diagnostic_description': diagnostic.diagnostic_description,
-                'is_active': diagnostic.is_active,
+                'code': diagnostic.diagnostic_code,
+                'description': diagnostic.diagnostic_description
             })
         else:
             return JsonResponse(diagnostic_form.errors.as_json(), safe=False)
@@ -221,6 +253,16 @@ def get_patient_list(request):
         }
     for patient in list(Patient.objects.all().order_by('-updated_at'))]
     return JsonResponse(data, safe=False)   
+
+def get_diagnosis_list(request):
+    return JsonResponse(
+        [{
+            'id': diagnosis.id,
+            'code': diagnosis.diagnostic_code,
+            'description': diagnosis.diagnostic_description
+        } for diagnosis in Diagnostic.objects.filter(is_active=True)],
+        safe=False
+    )
 
 def populatate_database(request):
     url = "https://es.wikipedia.org/wiki/Anexo:CIE-10_Cap%C3%ADtulo_XIII:_Enfermedades_del_sistema_osteomuscular_y_del_tejido_conectivo"

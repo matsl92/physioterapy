@@ -23,6 +23,8 @@ async function getPatients() {
 
 function populateTableBody(data) {
     const tableBody = document.createElement('tbody');
+    // const tableHead = document.getElementById('head-template').content.cloneNode(true);
+    console.log(tableHead);
 
     data.forEach(patient => {
         var row = document.createElement('tr');
@@ -52,6 +54,7 @@ function populateTableBody(data) {
     })
 
     const table = document.querySelector('table');
+    // table.appendChild(tableHead);
     table.appendChild(tableBody);
     
 }
@@ -64,6 +67,7 @@ function createPagination(data, totalPages) {
     
     // Iterate over the pages
     for (let page = 1; page <= totalPages; page++) {
+        const tableHead = document.getElementById('head-template').content.cloneNode(true);
 
         const tabPane = document.createElement('div');
         // const table = document.querySelector('table').cloneNode(true);
@@ -94,6 +98,7 @@ function createPagination(data, totalPages) {
             // Append the row to the table body
             tableBody.appendChild(row);
         });
+        table.appendChild(tableHead);
         table.appendChild(tableBody);
         tabPane.appendChild(table);
         tabPane.id = `pills-${page}`;

@@ -2,17 +2,21 @@ TO DO
 
 messages
 
-date format
-
 Organize sidebar
+
+Pagination controls
+
+include headers inside panes
 
 Remove useless elements
 
-Search bar for diagnostic
+Search bar for diagnostic select default
 
 
 
 DONE
+
+date format
 
 Table with diagnostic options
 
@@ -62,9 +66,22 @@ Fetch for diagnostic as well as selecting and adding in diagnostic options
 
 OTHER
 
+errors = {
+    "evolution_form": {
+        'evolution_record': ['Enter a valid email address.'], 
+        'created_at': ['This field is required.']
+    },
+    "patient_test_form": {
+        'test': ['Enter a valid email address.'], 
+        'result': ['This field is required.']
+    }
+}
 
-len all second level lis = 508
 
+Errores:
+
+    Evolution
+        Campo evolution record: This field is required
 
 submitting fetch forms:
 
@@ -123,62 +140,9 @@ provided for each object. Otherwise, It will divide the objects in groups of nPa
 objects each and create a pagination for those groups.
 
 
-containerH = 100vh-265px
-n = containerH//62.5px
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-MATEO SALAZAR
-Medellín | +57 3197012975 | mateoslb70@gmail.com
-PROFILE
-Committed and dedicated software developer with high attention to detail.
-I am looking for joining a team to work in a big and challenging project where I can apply my skills as well as develop new ones while working around people with even more knowledge and experience than I have.
-It is easy for me to teach and be taught, what makes teamwork something enjoyable for me. However, most of my experience comes from creating and developing apps on my own, hence, I have had to push myself to overcome any problem or error by myself.
-EMPLOYMENT HISTORY
-
-Feb, 2023 - Present	Backend developer  
-·	Developed the backend system of a lottery site. This application allows customers to select several numbers from a certain lottery’s remaining ones and pay through ePayco's gateway (API used). On the other hand, users can have multiple lotteries and customize all the details such as prices, number of tickets, etc.
-
-Jan, 2023 - Present	Backend developer  
-Built an e-commerce website which includes a CRUD management panel that was made with Django, and a main interface for the clients made with React. These two components interchange information through an API built upon Django Rest Framework.
-
-Sep, 2022 - Feb, 2023	Fullstack developer  
-·	Created and deployed app for scheduling appointments from scratch with Django, HTML5, CSS and Bootstrap. This app allows users to register with their phone number, add some personal information and book appointments after the time slots set by the owner.
-
-Oct, 2022 - Feb, 2023	Frontend developer  
-Recreated landing pages after some given photoshop designs using HTML5, CSS and Materialize mainly.
-
-Jul, 2020 - Nov 2020	Multitasking employee  
-Designed system for creating bills in no time by adding the customer products and its quantity, then the app took the price of each product from a modifiable table and returned the bill with all the details.
-
-TECNOLOGIES
-Python, JavaScript, Django, React, Git/GitHub, HTML, CSS, Bootstrap, scikit-learn, Pandas, NumPy.
-LANGUAGES
-English – C1 level 
-Spanish – Native speaker
-EDUCATION
-Jul 2019 – Dec 2022	Ingeniero biomédico, Medellín, Instituto Tecnológico metropolitano (ITM)
-Feb 2015 – Jun 2018	Maestro en música, Medellín, Universidad de Antioquia
-LINKS
-Linkedin	https://www.linkedin.com/in/mateo-salazar-46297622b
-GitHub	https://github.com/matsl92
-REFRENCES
-Camilo Henao	+57 3117437186 – camilohenaoalvarez@gmail.com
 

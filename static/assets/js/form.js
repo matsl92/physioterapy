@@ -209,16 +209,18 @@ async function submitDiagnosticData() {
             })
         });
         const data = await response.json();
-        const diagnosticSelection = document.getElementById('id_diagnostico');
-        var diagnosticOption = document.createElement('option');
-        diagnosticOption.value = data.id;
-        diagnosticOption.textContent = `${data.diagnostic_code} - ${data.diagnostic_description}`;
-        diagnosticSelection.appendChild(diagnosticOption);
-        diagnosticSelection.value = data.id;
+        diagnoses.push(data);
+        var option = document.createElement('li');
+        option.textContent = `${data.code} - ${data.description}`
+        option.addEventListener('click', () => selectDiagnostic(data.id));
+        optionContainer.appendChild(option);
+        console.log('data.id', data.id);
+        selectDiagnostic(data.id);
         diagnosticFormPage.classList.add('d-none');
         diagnosticHomePage.classList.remove('d-none');
         patientFormSubmitter.classList.remove('d-none');
         console.log(data);
+        return data;
     }
 }
 
@@ -230,15 +232,6 @@ async function submitTestData() {
         var category = document.getElementById('id_category').value;
         var subcategory = document.getElementById('id_subcategory').value;
         var resutlType = document.getElementById('id_result_type').value;
-        // var body = JSON.stringify({
-        //     nombre: name,
-        //     descripcion: description,
-        //     categoria: category, 
-        //     subcategoria: subcategory,
-        //     tipo_resultado: resutlType
-        // })
-
-        // console.log(body);
 
         const response = await fetch(`${proxyURL}/test/crear`, {
             method: 'POST',
@@ -291,39 +284,88 @@ testFormSubmitter.addEventListener('click', (e) => {
 
 // ----------------------------------- Search input ------------------------------------------
 
-
-// const diagnosticInput = document.querySelector('#id_diagnostico');
-
-// diagnosticInput.addEventListener('mousedown', (e) => {
-//     e.preventDefault();
-//     console.log('click!');
-//     diagnosticInput.value = ""
-// })
-
+const diagnoses = [];
 const optionContainer = document.querySelector('.option-container ul');
 const options = optionContainer.querySelectorAll('li');
-const buttonText = document.querySelector('.select-search-wrapper div:nth-child(1) button div');
-options.forEach(li => {
-    li.addEventListener('click', (e) => {
-        console.log(e.target.textContent);
-        buttonText.textContent = e.target.textContent;
+const searchInput = document.querySelector('.search-input');
+const selectDiagnosticButton = document.getElementById('diagnostic-select');
+const searchContainer = document.querySelector('.search-container');
+const svg = document.querySelector('.select-diagnostic button svg');
+const diagnosticInput = document.getElementById('id_diagnostico');
+const buttonText = document.querySelector('.select-diagnostic button div');
+
+
+async function getDiagnosisOptions() {
+    const response = await fetch(`${proxyURL}/diagnostico/lista`);
+    const data = await response.json();
+
+    diagnoses.length = 0;
+    data.forEach(diagnosis => {
+        diagnoses.push(diagnosis);
     })
+
+    optionContainer.innerHTML = '';
+    var option;
+    data.forEach(diagnosis => {
+        option = document.createElement('li');
+        option.textContent = `${diagnosis.code} - ${diagnosis.description}`;
+        option.addEventListener('click', () => selectDiagnostic(diagnosis.id))
+        optionContainer.appendChild(option);
+    })
+}
+
+function selectDiagnostic(id) {
+    const diagnosis = diagnoses.find(diagnosis => diagnosis.id == id);
+    if (diagnosis) {
+        console.log('previous value', diagnosticInput.value);
+        buttonText.textContent = diagnosis.description;
+        searchContainer.classList.remove('active');
+        svg.classList.remove('active');
+        console.log('id', diagnosis.id);
+        diagnosticInput.value = diagnosis.id;
+        console.log('value', diagnosticInput.value);
+    }
+}
+
+function filterAndAppendOptions(string) {
+    filteredOptions = diagnoses.filter(diagnosis => {
+        return diagnosis.description.toLowerCase().includes(string.toLowerCase()) || 
+        diagnosis.code.toLowerCase().includes(string.toLowerCase());
+    })
+    optionContainer.innerHTML = "";
+    var option;
+    filteredOptions.forEach(diagnosis => {
+        option = document.createElement('li');
+        option.textContent = `${diagnosis.code} - ${diagnosis.description}`;
+        option.addEventListener('click', () => selectDiagnostic(diagnosis.id))
+        optionContainer.appendChild(option);
+    })
+}
+
+async function setDiagnosisDefault() {
+    await getDiagnosisOptions();
+    console.log('diagnostic input value', diagnosticInput.value);
+    console.log('diagnoses length', diagnoses.length);
+    let diagnosis = diagnoses.find(diagnosis => diagnosis.id == diagnosticInput.value);
+    if (diagnosis) {
+        buttonText.textContent = diagnosis.description;
+    }
+    console.log('default diagnosis', diagnosis);
+    console.log('value', diagnosticInput.value);
+}
+
+searchInput.addEventListener('input', (e) => filterAndAppendOptions(e.target.value));
+selectDiagnosticButton.addEventListener('click', (e) => {
+    e.preventDefault()
+    svg.classList.toggle('active');
+    searchContainer.classList.toggle('active');
+})
+window.addEventListener('load', () => {
+    setDiagnosisDefault();
 })
 
-
-
-
-
-// // Tests
-// function buttonFunction() {
-//     const pageInputs = document.querySelectorAll('.django-patient-form, .django-test-form');
-//     pageInputs.forEach(input => {
-        
-//         console.log(input.name);
-//     })
-//     console.log(pageInputs.length);;    
-
-// }
-
-// const testButton = document.getElementById('test-button');
-// testButton.addEventListener('click', buttonFunction);
+testButton = document.getElementById('test-button');
+testButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    setDiagnosisDefault();
+})

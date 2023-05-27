@@ -4,9 +4,6 @@
 {% block content %}
 
   <div class="row">
-    {% comment %} <button id="test-button">test</button> {% endcomment %}
-    {% comment %} <div class="alert-danger">this is a danger notification</div> {% endcomment %}
-
     <div class="col-md-12">
       <div class="card">
         <div class="card-header card-header-primary">
@@ -81,9 +78,9 @@
                     <div class="col-md-4">
                       <div class="form-field">
                         <label for={{ patient_form.fecha_nacimiento.id_for_label }}>{{ patient_form.fecha_nacimiento.label }}</label>
-                        {{ patient_form.fecha_nacimiento }}
+                        <input type="date" name="fecha_nacimiento" id="id_fecha_nacimiento" required value={{ patient_form.fecha_nacimiento.value|date:"Y-m-d" }}>
+                        {% comment %} {{ patient_form.fecha_nacimiento }} {% endcomment %}
                       </div>
-                      <input type="date" value={{ patient_form.fecha_nacimiento.value }}>
                     </div>
       
                     <div class="col-md-4">
@@ -249,11 +246,26 @@
 
                       <div class="col-md-8">
                         <div class="row">
+                          <div class="col-md-12">
+                            <label for={{ patient_form.diagnostico.id_for_label }}>{{ patient_form.diagnostico.label }}</label>
+                            <div class="d-none">
+                              {{ patient_form.diagnostico }}
+                            </div>
+                            <button id="test-button">Test</button>
+                            {% comment %} <input type="hidden" name="diagnostico" id="id_diagnostico"> {% endcomment %}
+                          </div>
+                        </div>
+                        
+                        <div class="row">
 
                           <div class="col-md-10 col-sm-10 col-9">
-                            <div class="form-field">
-                              <label for={{ patient_form.diagnostico.id_for_label }}>{{ patient_form.diagnostico.label }}</label>
-                              {{ patient_form.diagnostico }}
+                            <div class="select-diagnostic">
+                              <button id="diagnostic-select">
+                                <div>Seleccionar</div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="15.6" height="15.6" viewBox="0 0 24 24">
+                                  <path d="M12 17.414L3.293 8.707l1.414-1.414L12 14.586l7.293-7.293 1.414 1.414L12 17.414z"/>
+                                </svg>
+                              </button>
                             </div>
                           </div>
     
@@ -270,14 +282,6 @@
                         <div class="row">
                           <div class="col-md-10 col-sm-10 col-9">
                             <div class="select-search-wrapper">
-                              <div>
-                                <button id="diagnostic-select">
-                                  <div>Seleccionar</div>
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
-                                    <path d="M12 17.414 3.293 8.707l1.414-1.414L12 14.586l7.293-7.293 1.414 1.414L12 17.414z"/>
-                                  </svg>
-                                </button>
-                              </div>
                               <div class="search-container">
                                 <div class="search-input-header">
                                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -289,13 +293,6 @@
                                 
                                 <div class="option-container">
                                   <ul>
-                                    <li>Hello motherfucker</li>
-                                    <li>Hello </li>
-                                    <li>Hello motherfucker Hello motherfucker Hello motherfucker</li>
-                                    <li>Hello motherfucker motherfucker motherfucker</li>
-                                    <li>Hello motherfucker motherfucker</li>
-                                    <li>Hello motherfucker</li>
-                                    <li>Hello motherfucker</li>
                                   </ul>
                                 </div>
                               </div>
@@ -380,11 +377,11 @@
                           {% for record in evolution_records %}
                           <div class="accordion-item">
                             <h2 class="accordion-header">
-                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapseOne">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-evolucion-{{ forloop.counter }}" aria-expanded="true" aria-controls="collapseOne">
                                 {{ record }}
                               </button>
                             </h2>
-                            <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                            <div id="collapse-evolucion-{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                               <div class="accordion-body">
                                 {{ record.evolution_record }}
                               </div>
@@ -464,11 +461,11 @@
                           {% for patient_test in patient_tests %}
                           <div class="accordion-item">
                             <h2 class="accordion-header">
-                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapseOne">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-test-{{ forloop.counter }}" aria-expanded="true" aria-controls="collapseOne">
                                 {{ patient_test }}
                               </button>
                             </h2>
-                            <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                            <div id="collapse-test-{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                               <div class="accordion-body">
                                 {{ patient_test.result }}
                               </div>
@@ -650,6 +647,27 @@
       </div>
     </div>
   </div>
+
+
+  {% comment %} <div data-notify="container" class="col-11 col-md-4 alert alert-danger 
+  alert-with-icon animated fadeInDown" role="alert" data-notify-position="top-left" 
+  style="display: inline-block; margin: 15px auto; position: fixed; 
+  transition: all 0.5s ease-in-out 0s; z-index: 1031; top:20px; left: 20px;">
+    <button type="button" aria-hidden="true" class="close" data-notify="dismiss" 
+    style="position: absolute; right: 10px; top: 50%; margin-top: -9px; z-index: 1033;">
+      <i class="material-icons">close</i>
+    </button>
+    <i data-notify="icon" class="material-icons" >add_alert</i>
+    <span data-notify="title"></span>
+    <span data-notify="message">
+      Welcome to
+      <b>material dashboard pro</b>
+      alright
+    </span>
+    <a href="#" target="blank" data-notify="url"></a>
+  </div> {% endcomment %}
+
+  
 
   
   

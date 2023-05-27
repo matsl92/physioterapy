@@ -22,11 +22,6 @@ def get_test_options():
 
 class PatientForm(forms.ModelForm):
     
-    # fecha_nacimiento = forms.DateField(
-    #     widget=forms.DateInput(attrs={'type': 'date', 'class': 'django-patient-form'}),
-    #     input_formats=['%Y-%m/%d']  # Specify the desired date format here
-    # )
-    
     class Meta:
         model = Patient
         fields = '__all__'
@@ -42,8 +37,7 @@ class PatientForm(forms.ModelForm):
             }),
             'fecha_nacimiento': forms.DateInput(attrs={
                 'type': 'date',
-                'class': 'django-patient-form',
-                'value': "2000-05-02",
+                'class': 'django-patient-form'
             }),
             'telefono': forms.TextInput(attrs={
                 'class': 'django-patient-form'
