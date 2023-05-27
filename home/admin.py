@@ -7,8 +7,16 @@ class EvolutionInline(admin.TabularInline):
     model = Evolution
     extra = 0
     
+class PatientTestInline(admin.TabularInline):
+    model = PatientTest
+    extra = 0
+    
+class TestInline(admin.TabularInline):
+    model = Test
+    extra = 0
+    
 class PatientAdmin(admin.ModelAdmin):
-    inlines = [EvolutionInline]
+    inlines = [EvolutionInline, PatientTestInline]
     fieldsets = (
         ('Datos demográficos', {
             'fields': (

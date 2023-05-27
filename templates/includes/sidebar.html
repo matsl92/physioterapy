@@ -1,11 +1,11 @@
 {% load static %}
-    <div class="sidebar" data-color="purple" data-background-color="white" data-image={% static "/assets/img/sidebar-1.jpg" %}>
+    <div class="sidebar" data-color="purple" data-background-color="white" data-image={% static "/assets/img/physiotherapy_sidebar_backgroud.jpg" %}>
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
         Tip 2: you can also add an image using data-image tag
       -->
       <div class="logo">
-        <a href={% url 'home:home' %} class="simple-text logo-normal">Inicio</a>
+        <a href={% url 'home:patients' %} class="simple-text logo-normal">Inicio</a>
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
@@ -13,8 +13,8 @@
 
         <li class="nav-item {% if 'patient_list' in segment %} active {% endif %}">
           <a class="nav-link" href={% url 'home:patients' %}>
-            <i class="material-icons">person</i>
-            <p>Lista de pacientes</p>
+            <i class="material-icons">people</i>
+            <p>Pacientes</p>
           </a>
         </li>
         <li class="nav-item {% if 'form' in segment %} active {% endif %}">
@@ -23,7 +23,8 @@
             <p>Añadir paciente</p>
           </a>
         </li>
-          <li class="nav-item {% if 'index' in segment %} active {% endif %}">
+
+          {% comment %} <li class="nav-item {% if 'index' in segment %} active {% endif %}">
             <a class="nav-link" href="/">
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
@@ -58,22 +59,24 @@
               <i class="material-icons">notifications</i>
               <p>Notifications</p>
             </a>
-          </li>
-          {% comment %} <li class="nav-item ">
+          </li> {% endcomment %}
+
+
+          <li class="nav-item active-pro">
             <a class="nav-link" href="{% url 'authentication:logout' %}" >
               <i class="material-icons">directions_run</i>
               <p>Logout</p>
             </a>
-          </li> {% endcomment %}
+          </li>
 
-          <li class="nav-item active-pro ">
+          {% comment %} <li class="nav-item active-pro ">
             <a class="nav-link" 
                target="_blank" rel="noopener noreferrer"  
                href="https://appseed.us/admin-dashboards/django-dashboard-material-pro">
               <i class="material-icons">unarchive</i>
               <p>PRO Version</p>
             </a>
-          </li>
+          </li> {% endcomment %}
 
         {% else %}
 

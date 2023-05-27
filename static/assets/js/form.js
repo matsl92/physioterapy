@@ -12,10 +12,15 @@ const testHomePage = document.querySelector('#test-home-page');
 const patientTestFormPage = document.querySelector('#patient-test-form-page');
 const testFormPage = document.querySelector('#test-form-page');
 
+// Items
+
+const pillControllers = document.querySelectorAll('#pills-tab.nav.nav-pills .nav-item .nav-link');
+
 // Displayers
 const diagnosticFormDisplayer = document.getElementById('diagnostic-form-displayer');
 diagnosticFormDisplayer.addEventListener('click', (e) => {
     e.preventDefault();
+    disablePillControllers()
     patientFormSubmitter.classList.add('d-none');
     diagnosticHomePage.classList.add('d-none');
     diagnosticFormPage.classList.remove('d-none');
@@ -38,6 +43,7 @@ patientTestFormDisplayer.addEventListener('click', (e) =>{
 const testFormDisplayer = document.getElementById('test-form-displayer');
 testFormDisplayer.addEventListener('click', (e) => {
     e.preventDefault();
+    disablePillControllers()
     patientFormSubmitter.classList.add('d-none');
     patientTestFormPage.classList.add('d-none');
     testFormPage.classList.remove('d-none');
@@ -47,14 +53,17 @@ testFormDisplayer.addEventListener('click', (e) => {
 const diagnosticFormHider = document.getElementById('diagnostic-form-hider');
 diagnosticFormHider.addEventListener('click', (e) => {
     e.preventDefault();
+    clearMarkedFields('.django-diagnostic-form');
     diagnosticFormPage.classList.add('d-none');
     diagnosticHomePage.classList.remove('d-none');
     patientFormSubmitter.classList.remove('d-none');
+    enablePillControllers();
 })
 
 const evolutionFormHider = document.getElementById('evolution-form-hider');
 evolutionFormHider.addEventListener('click', (e) => {
     e.preventDefault();
+    clearMarkedFields('.django-evolution-form');
     evolutionFormPage.classList.add('d-none');
     evolutionHomePage.classList.remove('d-none')
 })
@@ -62,6 +71,7 @@ evolutionFormHider.addEventListener('click', (e) => {
 const patientTestFormHider = document.getElementById('patient-test-form-hider');
 patientTestFormHider.addEventListener('click', (e) => {
     e.preventDefault();
+    clearMarkedFields('.django-patient-test-form');
     patientTestFormPage.classList.add('d-none');
     testHomePage.classList.remove('d-none');
 })
@@ -69,9 +79,11 @@ patientTestFormHider.addEventListener('click', (e) => {
 const testFormHider = document.getElementById('test-form-hider');
 testFormHider.addEventListener('click', (e) => {
     e.preventDefault();
+    clearMarkedFields('.django-test-form');
     testFormPage.classList.add('d-none');
     patientTestFormPage.classList.remove('d-none');
     patientFormSubmitter.classList.remove('d-none');
+    enablePillControllers();
 })
 
 // functions related to input validation
@@ -192,6 +204,7 @@ function submitMainForm() {
 async function submitDiagnosticData() {
 
     if (validateMarkedInputs('.django-diagnostic-form')) {
+        enablePillControllers();
         var code = document.getElementById('id_diagnostic_code').value;
         var description = document.getElementById('id_diagnostic_description').value;
 
@@ -220,6 +233,7 @@ async function submitDiagnosticData() {
         diagnosticHomePage.classList.remove('d-none');
         patientFormSubmitter.classList.remove('d-none');
         console.log(data);
+        clearMarkedFields('.django-diagnostic-form');
         return data;
     }
 }
@@ -227,6 +241,7 @@ async function submitDiagnosticData() {
 async function submitTestData() {
 
     if (validateMarkedInputs('.django-test-form')) {
+        enablePillControllers();
         var name = document.getElementById('id_test_name').value;
         var description = document.getElementById('id_test_description').value;
         var category = document.getElementById('id_category').value;
@@ -258,6 +273,7 @@ async function submitTestData() {
         testFormPage.classList.add('d-none');
         patientTestFormPage.classList.remove('d-none');
         patientFormSubmitter.classList.remove('d-none');
+        clearMarkedFields('.django-test-form');
         console.log(data);
     }
     
@@ -281,6 +297,35 @@ testFormSubmitter.addEventListener('click', (e) => {
     e.preventDefault()
     submitTestData();
 })
+
+// Other functions
+
+function disablePillControllers() {
+    pillControllers.forEach(controller => {
+        controller.classList.add('disabled');
+    }) 
+}
+
+function enablePillControllers() {
+    pillControllers.forEach(controller => {
+        controller.classList.remove('disabled');
+    }) 
+}
+
+function clearMarkedFields(formLabel) {
+    const fields = document.querySelectorAll(formLabel);
+    fields.forEach(field => {
+        field.value = ""
+    })
+}
+
+
+
+
+
+
+
+
 
 // ----------------------------------- Search input ------------------------------------------
 

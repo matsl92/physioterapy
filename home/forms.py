@@ -187,14 +187,9 @@ class TestForm(forms.ModelForm):    # Fetch
             'result_type': forms.Select(
                 choices=TEST_RESPONSE_TYPE,
                 attrs={
-                    'class': 'django-test-form'
+                    'class': 'django-test-form',
+                    'required': True
                 }
             )
         }
-
-# class PatientForm(forms.ModelForm):
-#     fecha_nacimiento = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), input_formats=['%Y-%m-%d'])
-
-#     class Meta:
-#         model = Patient
-#         fields = '__all__'
+        

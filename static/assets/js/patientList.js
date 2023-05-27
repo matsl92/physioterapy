@@ -1,12 +1,24 @@
+let headerHeight;
 let rowHeight;
-if (window.innerWidth > 586) {
+if (window.innerWidth > 606) {
     rowHeight = 46;
+    headerHeight = 50;
 } else {
     rowHeight = 67;
+    headerHeight = 75.5;
 }
 
-const nPatientPerPage = Math.floor((window.innerHeight - 265 - 50 - 24 - 30 - 16) / rowHeight);
-//                                                            head pad  mar mar table   66.5
+const pad = 15; // padding card-body
+// const headers = 30; // total height of the table header
+const cardBodyHeight = window.innerHeight - 265;
+// console.log(cardBodyHeight);
+const availableHeight = cardBodyHeight - pad - headerHeight;
+
+const nPatientPerPage = availableHeight >= rowHeight ? Math.floor(availableHeight / rowHeight) : 1
+
+// const nPatientPerPage = Math.floor((window.innerHeight - 265 - 30 - 24 - 30 - 16) / rowHeight) || 1;
+//                                                      head  pad  mar  mar table     66.5
+//                                                             50     
 const proxyURL = 'http://127.0.0.1:8000';
 
 async function getPatients() {
@@ -23,8 +35,7 @@ async function getPatients() {
 
 function populateTableBody(data) {
     const tableBody = document.createElement('tbody');
-    // const tableHead = document.getElementById('head-template').content.cloneNode(true);
-    console.log(tableHead);
+    const tableHead = document.getElementById('head-template').content.cloneNode(true);
 
     data.forEach(patient => {
         var row = document.createElement('tr');
@@ -43,18 +54,14 @@ function populateTableBody(data) {
         var updated_at = document.createElement('td');
         updated_at.textContent = patient.updated_at;
         row.appendChild(updated_at);
-
         var view = document.createElement('td');
-        var link = document.createElement('a');
-        link.textContent = "Ver";
-        link.href = `/paciente/actualizar/${patient.cedula}`
-        view.textContent = link;
+        view.innerHTML = `<a href="/paciente/actualizar/${patient.cedula}">Ver</a>`;
         row.appendChild(view);
         tableBody.appendChild(row);
     })
 
     const table = document.querySelector('table');
-    // table.appendChild(tableHead);
+    table.appendChild(tableHead);
     table.appendChild(tableBody);
     
 }

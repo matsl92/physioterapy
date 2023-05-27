@@ -35,34 +35,10 @@
 <body class="">
   <div class="wrapper ">
 
-
     <!-- Messages -->
+    {% include 'includes/messages.html' %}
 
-    {% if messages %}
-
-      {% for message in messages %}
-      <div data-notify="container" class="col-11 col-md-4 alert {% if message.tags %} alert-{{message.tags}} {% endif %} 
-      alert-with-icon animated fadeInDown" role="alert" data-notify-position="top-center" 
-      style="display: inline-block; margin: 15px auto; position: absolute; 
-      transition: all 0.5s ease-in-out 0s; z-index: 1031; top: 20px; left: 0px; right: 0px;">
-        <button type="button" aria-hidden="true" class="close" data-notify="dismiss" 
-        style="position: absolute; right: 10px; top: 50%; margin-top: -9px; z-index: 1033;">
-          <i class="material-icons">close</i>
-        </button>
-        <i data-notify="icon" class="material-icons">add_alert</i>
-        <span data-notify="title"></span> 
-        <span data-notify="message">
-          {% autoescape off %}
-          {{ message }}
-          {% endautoescape %}
-        </span>
-        <a href="#" target="_blank" data-notify="url"></a>
-      </div>
-      {% endfor %}
-
-      <script src={% static 'assets/js/messages.js' %}></script>
-    {% endif %}
-
+    <!-- Sidebar -->
     {% include 'includes/sidebar.html' %}
 
     <div class="main-panel">
@@ -81,12 +57,12 @@
         </div>
       </div>
 
-      {% include 'includes/footer.html' %}
+      {% comment %} {% include 'includes/footer.html' %} {% endcomment %}
 
     </div>
   </div>
 
-  {% include 'includes/fixed-plugin.html' %}
+  {% comment %} {% include 'includes/fixed-plugin.html' %} {% endcomment %}
 
   {% include 'includes/scripts.html' %}
 

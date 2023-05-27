@@ -1,20 +1,21 @@
 TO DO
 
-messages
-
-Organize sidebar
-
 Pagination controls
-
-include headers inside panes
-
-Remove useless elements
 
 Search bar for diagnostic select default
 
 
-
 DONE
+
+Remove useless elements
+
+Organize sidebar
+
+messages
+
+Patient list is not displayed in a single page, issue with 0
+
+include headers inside panes
 
 date format
 
@@ -42,102 +43,19 @@ Finish evolution section and go on to tests
 
 Specify a height for the patient form 
 
-Diagnostic
-
-    select 
-
-    create
-
-
-Evolucion    optional
-
-    create  display form
-
-
-Patient Test         optional
-
-    create  display form
-
-    select and create
-
-    create and create
-
 Fetch for diagnostic as well as selecting and adding in diagnostic options
+
 
 OTHER
 
-errors = {
-    "evolution_form": {
-        'evolution_record': ['Enter a valid email address.'], 
-        'created_at': ['This field is required.']
-    },
-    "patient_test_form": {
-        'test': ['Enter a valid email address.'], 
-        'result': ['This field is required.']
-    }
-}
-
-
-Errores:
-
-    Evolution
-        Campo evolution record: This field is required
-
-submitting fetch forms:
-
-The submitting function will check the specific fields. If they are valid, they 
-will be sumbitted. Otherwise, the first invalid related input will be highlighted
-
-
-Submitting Evolution
-
-There is only one field so it shouldn't be forgotten, therefore the required attribute 
-could be removed
-
-
-Submitting patient form
-
-Since this would be the last action, once the specific fields are validated, the 
-required attribute should be removed from all the other fields to allow the form to be 
-submitted
 
 
 
 
 
-function validateInputs('form-tag-class') {
 
-}
 
-get list of specific inputs
 
-check for an invalid input to execute the alert function over it
-
-    alert function:
-
-    select the message to be displayed  <---
-
-    add and remove classes to take the user to that specific section  <---
-
-    display message over the invalid input
-
-if not invalid input:
-
-    remove required attribute ---> not always 
-
-    submit --> break
-
-    
-
-In the backend I shouldn't take in to account fetch forms
-
-Take this django html template and provide a JavaScript code which does the following:
-1. fetch a list of objects from "http://127.0.0.1:8000/patient/list".
-2. Given a nPatientPerPage variable which will be an integer number; if the length of 
-the object list doesn't exceed this number, it will populate the tbody element with  
-all the objects in the list using the comented structure in the Django html previously 
-provided for each object. Otherwise, It will divide the objects in groups of nPatientPerPage 
-objects each and create a pagination for those groups.
 
 
 

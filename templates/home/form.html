@@ -7,8 +7,8 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header card-header-primary">
-          <h4 class="card-title">Historia clínica</h4>
-          <p class="card-category">Completa la historia clínica</p>
+          <h4 class="card-title">Formulario del paciente</h4>
+          <p class="card-category">...</p>
         </div>
         <div class="card-body main-card">
 
@@ -78,8 +78,7 @@
                     <div class="col-md-4">
                       <div class="form-field">
                         <label for={{ patient_form.fecha_nacimiento.id_for_label }}>{{ patient_form.fecha_nacimiento.label }}</label>
-                        <input type="date" name="fecha_nacimiento" id="id_fecha_nacimiento" required value={{ patient_form.fecha_nacimiento.value|date:"Y-m-d" }}>
-                        {% comment %} {{ patient_form.fecha_nacimiento }} {% endcomment %}
+                        <input type="date" name="fecha_nacimiento" id="id_fecha_nacimiento" class="django-patient-form" required value={{ patient_form.fecha_nacimiento.value|date:"Y-m-d" }}>
                       </div>
                     </div>
       

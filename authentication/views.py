@@ -16,11 +16,11 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect("home:home")
+                return redirect("home:patients")
             else:
-                msg = 'Invalid credentials'
+                msg = 'Credenciales inválidas'
         else:
-            msg = 'Error validating the form'
+            msg = 'Error al validar los datos'
 
     return render(request, "accounts/login.html", {"form": form, "msg": msg})
 

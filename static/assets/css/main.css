@@ -11,13 +11,13 @@
     position: relative;
 }
 
+.card-body.patient-list-container {
+    padding-bottom: 0;
+}
+
 .tab-content {
     height: 100%;
 }
-
-/* .card-body form .tab-pane {
-    color: aliceblue;
-} */
 
 .form-section-container {
     display: flex;
@@ -64,7 +64,6 @@
 .fetch-form .card-body {
     display: flex;
     flex-direction: column;
-    /* height: 30vh; */
 }
 
 #diagnostic-form-page {
@@ -305,15 +304,6 @@ input[type="file"] {
     background: #b3b3b3;
   }
 
-
-/* .select-search-wrapper ul {
-    list-style-type: none;
-} */
-
-/* .select-search-wrapper  li {
-    text-decoration: none;
-} */
-
 /*--------------------------- Patient list -----------------------------*/
 
 .frame {
@@ -323,5 +313,6 @@ input[type="file"] {
 }
 
 .patient-list-container {
-    min-height: calc(100vh - 265px);
+    /* min-height: calc(100vh - 265px); */
+    height: calc(100vh - 265px);
 }
