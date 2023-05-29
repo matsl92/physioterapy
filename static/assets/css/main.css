@@ -66,7 +66,7 @@
     flex-direction: column;
 }
 
-#diagnostic-form-page {
+#diagnosis-form-page {
     height: 40vh;
 }
 
@@ -103,6 +103,10 @@ button.success {
     position: absolute;
     bottom: 0;
     left: 14px;
+}
+
+button[name="login"] {
+    text-transform: none;
 }
 
 .form-field {
@@ -211,7 +215,7 @@ input[type="file"] {
 
 /*--------------------------- Search input -----------------------------*/
 
-.select-diagnostic button {
+.select-diagnosis button {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -222,7 +226,7 @@ input[type="file"] {
     height: 40px;
 }
 
-.select-diagnostic button div {
+.select-diagnosis button div {
     padding-left: 7px;
     width: calc(100% - 10px);
     white-space: nowrap;
@@ -231,11 +235,11 @@ input[type="file"] {
     text-align: start;
 }
 
-.select-diagnostic button svg {
+.select-diagnosis button svg {
     transition: .3s;
 }
 
-.select-diagnostic button svg.active {
+.select-diagnosis button svg.active {
     transform: rotate(180deg);
 }
 

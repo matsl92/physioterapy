@@ -6,14 +6,19 @@ from django.template import loader
 from django import template
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
-from .forms import PatientForm, DiagnosticForm, EvolutionForm, TestForm, PatientTestForm
+from .forms import PatientForm, DiagnosisForm, EvolutionForm, TestForm, PatientTestForm
 from .models import Patient, Evolution, PatientTest
 import json
+import os
+from dotenv import load_dotenv
 
 # For web scraping. Used in populate_database view.
 from bs4 import BeautifulSoup
 import requests
-from .models import Diagnostic
+from .models import Diagnosis
+
+load_dotenv()
+root_url = os.getenv('ROOT_URL')
 
 
 # Functions
@@ -72,12 +77,13 @@ def create_patient(request):
         context = {
             'segment': 'form', 
             'patient_form': PatientForm(), 
-            'diagnostic_form': DiagnosticForm(),
+            'diagnosis_form': DiagnosisForm(),
             'evolution_form': EvolutionForm(),
             'patient_test_form': PatientTestForm(),
             'test_form': TestForm(),
             'evolution_records': None,
             'patient_tests': None,
+            'js_variables': {'root_url': root_url}
         }
         
         return render(request, 'home/form.html', context)
@@ -134,12 +140,13 @@ def update_patient(request, id):
             'patient_id': id,
             'segment': 'form', 
             'patient_form': PatientForm(instance=patient), 
-            'diagnostic_form': DiagnosticForm(),
+            'diagnosis_form': DiagnosisForm(),
             'evolution_form': EvolutionForm(),
             'patient_test_form': PatientTestForm(),
             'test_form': TestForm(),
             'evolution_records': Evolution.objects.filter(patient=patient),
-            'patient_tests': PatientTest.objects.filter(patient=patient)
+            'patient_tests': PatientTest.objects.filter(patient=patient),
+            'js_variables': {'root_url': root_url}
         }
         return render(request, 'home/form.html', context)
     
@@ -191,23 +198,24 @@ def update_patient(request, id):
 def patient_list(request):
     context = {
         'object_list': len(Patient.objects.all()) != 0,
-        'segment': 'patient_list'
+        'segment': 'patient_list',
+        'js_variables': {'root_url': root_url}
     }
     return render(request, 'home/patient_list.html', context)
 
 # APIs
-def create_diagnostic(request):
+def create_diagnosis(request):
     if request.method == 'POST':
-        diagnostic_form = DiagnosticForm(json.loads(request.body.decode('utf-8')))
-        if diagnostic_form.is_valid():
-            diagnostic = diagnostic_form.save()
+        diagnosis_form = DiagnosisForm(json.loads(request.body.decode('utf-8')))
+        if diagnosis_form.is_valid():
+            diagnosis = diagnosis_form.save()
             return JsonResponse({
-                'id': diagnostic.id,
-                'code': diagnostic.diagnostic_code,
-                'description': diagnostic.diagnostic_description
+                'id': diagnosis.id,
+                'code': diagnosis.diagnosis_code,
+                'description': diagnosis.diagnosis_description
             })
         else:
-            return JsonResponse(diagnostic_form.errors.as_json(), safe=False)
+            return JsonResponse(diagnosis_form.errors.as_json(), safe=False)
         
 def create_test(request):
     if request.method == 'POST':
@@ -248,9 +256,9 @@ def get_diagnosis_list(request):
     return JsonResponse(
         [{
             'id': diagnosis.id,
-            'code': diagnosis.diagnostic_code,
-            'description': diagnosis.diagnostic_description
-        } for diagnosis in Diagnostic.objects.filter(is_active=True)],
+            'code': diagnosis.diagnosis_code,
+            'description': diagnosis.diagnosis_description
+        } for diagnosis in Diagnosis.objects.filter(is_active=True)],
         safe=False
     )
 
@@ -284,20 +292,20 @@ def populatate_database(request):
         code = ''.join(chars[0:7]).strip('()')
         description = ''.join(chars[7:]).strip()
         
-        diagnostic = Diagnostic.objects.create(
-            diagnostic_code=code, 
-            diagnostic_description=description, 
+        diagnosis = Diagnosis.objects.create(
+            diagnosis_code=code, 
+            diagnosis_description=description, 
             is_active=True
         )
 
-        diagnostic.save()
+        diagnosis.save()
         
     data = [
         {
-            'code': diagnostic.diagnostic_code,
-            'description': diagnostic.diagnostic_description
+            'code': diagnosis.diagnosis_code,
+            'description': diagnosis.diagnosis_description
         }
-    for diagnostic in list(Diagnostic.objects.all())]
+    for diagnosis in list(Diagnosis.objects.all())]
     return JsonResponse(data, safe=False)
         
 

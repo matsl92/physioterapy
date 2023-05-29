@@ -25,19 +25,19 @@ TEST_RESPONSE_TYPE = [
     ('bool','Campo positivo o negativo'),
 ]
 
-class Diagnostic(models.Model):
-    diagnostic_code = models.CharField('código', max_length=20)
-    diagnostic_description = models.CharField('descripción', max_length=200)
+class Diagnosis(models.Model):
+    diagnosis_code = models.CharField('código', max_length=20)
+    diagnosis_description = models.CharField('descripción', max_length=200)
     created_at = models.DateField('fecha de creación', auto_now_add=True)
     is_active = models.BooleanField('activo', default=True)
     
     """
-    foranea a diagnostico
+    foranea a diagnosiso
     activo bool mostrar solo activos
     """
     
     def __str__(self):
-        return f"{self.diagnostic_code} - {self.diagnostic_description}"
+        return f"{self.diagnosis_code} - {self.diagnosis_description}"
     
     class Meta:
         verbose_name = 'Diagnóstico médico'
@@ -58,7 +58,7 @@ class Patient(models.Model):
     ocupacion = models.CharField('ocupación', max_length=60, choices = OCUPACION_OPCIONES)
     profesion = models.CharField('profesión', max_length=120, blank=True, null=True)
     seguridad_social = models.CharField(max_length=240)
-    diagnostico = models.ForeignKey(Diagnostic, on_delete=models.SET_DEFAULT, default=None, blank=True, null=True, verbose_name='diagnóstico médico')
+    diagnosiso = models.ForeignKey(Diagnosis, on_delete=models.SET_DEFAULT, default=None, blank=True, null=True, verbose_name='diagnóstico médico')
     motivo_consulta = models.TextField('motivo de consulta')
     cronologia_de_patologia = models.TextField('cronología de la patología')
     actividad_fisica = models.BooleanField('actividad física', default = False)

@@ -1,7 +1,5 @@
 TO DO
 
-dotenv
-
 Archivo adjunto
 
     Created at
@@ -10,23 +8,30 @@ Archivo adjunto
 
     Muestra lista y añadir
 
-PatientDiagnostic
+PatientDiagnosis
 
     patient
     created_at
     diagnosis
 
+Test 
 
-LOGIN MINUSCULA
+    help text for description
 
-ELIMINAR danger outline
+Delete confirmation dialog
+
+ELIMINAR with danger outline class
 
 Pagination controls
 
-Search bar for diagnostic select default
+Search bar for diagnosis select default
 
 
 DONE
+
+LOGIN MINUSCULA
+
+dotenv
 
 Remove useless elements
 
@@ -40,7 +45,7 @@ include headers inside panes
 
 date format
 
-Table with diagnostic options
+Table with diagnosis options
 
 Translated models and add unique names to the fields so they won't be miss recognized
 
@@ -64,13 +69,13 @@ Finish evolution section and go on to tests
 
 Specify a height for the patient form 
 
-Fetch for diagnostic as well as selecting and adding in diagnostic options
+Fetch for diagnosis as well as selecting and adding in diagnosis options
 
 
 OTHER
 
 
-Correct translation from Diagnostic to diagnosis
+
 
 
 

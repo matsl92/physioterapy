@@ -1,7 +1,7 @@
 from django import forms
 from .models import (
     Patient,
-    Diagnostic,
+    Diagnosis,
     Evolution,
     Test,
     PatientTest,
@@ -12,7 +12,7 @@ from .models import (
 )
 
 def get_diagnosis_options():
-    return Diagnostic.objects.filter(is_active = True)
+    return Diagnosis.objects.filter(is_active = True)
 
 def get_category_options():
     return Category.objects.all()
@@ -65,7 +65,7 @@ class PatientForm(forms.ModelForm):
             'seguridad_social': forms.TextInput(attrs={
                 'class': 'django-patient-form'
             }),
-            'diagnostico': forms.Select(
+            'diagnosiso': forms.Select(
                 choices=[get_diagnosis_options()],
                 attrs={
                 'class': 'django-patient-form'
@@ -99,19 +99,19 @@ class PatientForm(forms.ModelForm):
             
         }
 
-class DiagnosticForm(forms.ModelForm):  # Fetch
+class DiagnosisForm(forms.ModelForm):  # Fetch
     class Meta:
-        model = Diagnostic
+        model = Diagnosis
         fields = '__all__'
         widgets = {
-            'diagnostic_code': forms.TextInput(
+            'diagnosis_code': forms.TextInput(
                 attrs={
-                    'class': 'django-diagnostic-form'
+                    'class': 'django-diagnosis-form'
                 }
             ),
-            'diagnostic_description': forms.TextInput(
+            'diagnosis_description': forms.TextInput(
                 attrs={
-                    'class': 'django-diagnostic-form'
+                    'class': 'django-diagnosis-form'
                 }
             )
         }

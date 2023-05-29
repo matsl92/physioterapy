@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import (Category, Patient, Test, PatientTest, 
-                     Evolution, Diagnostic
+                     Evolution, Diagnosis
 )
 
 class EvolutionInline(admin.TabularInline):
@@ -9,10 +9,6 @@ class EvolutionInline(admin.TabularInline):
     
 class PatientTestInline(admin.TabularInline):
     model = PatientTest
-    extra = 0
-    
-class TestInline(admin.TabularInline):
-    model = Test
     extra = 0
     
 class PatientAdmin(admin.ModelAdmin):
@@ -47,7 +43,7 @@ class PatientAdmin(admin.ModelAdmin):
             'classes': ['collapse']
         }),
         ('Historia clínica', {'fields': (
-            'diagnostico', 
+            'diagnosiso', 
             'motivo_consulta', 
             'cronologia_de_patologia', 
             'conclusion',
@@ -56,6 +52,6 @@ class PatientAdmin(admin.ModelAdmin):
             'classes': ['collapse']
         })
     )
-    
+
 admin.site.register(Patient, PatientAdmin)
-admin.site.register([Category, Test, PatientTest, Evolution, Diagnostic])
+admin.site.register([Category, Test, PatientTest, Evolution, Diagnosis])
