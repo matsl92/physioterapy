@@ -1,5 +1,8 @@
-const proxyURL = 'http://127.0.0.1:8000';
+// const proxyURL = 'http://127.0.0.1:8000';
+const proxyURL = 'https://ed9b-152-203-118-196.ngrok-free.app';
 const CSRFToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+const url = window.location.href;
+console.log(url.split('/')[url.split('/').length-1]);
 
 // Containers
 const diagnosticHomePage = document.querySelector('#diagnostic-home-page');
@@ -298,6 +301,14 @@ testFormSubmitter.addEventListener('click', (e) => {
     submitTestData();
 })
 
+const patientDeleter = document.getElementById('patient-deleter');
+if (patientDeleter) {
+    patientDeleter.addEventListener('click', async () => {
+        fetch(`${proxyURL}/paciente/eliminar/${url.split('/')[url.split('/').length-1]}`)
+        window.location.replace(proxyURL);
+    })
+}
+
 // Other functions
 
 function disablePillControllers() {
@@ -409,8 +420,8 @@ window.addEventListener('load', () => {
     setDiagnosisDefault();
 })
 
-testButton = document.getElementById('test-button');
-testButton.addEventListener('click', (e) => {
-    e.preventDefault();
-    setDiagnosisDefault();
-})
+// testButton = document.getElementById('test-button');
+// testButton.addEventListener('click', (e) => {
+//     e.preventDefault();
+//     setDiagnosisDefault();
+// })

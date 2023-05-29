@@ -1,5 +1,26 @@
 TO DO
 
+dotenv
+
+Archivo adjunto
+
+    Created at
+    Paciente
+    Archivo
+
+    Muestra lista y añadir
+
+PatientDiagnostic
+
+    patient
+    created_at
+    diagnosis
+
+
+LOGIN MINUSCULA
+
+ELIMINAR danger outline
+
 Pagination controls
 
 Search bar for diagnostic select default
@@ -48,6 +69,8 @@ Fetch for diagnostic as well as selecting and adding in diagnostic options
 
 OTHER
 
+
+Correct translation from Diagnostic to diagnosis
 
 
 

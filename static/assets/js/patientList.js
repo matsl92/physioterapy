@@ -19,7 +19,8 @@ const nPatientPerPage = availableHeight >= rowHeight ? Math.floor(availableHeigh
 // const nPatientPerPage = Math.floor((window.innerHeight - 265 - 30 - 24 - 30 - 16) / rowHeight) || 1;
 //                                                      head  pad  mar  mar table     66.5
 //                                                             50     
-const proxyURL = 'http://127.0.0.1:8000';
+// const proxyURL = 'http://127.0.0.1:8000';
+const proxyURL = 'https://ed9b-152-203-118-196.ngrok-free.app';
 
 async function getPatients() {
     const response = await fetch(`${proxyURL}/paciente/lista`);

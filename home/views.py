@@ -131,6 +131,7 @@ def update_patient(request, id):
     patient = Patient.objects.get(pk=id)
     if request.method == 'GET': 
         context = {
+            'patient_id': id,
             'segment': 'form', 
             'patient_form': PatientForm(instance=patient), 
             'diagnostic_form': DiagnosticForm(),
@@ -189,7 +190,7 @@ def update_patient(request, id):
 @login_required            
 def patient_list(request):
     context = {
-        'object_list': Patient.objects.all().order_by('nombre', 'apellidos'),
+        'object_list': len(Patient.objects.all()) != 0,
         'segment': 'patient_list'
     }
     return render(request, 'home/patient_list.html', context)
@@ -235,6 +236,13 @@ def get_patient_list(request):
         }
     for patient in list(Patient.objects.all().order_by('-updated_at'))]
     return JsonResponse(data, safe=False)   
+
+@login_required
+def delete_patient(request, id):
+    patient =  Patient.objects.get(pk=id)
+    patient.delete()
+    # messages.success(request, 'Se eliminó el paciente.')
+    return HttpResponse('Paciente eliminado')
 
 def get_diagnosis_list(request):
     return JsonResponse(

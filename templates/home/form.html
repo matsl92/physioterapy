@@ -250,7 +250,7 @@
                             <div class="d-none">
                               {{ patient_form.diagnostico }}
                             </div>
-                            <button id="test-button">Test</button>
+                            {% comment %} <button id="test-button">Test</button> {% endcomment %}
                             {% comment %} <input type="hidden" name="diagnostico" id="id_diagnostico"> {% endcomment %}
                           </div>
                         </div>
@@ -637,12 +637,17 @@
                 
               </div>
             </div>
-              
+
+            
             <button id="patient-form-submitter" type="submit" class="submitting-button btn btn-primary pull-right">Guardar</button>
             <div class="clearfix"></div>
           </form>
-
+          
         </div>
+        {% if patient_id %}
+        <button id="patient-deleter" type="button" class="btn pull-left delete-button secondary">Eliminar</button>
+        {% endif %}
+
       </div>
     </div>
   </div>

@@ -20,34 +20,38 @@
                         <div class="table-responsive">
 
                             <div class="tab-content" id="pills-tabContent">
-                                {% comment %} <div class="tab-pane fade show active d-none" id="pills-100" role="tabpanel" aria-labelledby="pills-100-tab" tabindex="0"> {% endcomment %}
-                                  
-                                    <table class="table table-hover mb-0">
-                                        
-                                        <template id="head-template">
-                                            <thead class="text-primary">
-                                                <th>
-                                                    Cédula
-                                                </th>
-                                                <th>
-                                                    Nombre
-                                                </th>
-                                                <th>
-                                                    Apellidos
-                                                </th>
-                                                <th>
-                                                    Teléfono
-                                                </th>
-                                                <th>
-                                                    Última actualización
-                                                </th>
-                                                <th>
-                                                    Link
-                                                </th>
-                                            </thead>
-                                        </template>
-
-                                    </table>
+                                {% if object_list %}
+                                <table class="table table-hover mb-0">
+                                    
+                                    <template id="head-template">
+                                        <thead class="text-primary">
+                                            <th>
+                                                Cédula
+                                            </th>
+                                            <th>
+                                                Nombre
+                                            </th>
+                                            <th>
+                                                Apellidos
+                                            </th>
+                                            <th>
+                                                Teléfono
+                                            </th>
+                                            <th>
+                                                Última actualización
+                                            </th>
+                                                Link
+                                            </th>
+                                        {% comment %} <thead> {% endcomment %}
+                                        </thead>
+                                    </template>
+                                    
+                                </table>
+                                {% else %}
+                                <div class="d-flex justify-content-center">
+                                    <h4>No hay pacientes registrados</h4>
+                                </div>
+                                {% endif %}
                     
                             
                             </div>
