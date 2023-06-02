@@ -5,27 +5,23 @@ const url = window.location.href;
 
 // Containers
 const diagnosisHomePage = document.querySelector('#diagnosis-home-page');
-const diagnosisFormPage = document.querySelector('#diagnosis-form-page');
+const patientDiagnosisFormPage = document.querySelector('#patient-diagnosis-form-page');
 
 const evolutionHomePage = document.querySelector('#evolution-home-page');
 const evolutionFormPage = document.querySelector('#evolution-form-page');
 
 const testHomePage = document.querySelector('#test-home-page');
 const patientTestFormPage = document.querySelector('#patient-test-form-page');
-const testFormPage = document.querySelector('#test-form-page');
 
-// Items
-
-const pillControllers = document.querySelectorAll('#pills-tab.nav.nav-pills .nav-item .nav-link');
+const documentHomePage = document.querySelector('#document-home-page');
+const documentFormPage = document.querySelector('#document-form-page');
 
 // Displayers
-const diagnosisFormDisplayer = document.getElementById('diagnosis-form-displayer');
-diagnosisFormDisplayer.addEventListener('click', (e) => {
+const patientDiagnosisFormDisplayer = document.getElementById('patient-diagnosis-form-displayer');
+patientDiagnosisFormDisplayer.addEventListener('click', (e) => {
     e.preventDefault();
-    disablePillControllers()
-    patientFormSubmitter.classList.add('d-none');
     diagnosisHomePage.classList.add('d-none');
-    diagnosisFormPage.classList.remove('d-none');
+    patientDiagnosisFormPage.classList.remove('d-none');
 })
 
 const evolutionFormDisplayer = document.getElementById('evolution-form-displayer');
@@ -42,24 +38,21 @@ patientTestFormDisplayer.addEventListener('click', (e) =>{
     patientTestFormPage.classList.remove('d-none');
 });
 
-const testFormDisplayer = document.getElementById('test-form-displayer');
-testFormDisplayer.addEventListener('click', (e) => {
+const documentFormDisplayer = document.getElementById('document-form-displayer');
+documentFormDisplayer.addEventListener('click', (e) => {
     e.preventDefault();
-    disablePillControllers()
-    patientFormSubmitter.classList.add('d-none');
-    patientTestFormPage.classList.add('d-none');
-    testFormPage.classList.remove('d-none');
+    documentHomePage.classList.add('d-none');
+    documentFormPage.classList.remove('d-none');
 })
 
 // Hiders
-const diagnosisFormHider = document.getElementById('diagnosis-form-hider');
-diagnosisFormHider.addEventListener('click', (e) => {
+const patientDiagnosisFormHider = document.getElementById('patient-diagnosis-form-hider');
+patientDiagnosisFormHider.addEventListener('click', (e) => {
     e.preventDefault();
-    clearMarkedFields('.django-diagnosis-form');
-    diagnosisFormPage.classList.add('d-none');
+    clearMarkedFields('.django-patient-diagnosis-form');
+    document.querySelector('#diagnosis-select div').textContent = "Seleccionar";
+    patientDiagnosisFormPage.classList.add('d-none');
     diagnosisHomePage.classList.remove('d-none');
-    patientFormSubmitter.classList.remove('d-none');
-    enablePillControllers();
 })
 
 const evolutionFormHider = document.getElementById('evolution-form-hider');
@@ -67,25 +60,24 @@ evolutionFormHider.addEventListener('click', (e) => {
     e.preventDefault();
     clearMarkedFields('.django-evolution-form');
     evolutionFormPage.classList.add('d-none');
-    evolutionHomePage.classList.remove('d-none')
+    evolutionHomePage.classList.remove('d-none');
 })
 
 const patientTestFormHider = document.getElementById('patient-test-form-hider');
 patientTestFormHider.addEventListener('click', (e) => {
     e.preventDefault();
     clearMarkedFields('.django-patient-test-form');
+    document.querySelector('#test-select div').textContent = "Seleccionar";
     patientTestFormPage.classList.add('d-none');
     testHomePage.classList.remove('d-none');
 })
 
-const testFormHider = document.getElementById('test-form-hider');
-testFormHider.addEventListener('click', (e) => {
+const documentFormHider = document.getElementById('document-form-hider');
+documentFormHider.addEventListener('click', (e) => {
     e.preventDefault();
-    clearMarkedFields('.django-test-form');
-    testFormPage.classList.add('d-none');
-    patientTestFormPage.classList.remove('d-none');
-    patientFormSubmitter.classList.remove('d-none');
-    enablePillControllers();
+    clearMarkedFields('.django-attached-file-form');
+    documentFormPage.classList.add('d-none');
+    documentHomePage.classList.remove('d-none');
 })
 
 // functions related to input validation
@@ -183,121 +175,27 @@ function validateMarkedInputs(tagClass) {
 function submitMainForm() {
     if (validateMarkedInputs('.django-patient-form')) {
 
-        const secundaryInputs = document.querySelectorAll(
-            `.django-diagnosis-form,
-            .django-evolution-form,
-            .django-patient-test-form,
-            .django-test-form`
-        )
+        // const secundaryInputs = document.querySelectorAll(
+        //     `.django-diagnosis-form,
+        //     .django-evolution-form,
+        //     .django-patient-test-form,
+        //     .django-patient-diagnosis-form`
+        // );
 
-        secundaryInputs.forEach(input => {
-            console.log(input.name);
-            console.log(input.required);
-            input.required = false;
-            console.log(input.required);
-        })
+        // secundaryInputs.forEach(input => {
+        //     input.required = false;
+        // })
 
-        const mainForm = document.getElementById('main-form')
+        const mainForm = document.getElementById('main-form');
         mainForm.submit();
 
     }
 }
 
-async function submitDiagnosisData() {
-
-    if (validateMarkedInputs('.django-diagnosis-form')) {
-        enablePillControllers();
-        var code = document.getElementById('id_diagnosis_code').value;
-        var description = document.getElementById('id_diagnosis_description').value;
-
-        const response = await fetch(`${proxyURL}/diagnosiso/crear`, {
-            method: 'POST',
-            credentials: 'same-origin',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': CSRFToken
-            },
-            body: JSON.stringify({
-                diagnosis_code: code,
-                diagnosis_description: description,
-                is_active: true
-            })
-        });
-        const data = await response.json();
-        diagnoses.push(data);
-        var option = document.createElement('li');
-        option.textContent = `${data.code} - ${data.description}`
-        option.addEventListener('click', () => selectDiagnosis(data.id));
-        optionContainer.appendChild(option);
-        console.log('data.id', data.id);
-        selectDiagnosis(data.id);
-        diagnosisFormPage.classList.add('d-none');
-        diagnosisHomePage.classList.remove('d-none');
-        patientFormSubmitter.classList.remove('d-none');
-        console.log(data);
-        clearMarkedFields('.django-diagnosis-form');
-        return data;
-    }
-}
-
-async function submitTestData() {
-
-    if (validateMarkedInputs('.django-test-form')) {
-        enablePillControllers();
-        var name = document.getElementById('id_test_name').value;
-        var description = document.getElementById('id_test_description').value;
-        var category = document.getElementById('id_category').value;
-        var subcategory = document.getElementById('id_subcategory').value;
-        var resutlType = document.getElementById('id_result_type').value;
-
-        const response = await fetch(`${proxyURL}/test/crear`, {
-            method: 'POST',
-            credentials: 'same-origin',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': CSRFToken
-            },
-            body: JSON.stringify({
-                test_name: name,
-                test_description: description,
-                category: category, 
-                subcategory: subcategory,
-                result_type: resutlType
-            })
-        });
-        const data = await response.json();
-        const testSelection = document.getElementById('id_test');
-        var testOption = document.createElement('option');
-        testOption.value = data.id;
-        testOption.textContent = `${data.category} - ${data.subcategory} - ${data.test_name}`;
-        testSelection.appendChild(testOption);
-        testSelection.value = data.id;
-        testFormPage.classList.add('d-none');
-        patientTestFormPage.classList.remove('d-none');
-        patientFormSubmitter.classList.remove('d-none');
-        clearMarkedFields('.django-test-form');
-        console.log(data);
-    }
-    
-}
-
-// Submitters
 const patientFormSubmitter =document.getElementById('patient-form-submitter');
 patientFormSubmitter.addEventListener('click', (e) =>{
     e.preventDefault()
     submitMainForm()
-})
-
-const diagnosisFormSubmitter = document.getElementById('diagnosis-form-submitter');
-diagnosisFormSubmitter.addEventListener('click', (e) => {
-    e.preventDefault()
-    submitDiagnosisData();
-})
-
-const testFormSubmitter = document.getElementById('test-form-submitter');
-testFormSubmitter.addEventListener('click', (e) => {
-    e.preventDefault()
-    submitTestData();
 })
 
 const patientDeleter = document.getElementById('patient-deleter');
@@ -309,76 +207,52 @@ if (patientDeleter) {
 }
 
 // Other functions
-
-function disablePillControllers() {
-    pillControllers.forEach(controller => {
-        controller.classList.add('disabled');
-    }) 
-}
-
-function enablePillControllers() {
-    pillControllers.forEach(controller => {
-        controller.classList.remove('disabled');
-    }) 
-}
-
 function clearMarkedFields(formLabel) {
     const fields = document.querySelectorAll(formLabel);
     fields.forEach(field => {
-        field.value = ""
+        field.value = "";
     })
 }
 
-
-
-
-
-
-
-
-
-// ----------------------------------- Search input ------------------------------------------
+// ----------------------------------- Diagnosis search input ------------------------------------------
 
 const diagnoses = [];
-const optionContainer = document.querySelector('.option-container ul');
-const options = optionContainer.querySelectorAll('li');
-const searchInput = document.querySelector('.search-input');
+const diagnosisOptionContainer = document.querySelector('#diagnosis-search-container .option-container ul');
+// const options = diagnosisOptionContainer.querySelectorAll('li');
+const diagnosisSearchInput = document.querySelector('#diagnosis-search-input');
 const selectDiagnosisButton = document.getElementById('diagnosis-select');
-const searchContainer = document.querySelector('.search-container');
-const svg = document.querySelector('.select-diagnosis button svg');
-const diagnosisInput = document.getElementById('id_diagnosiso');
-const buttonText = document.querySelector('.select-diagnosis button div');
+const diagnosisSearchContainer = document.querySelector('#diagnosis-search-container');
+const diagnosisSvg = document.querySelector('#select-diagnosis button svg');
+const diagnosisInput = document.getElementById('id_diagnosis');
+const diagnosisButtonText = document.querySelector('#select-diagnosis button div');
 
 
 async function getDiagnosisOptions() {
-    const response = await fetch(`${proxyURL}/diagnosiso/lista`);
+    const response = await fetch(`${proxyURL}/diagnostico/lista`);
     const data = await response.json();
 
-    diagnoses.length = 0;
+    diagnoses.length = 0; 
     data.forEach(diagnosis => {
         diagnoses.push(diagnosis);
     })
 
-    optionContainer.innerHTML = '';
+    diagnosisOptionContainer.innerHTML = '';
     var option;
     data.forEach(diagnosis => {
         option = document.createElement('li');
         option.textContent = `${diagnosis.code} - ${diagnosis.description}`;
         option.addEventListener('click', () => selectDiagnosis(diagnosis.id))
-        optionContainer.appendChild(option);
+        diagnosisOptionContainer.appendChild(option);
     })
 }
 
 function selectDiagnosis(id) {
     const diagnosis = diagnoses.find(diagnosis => diagnosis.id == id);
     if (diagnosis) {
-        console.log('previous value', diagnosisInput.value);
-        buttonText.textContent = diagnosis.description;
-        searchContainer.classList.remove('active');
-        svg.classList.remove('active');
-        console.log('id', diagnosis.id);
+        diagnosisButtonText.textContent = diagnosis.description;
+        diagnosisSearchContainer.classList.remove('active');
+        diagnosisSvg.classList.remove('active');
         diagnosisInput.value = diagnosis.id;
-        console.log('value', diagnosisInput.value);
     }
 }
 
@@ -387,40 +261,131 @@ function filterAndAppendOptions(string) {
         return diagnosis.description.toLowerCase().includes(string.toLowerCase()) || 
         diagnosis.code.toLowerCase().includes(string.toLowerCase());
     })
-    optionContainer.innerHTML = "";
+    diagnosisOptionContainer.innerHTML = "";
     var option;
     filteredOptions.forEach(diagnosis => {
         option = document.createElement('li');
         option.textContent = `${diagnosis.code} - ${diagnosis.description}`;
         option.addEventListener('click', () => selectDiagnosis(diagnosis.id))
-        optionContainer.appendChild(option);
+        diagnosisOptionContainer.appendChild(option);
     })
 }
 
 async function setDiagnosisDefault() {
     await getDiagnosisOptions();
-    console.log('diagnosis input value', diagnosisInput.value);
-    console.log('diagnoses length', diagnoses.length);
     let diagnosis = diagnoses.find(diagnosis => diagnosis.id == diagnosisInput.value);
     if (diagnosis) {
-        buttonText.textContent = diagnosis.description;
+        diagnosisButtonText.textContent = diagnosis.description;
     }
-    console.log('default diagnosis', diagnosis);
-    console.log('value', diagnosisInput.value);
 }
 
-searchInput.addEventListener('input', (e) => filterAndAppendOptions(e.target.value));
+diagnosisSearchInput.addEventListener('input', (e) => filterAndAppendOptions(e.target.value));
 selectDiagnosisButton.addEventListener('click', (e) => {
     e.preventDefault()
-    svg.classList.toggle('active');
-    searchContainer.classList.toggle('active');
+    diagnosisSvg.classList.toggle('active');
+    diagnosisSearchContainer.classList.toggle('active');
+
+})
+// ----------------------------------- Test search input ------------------------------------------
+
+const tests = [];
+const testOptionContainer = document.querySelector('#test-search-container .option-container ul');
+const selectTestButton = document.getElementById('test-select');
+const testSearchContainer = document.querySelector('#test-search-container');
+const testSvg = document.querySelector('#select-test button svg');
+const testInput = document.getElementById('id_test');
+const testButtonText = document.querySelector('#select-test button div');
+const testFormSecondary = document.querySelectorAll('.test-form-secondary');
+const testDetailContainer = document.getElementById('test-detail-container');
+
+function showTextDetails(id) {
+    const test = tests.find(test => test.id === id)
+    if (test) {
+        testDetailContainer.classList.remove('d-none');
+        testDetailContainer.querySelector('div h5').textContent = `${test.category} - ${test.subcategory} - ${test.name}`;
+        testDetailContainer.querySelector('div p').textContent = test.description;
+    }
+    else {
+        console.log(id)
+    }
+}
+
+function selectTest(id) {
+    const test = tests.find(test => test.id == id);
+    if (test) {
+        testButtonText.textContent = `${test.category} - ${test.subcategory} - ${test.name}`;
+        testFormSecondary.forEach(element => {
+            element.classList.remove('d-none');
+        })
+        testSearchContainer.classList.remove('active');
+        testSvg.classList.remove('active');
+        testInput.value = test.id;
+    }
+}
+
+function filterAndAppendOptions(string) {
+    filteredOptions = tests.filter(test => {
+        return test.description.toLowerCase().includes(string.toLowerCase()) || 
+        test.code.toLowerCase().includes(string.toLowerCase());
+    })
+    testOptionContainer.innerHTML = "";
+    var option;
+    filteredOptions.forEach(test => {
+        option = document.createElement('li');
+        option.textContent = `${test.code} - ${test.description}`;
+        option.addEventListener('click', () => selectTest(test.id))
+        testOptionContainer.appendChild(option);
+    })
+}
+
+async function getTestOptions() {
+    const response = await fetch(`${proxyURL}/test/lista`);
+    const data = await response.json();
+
+    tests.length = 0; 
+    data.forEach(test => {
+        tests.push(test);
+    })
+    console.log(tests)
+
+    testOptionContainer.innerHTML = '';
+    var option;
+    data.forEach(test => {
+        option = document.createElement('li');
+        option.textContent = `${test.category} - ${test.subcategory} - ${test.name}`;
+        option.addEventListener('click', () => selectTest(test.id));
+        option.addEventListener('mouseover', () => {
+            showTextDetails(test.id);
+        });
+        option.addEventListener('mouseout', () => {
+            testDetailContainer.classList.add('d-none');
+        });
+        testOptionContainer.appendChild(option);
+    })
+}
+
+async function setTestDefault() {
+    await getTestOptions();
+    let test = tests.find(test => test.id == testInput.value);
+    if (test) {
+        testButtonText.textContent = test.description;
+    }
+}
+
+// testSearchInput.addEventListener('input', (e) => filterAndAppendOptions(e.target.value));
+selectTestButton.addEventListener('click', (e) => {
+    e.preventDefault()
+    testFormSecondary.forEach(element => {
+        element.classList.toggle('d-none');
+    })
+    testSvg.classList.toggle('active');
+    testSearchContainer.classList.toggle('active');
+
 })
 window.addEventListener('load', () => {
-    setDiagnosisDefault();
+    // setTestDefault();
+    getDiagnosisOptions();
+    getTestOptions();
 })
 
-// testButton = document.getElementById('test-button');
-// testButton.addEventListener('click', (e) => {
-//     e.preventDefault();
-//     setDiagnosisDefault();
-// })
+

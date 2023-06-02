@@ -32,7 +32,7 @@ class Diagnosis(models.Model):
     is_active = models.BooleanField('activo', default=True)
     
     """
-    foranea a diagnosiso
+    foranea a diagnostico
     activo bool mostrar solo activos
     """
     
@@ -58,7 +58,7 @@ class Patient(models.Model):
     ocupacion = models.CharField('ocupación', max_length=60, choices = OCUPACION_OPCIONES)
     profesion = models.CharField('profesión', max_length=120, blank=True, null=True)
     seguridad_social = models.CharField(max_length=240)
-    diagnosiso = models.ForeignKey(Diagnosis, on_delete=models.SET_DEFAULT, default=None, blank=True, null=True, verbose_name='diagnóstico médico')
+    # diagnostico = models.ForeignKey(Diagnosis, on_delete=models.SET_DEFAULT, default=None, blank=True, null=True, verbose_name='diagnóstico médico')
     motivo_consulta = models.TextField('motivo de consulta')
     cronologia_de_patologia = models.TextField('cronología de la patología')
     actividad_fisica = models.BooleanField('actividad física', default = False)
@@ -79,7 +79,7 @@ class Patient(models.Model):
     def user_directory_path(instance, filename):
         return 'paciente_{0}/{1}'.format(instance.get_cedula(), filename)
 
-    documento_adjunto = models.FileField('Adjuntar documento', upload_to=user_directory_path, blank=True, null=True)
+    # documento_adjunto = models.FileField('Adjuntar documento', upload_to=user_directory_path, blank=True, null=True)
 
 
     def __str__(self):
@@ -96,7 +96,7 @@ class Patient(models.Model):
 class Evolution(models.Model):
     patient = models.ForeignKey(Patient, on_delete = models.CASCADE, verbose_name='Paciente')
     evolution_record = models.TextField('Evolución')
-    created_at = models.DateTimeField(auto_now_add=True, editable=False, verbose_name='Fecha de creación')
+    created_at = models.DateTimeField(auto_now_add=True, editable=False, verbose_name='Fecha del registro')
 
     def __str__(self):
         return f"{self.patient} - {timezone.localtime(self.created_at).strftime('%Y/%m/%d - %I:%M %p')}"
@@ -137,3 +137,32 @@ class PatientTest(models.Model):
         verbose_name = 'test de paciente'
         verbose_name_plural = 'tests de pacientes'
 
+class PatientDiagnosis(models.Model):
+    patient = models.ForeignKey(Patient, on_delete = models.CASCADE, verbose_name='paciente')
+    diagnosis = models.ForeignKey(Diagnosis, models.CASCADE, verbose_name='diagnóstico')
+    created_at = models.DateField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"{self.diagnosis.diagnosis_code} - {self.diagnosis.diagnosis_description}"
+    
+    class Meta:
+        verbose_name = 'diagnóstico de paciente'
+        verbose_name_plural = 'diagnósticos de pacientes'
+
+class AttachedFile(models.Model):
+    # name = models.CharField('nombre del archivo', max_length=100, editable=False, default=None, null=True)
+    patient = models.ForeignKey(Patient, models.CASCADE, verbose_name='paciente')
+    
+    def get_patient_directory_path(instance, filename):
+        # instance.name = filename
+        return f"paciente_{instance.patient.cedula}/{filename}"
+    
+    file = models.FileField('documento', upload_to=get_patient_directory_path)
+    created_at = models.DateField('fecha de adición', auto_now_add=True)
+    
+    # def __str__(self):
+    #     return str(self.name)
+    
+    class Meta:
+        verbose_name = 'documento adjunto'
+        verbose_name_plural = 'documentos adjuntos'

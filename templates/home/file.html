@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input a file</title>
+</head>
+<body>
+
+    <h1>Load a file a the specified fields</h1>
+
+    <form action="" id="file-form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <input type="hidden" name="patient" value="1020479669">
+        {{ form.file }}
+
+    </form>
+
+
+    <input type="submit" value="submit" form="file-form">
+    
+</body>
+</html>
+
+
+{% comment %} <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Document</title>
+</head>
+<body>
+    <h1>Upload Document</h1>
+
+    <form action="{% url 'home:file' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.file.label_tag }}
+        {{ form.file }}
+        <br>
+        <input type="submit" value="Upload">
+    </form>
+</body>
+</html> {% endcomment %}

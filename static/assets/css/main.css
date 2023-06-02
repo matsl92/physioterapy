@@ -99,6 +99,17 @@ button.success {
     color: white;
 }
 
+.btn.delete-button:hover {
+    color: white;
+    background-color: #f44336;
+}
+
+.btn.confirmation-button {
+    position: static;
+    border: 1px solid #f44336;
+    color: #f44336;
+}
+
 .delete-button {
     position: absolute;
     bottom: 0;
@@ -215,6 +226,13 @@ input[type="file"] {
 
 /*--------------------------- Search input -----------------------------*/
 
+.diagnosis-search-box {
+    position: absolute;
+    width: 100%;
+    top: 65px;
+    z-index: 1;
+}
+
 .select-diagnosis button {
     display: flex;
     justify-content: space-between;
@@ -245,6 +263,7 @@ input[type="file"] {
 
 .search-container {
     display: none;
+    background-color: white;
     margin-top: 16px;
     padding: 9px;
     width: 100%;
@@ -306,18 +325,18 @@ input[type="file"] {
 .option-container ul::-webkit-scrollbar{
     width: 9px;
     height: 9px;
-  }
-  .option-container ul::-webkit-scrollbar-track{
+}
+.option-container ul::-webkit-scrollbar-track{
     background: #f1f1f1;
     border-radius: 25px;
-  }
-  .option-container ul::-webkit-scrollbar-thumb{
+}
+.option-container ul::-webkit-scrollbar-thumb{
     background: #ccc;
     border-radius: 25px;
-  }
-  .option-container ul::-webkit-scrollbar-thumb:hover{
+}
+.option-container ul::-webkit-scrollbar-thumb:hover{
     background: #b3b3b3;
-  }
+}
 
 /*--------------------------- Patient list -----------------------------*/
 
@@ -330,4 +349,42 @@ input[type="file"] {
 .patient-list-container {
     /* min-height: calc(100vh - 265px); */
     height: calc(100vh - 265px);
+}
+
+/* ------------------------------ Test ---------------------------------- */
+
+.option-container.test-option-container ul::-webkit-scrollbar{
+    width: 9px;
+    height: 0;
+}
+
+.help-text.d-none {
+    opacity: 0;
+    transition: .3s;
+}
+
+.help-text {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    z-index: 3;
+    opacity: 1;
+}
+
+.test-help-text {
+    background-color: rgb(233 205 243);
+    border-radius: 3px;
+    height: 143px;
+}
+
+.help-text .help-content {
+    overflow: hidden;
+}
+
+.help-content h5, .help-content p {
+    text-align: center;
 }

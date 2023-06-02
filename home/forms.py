@@ -2,10 +2,12 @@ from django import forms
 from .models import (
     Patient,
     Diagnosis,
+    PatientDiagnosis,
     Evolution,
     Test,
     PatientTest,
     Category,
+    AttachedFile,
     FRECUENCIA_ACTIVIDAD_FISICA_OPCIONES,
     OCUPACION_OPCIONES,
     TEST_RESPONSE_TYPE
@@ -65,11 +67,11 @@ class PatientForm(forms.ModelForm):
             'seguridad_social': forms.TextInput(attrs={
                 'class': 'django-patient-form'
             }),
-            'diagnosiso': forms.Select(
-                choices=[get_diagnosis_options()],
-                attrs={
-                'class': 'django-patient-form'
-            }),
+            # 'diagnostico': forms.Select(
+            #     choices=[get_diagnosis_options()],
+            #     attrs={
+            #     'class': 'django-patient-form'
+            # }),
             'motivo_consulta': forms.Textarea(attrs={
                 'rows': "3",
                 'class': 'django-patient-form'
@@ -93,9 +95,9 @@ class PatientForm(forms.ModelForm):
                 'rows': "3",
                 'class': 'django-patient-form'    
             }),
-            'documento_adjunto': forms.FileInput(attrs={
-                'class': 'django-patient-form',
-            })
+            # 'documento_adjunto': forms.FileInput(attrs={
+            #     'class': 'django-patient-form',
+            # })
             
         }
 
@@ -115,7 +117,20 @@ class DiagnosisForm(forms.ModelForm):  # Fetch
                 }
             )
         }
-        
+
+class PatientDiagnosisForm(forms.ModelForm):
+    class Meta:
+        model = PatientDiagnosis
+        fields = '__all__'
+        widgets = {
+            'diagnosis': forms.Select(
+                choices=get_diagnosis_options(),
+                attrs={
+                    'class': 'django-patient-diagnosis-form'
+                }
+            )
+        }
+       
 class EvolutionForm(forms.ModelForm):
     class Meta: 
         model = Evolution
@@ -192,4 +207,15 @@ class TestForm(forms.ModelForm):    # Fetch
                 }
             )
         }
-        
+    
+class AttachedFileForm(forms.ModelForm):
+    class Meta:
+        model = AttachedFile
+        fields = '__all__'
+        widgets = {
+            'file': forms.FileInput(
+                attrs={
+                    'class': 'django-attached-file-form'
+                }
+            )
+        }

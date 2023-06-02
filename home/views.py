@@ -6,8 +6,17 @@ from django.template import loader
 from django import template
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
-from .forms import PatientForm, DiagnosisForm, EvolutionForm, TestForm, PatientTestForm
-from .models import Patient, Evolution, PatientTest
+from django.forms.models import model_to_dict
+from .forms import (
+    PatientForm, 
+    DiagnosisForm, 
+    EvolutionForm, 
+    TestForm, 
+    PatientTestForm,
+    PatientDiagnosisForm,
+    AttachedFileForm
+)
+from .models import Patient, Evolution, PatientTest, PatientDiagnosis, AttachedFile, Test
 import json
 import os
 from dotenv import load_dotenv
@@ -75,14 +84,19 @@ def pages(request):
 def create_patient(request):
     if request.method == 'GET': 
         context = {
-            'segment': 'form', 
+            'segment': 'form',
+            'patient': None,
             'patient_form': PatientForm(), 
-            'diagnosis_form': DiagnosisForm(),
+            # 'diagnosis_form': DiagnosisForm(),
+            'patient_diagnosis_form': PatientDiagnosisForm(),
             'evolution_form': EvolutionForm(),
             'patient_test_form': PatientTestForm(),
-            'test_form': TestForm(),
+            'attached_file_form': AttachedFileForm(),
+            # 'test_form': TestForm(),
             'evolution_records': None,
             'patient_tests': None,
+            'patient_diagnoses': None,
+            'patient_attached_files': None,
             'js_variables': {'root_url': root_url}
         }
         
@@ -95,6 +109,33 @@ def create_patient(request):
         if patient_form.is_valid():
             patient = patient_form.save()
             msgs.append("Se guardó el nuevo paciente.")
+            
+            if request.FILES.get('file') != None:
+                data = {
+                    # **request.FILES,
+                    **request.POST,
+                    **{'patient': patient,
+                       'file': request.FILES.get('file')}
+                }
+                # print('data: ', data)
+                attached_file_form = AttachedFileForm(data)
+                if attached_file_form.is_valid():
+                    attached_file_form.save()
+                    msgs.append("Se añadió un archivo al paciente.")
+                else:
+                    # print('errors: ', attached_file_form.errors.as_data())
+                    errors['No_se_añadió_un_archivo_al_paciente'] = attached_file_form.errors
+            
+            if request.POST.get('diagnosis') != '':
+                patient_diagnosis_form = PatientDiagnosisForm({
+                    **request.POST.dict(),
+                    **{'patient': patient}
+                })
+                if patient_diagnosis_form.is_valid():
+                    patient_diagnosis_form.save()
+                    msgs.append("Se añadió un diagnóstico al paciente.")
+                else:
+                    errors['No_se_añadió_un_diagnóstico_al_paciente'] = patient_diagnosis_form.errors
             
             if request.POST.get('evolution_record') != '':
                 evolution_form = EvolutionForm({
@@ -132,22 +173,27 @@ def create_patient(request):
             
             return redirect('home:patients')
 
-@login_required                  
+@login_required
 def update_patient(request, id):
     patient = Patient.objects.get(pk=id)
     if request.method == 'GET': 
         context = {
-            'patient_id': id,
-            'segment': 'form', 
+            'segment': 'patient_list', 
+            'patient': patient,
             'patient_form': PatientForm(instance=patient), 
-            'diagnosis_form': DiagnosisForm(),
+            # 'diagnosis_form': DiagnosisForm(),
+            'patient_diagnosis_form': PatientDiagnosisForm(),
             'evolution_form': EvolutionForm(),
             'patient_test_form': PatientTestForm(),
-            'test_form': TestForm(),
+            'attached_file_form': AttachedFileForm(),
+            # 'test_form': TestForm(),
             'evolution_records': Evolution.objects.filter(patient=patient),
             'patient_tests': PatientTest.objects.filter(patient=patient),
+            'patient_diagnoses': PatientDiagnosis.objects.filter(patient=patient),
+            'patient_attached_files': AttachedFile.objects.filter(patient=patient),
             'js_variables': {'root_url': root_url}
         }
+        
         return render(request, 'home/form.html', context)
     
     if request.method == 'POST':
@@ -157,6 +203,28 @@ def update_patient(request, id):
         if patient_form.is_valid():
             patient = patient_form.save()
             msgs.append("Se actualizaron los datos del paciente.")
+            
+            if request.FILES.get('file') != None:
+                attached_file_form = AttachedFileForm(
+                    request.POST, 
+                    request.FILES
+                )
+                if attached_file_form.is_valid():
+                    attached_file_form.save()
+                    msgs.append("Se añadió un archivo al paciente.")
+                else:
+                    errors['No_se_añadió_un_archivo_al_paciente'] = attached_file_form.errors
+            
+            if request.POST.get('diagnosis') != '':
+                patient_diagnosis_form = PatientDiagnosisForm({
+                    **request.POST.dict(),
+                    **{'patient': patient}
+                })
+                if patient_diagnosis_form.is_valid():
+                    patient_diagnosis_form.save()
+                    msgs.append("Se añadió un diagnóstico al paciente.")
+                else:
+                    errors['No_se_añadió_un_diagnóstico_al_paciente'] = patient_diagnosis_form.errors
             
             if request.POST.get('evolution_record') != '':
                 evolution_form = EvolutionForm({
@@ -262,6 +330,18 @@ def get_diagnosis_list(request):
         safe=False
     )
 
+def get_test_list(request):
+    return JsonResponse(
+        [{
+            'id': test.id,
+            'name': test.test_name,
+            'description': test.test_description,
+            'category': test.category.category_name,
+            'subcategory': test.subcategory
+        } for test in Test.objects.all()],
+        safe=False
+    )
+
 def populatate_database(request):
     url = "https://es.wikipedia.org/wiki/Anexo:CIE-10_Cap%C3%ADtulo_XIII:_Enfermedades_del_sistema_osteomuscular_y_del_tejido_conectivo"
     response = requests.get(url)
@@ -308,9 +388,43 @@ def populatate_database(request):
     for diagnosis in list(Diagnosis.objects.all())]
     return JsonResponse(data, safe=False)
         
+def file_test(request):
+    
+    # if request.method == 'POST':
+    #     patient = Patient.objects.first()
+    #     form = AttachedFileForm(request.POST, request.FILES, initial={'patient': patient})
+    #     if form.is_valid():
+    #         file_instance = form.save(commit=False)
+    #         patient = Patient.objects.first()
+    #         if patient:
+    #             file_instance.patient = patient
+    #             file_instance.save()
+    #             return redirect('home:patients')  # Redirect to success page or appropriate URL
+    #         else:
+    #             return HttpResponse("No patient found.")
+    #     else:
+    #         return HttpResponse("form is not valid"+form.errors.as_json())
+    # else:
+    #     form = AttachedFileForm()
+    
+    # return render(request, 'home/file.html', {'form': form})
 
-
-
-
-
-
+    if request.method == 'POST':
+        # attached_file_form = AttachedFileForm({
+        #     **{'patient': Patient.objects.first()},
+        #     **request.FILES,
+        #     # **request.POST, 
+        # })
+        # for field in attached_file_form:
+        #     print(field.value())
+        
+        attached_file_form = AttachedFileForm(request.POST, request.FILES)
+        for field in attached_file_form:
+            print(field.value())
+        if attached_file_form.is_valid():
+            attached_file_form.save()
+            return redirect('home:patients')
+        else:
+            return HttpResponse(attached_file_form.errors.as_json())
+    if request.method == 'GET':
+        return render(request, 'home/file.html', {'form': AttachedFileForm()})

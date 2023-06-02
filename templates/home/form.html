@@ -8,12 +8,25 @@
       <div class="card">
         <div class="card-header card-header-primary">
           <h4 class="card-title">Formulario del paciente</h4>
-          <p class="card-category">...</p>
+          <p class="card-category">{% if patient %}{{ patient.nombre }} {{ patient.apellidos }} - {{ patient.cedula }}{% else %}Nuevo paciente{% endif %}</p>
         </div>
-        <div class="card-body main-card">
+        <div class="card-body main-card position-relative">
+
+          <div id="test-detail-container" class="help-text test-help-text d-none">
+            <div class="help-content">
+              <h5>test 3 ddddddddddd dddddddddd</h5>
+              <p>Hello!
+                I want to build Edit Profile from different models.
+                I think it will be kind of major models Profile with Foreign Key in different models. I can have build view which post data excellent but when user reopen edit profile page fields doesnt show content.
+                For example, Models have fields about University name, position etc. I open a page when to want to update information about me. I write name my university. Fields saves good. But when I reopen this forms, I dont see name my university.
+                I have been trying to create it with Class-Based View, but it worked not good. So now Im trying to create it with Function-Based View.</p>
+            </div>
+          </div>
 
 
           <div class="d-flex justify-content-center">
+
+
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
               <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="pills-demograficos-tab" data-bs-toggle="pill" data-bs-target="#pills-demograficos" type="button" role="tab" aria-controls="pills-demograficos" aria-selected="true">Demográficos</button>
@@ -28,13 +41,16 @@
                 <button class="nav-link" id="pills-clinica-tab" data-bs-toggle="pill" data-bs-target="#pills-clinica" type="button" role="tab" aria-controls="pills-clinica" aria-selected="false">Historia clínica</button>
               </li>
               <li class="nav-item" role="presentation">
-                <button class="nav-link" id="pills-diagnosiso-tab" data-bs-toggle="pill" data-bs-target="#pills-diagnosiso" type="button" role="tab" aria-controls="pills-diagnosiso" aria-selected="false">Diagnóstico</button>
+                <button class="nav-link" id="pills-archivos-tab" data-bs-toggle="pill" data-bs-target="#pills-archivos" type="button" role="tab" aria-controls="pills-archivos" aria-selected="false">Documentos</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-diagnostico-tab" data-bs-toggle="pill" data-bs-target="#pills-diagnostico" type="button" role="tab" aria-controls="pills-diagnostico" aria-selected="false">Diagnósticos</button>
               </li>
               <li class="nav-item" role="presentation">
                 <button class="nav-link" id="pills-evolucion-tab" data-bs-toggle="pill" data-bs-target="#pills-evolucion" type="button" role="tab" aria-controls="pills-evolucion" aria-selected="false">Evolución</button>
               </li>
               <li class="nav-item" role="presentation">
-                <button class="nav-link" id="pills-test-tab" data-bs-toggle="pill" data-bs-target="#pills-test" type="button" role="tab" aria-controls="pills-test" aria-selected="false">Test</button>
+                <button class="nav-link" id="pills-test-tab" data-bs-toggle="pill" data-bs-target="#pills-test" type="button" role="tab" aria-controls="pills-test" aria-selected="false">Tests</button>
               </li>
             </ul>
           </div>
@@ -232,11 +248,52 @@
                 </div>
 
               </div>
-              <div class="tab-pane fade" id="pills-diagnosiso" role="tabpanel" aria-labelledby="pills-diagnosiso-tab" tabindex="0">
+              <div class="tab-pane fade" id="pills-archivos" role="tabpanel" aria-labelledby="pills-archivos-tab" tabindex="0">
 
                 <div class="form-section-container">
 
-                  <div id="diagnosis-home-page">
+                  <div id="document-home-page">
+
+                    <div class="row">
+
+                      <div class="col-md-12">
+
+                        <div class="accordion" id="accordionDocument">
+                          {% for file in patient_attached_files %}
+                          <div class="accordion-item">
+                            <h2 class="accordion-header">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-file-{{ forloop.counter }}" aria-expanded="true" aria-controls="collapseOne">
+                                {{ file }}
+                              </button>
+                            </h2>
+                            <div id="collapse-file-{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                              <div class="accordion-body">
+                                {{ file.created_at }}
+                              </div>
+                            </div>
+                          </div>
+                          {% endfor %}
+                        </div>
+                      
+                      </div>
+                      
+                    </div>
+
+                    <div class="row">
+
+                      <div class="col-md-12">
+  
+                        <button id="document-form-displayer" class="w-100 add-accordion-field-button">
+                          Agregar documento
+                        </button>
+  
+                      </div>
+  
+                    </div>
+
+                  </div>
+
+                  <div id="document-form-page" class="d-none">
                     
                     <div class="row">
 
@@ -244,21 +301,138 @@
                       </div>
 
                       <div class="col-md-8">
+
                         <div class="row">
-                          <div class="col-md-12">
-                            <label for={{ patient_form.diagnosiso.id_for_label }}>{{ patient_form.diagnosiso.label }}</label>
-                            <div class="d-none">
-                              {{ patient_form.diagnosiso }}
-                            </div>
-                            {% comment %} <button id="test-button">Test</button> {% endcomment %}
-                            {% comment %} <input type="hidden" name="diagnosiso" id="id_diagnosiso"> {% endcomment %}
+                          <div class="col-md-12 d-flex justify-content-center">
+                            <label for={{ attached_file_form.file.id_for_label }}>{{ attached_file_form.file.label }}</label>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-12 d-flex justify-content-center">
+
+                            {{ attached_file_form.file }}
+                            {% if patient %}
+                            <input type="hidden" name="patient" value={{ patient.pk }}>
+                            {% endif %}
                           </div>
                         </div>
                         
                         <div class="row">
 
-                          <div class="col-md-10 col-sm-10 col-9">
-                            <div class="select-diagnosis">
+                          <div class="col-md-12 d-flex justify-content-center mt-3">
+                            <button id="document-form-hider" class="abort-accordion-field-button secondary">
+                              No agregar
+                            </button>
+                          </div>
+
+                        </div>
+
+                        
+
+                        {% comment %} <div class="row diagnosis-search-box">
+                          <div class="col-md-12">
+                            <div class="select-search-wrapper">
+                              <div class="search-container">
+                                <div class="search-input-header">
+                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"/>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                                  </svg>
+                                  <input class="search-input" type="search" placeholder="Buscar...">
+                                </div>
+                                
+                                <div class="option-container">
+                                  <ul>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div> {% endcomment %}
+
+                      </div>
+
+                      <div class="col-md-2">
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div>  
+
+              </div>
+              <div class="tab-pane fade" id="pills-diagnostico" role="tabpanel" aria-labelledby="pills-diagnostico-tab" tabindex="0">
+
+                <div class="form-section-container">
+
+                  <div id="diagnosis-home-page">
+
+                    <div class="row">
+
+                      <div class="col-md-12">
+  
+                        <div class="accordion" id="accordionDiagnostico">
+                          {% for patient_diagnosis in patient_diagnoses %}
+                          <div class="accordion-item">
+                            <h2 class="accordion-header">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-patient-diagnosis{{ forloop.counter }}" aria-expanded="true" aria-controls="collapseOne">
+                                {{ patient_diagnosis }}
+                              </button>
+                            </h2>
+                            <div id="collapse-patient-diagnosis{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                              <div class="accordion-body">
+                                {{ patient_diagnosis.diagnosis }}
+                              </div>
+                            </div>
+                          </div>
+                          {% endfor %}
+                        </div>
+                      
+                      </div>
+                      
+                    </div>
+
+                    <div class="row">
+
+                      <div class="col-md-12">
+  
+                        <button id="patient-diagnosis-form-displayer" class="w-100 add-accordion-field-button">
+                          Agregar diagnóstico
+                        </button>
+  
+                      </div>
+  
+                    </div>
+
+                  </div>
+
+                  <div id="patient-diagnosis-form-page" class="d-none">
+                    
+                    <div class="row">
+
+                      <div class="col-md-2">
+                      </div>
+
+                      <div class="col-md-8">
+
+                        <div class="row">
+                          <div class="col-md-12">
+
+                            <label for={{ patient_diagnosis_form.diagnosis.id_for_label }}>{{ patient_diagnosis_form.diagnosis.label }}</label>
+                            <div class="d-none">
+                              {{ patient_diagnosis_form.diagnosis }}
+                            </div>
+                          
+                          </div>
+                        </div>
+                        
+                        <div class="row">
+
+                          {% comment %} <div class="col-md-10 col-sm-10 col-9"> {% endcomment %}
+                          <div class="col-md-12">
+                            <div id="select-diagnosis" class="select-diagnosis">
                               <button id="diagnosis-select">
                                 <div>Seleccionar</div>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="15.6" height="15.6" viewBox="0 0 24 24">
@@ -268,26 +442,33 @@
                             </div>
                           </div>
     
-                          <div class="col-md-2 col-sm-2 col-3 d-flex align-items-center justify-content-center9">
+                          {% comment %} <div class="col-md-2 col-sm-2 col-3 d-flex align-items-center justify-content-center9">
                             <button id="diagnosis-form-displayer" class="plus-button">
                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" fill="rgb(255, 255, 255)">
                                 <path d="M19 11H13V5a1 1 0 0 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2z"/>
                               </svg>
                             </button>
+                          </div> {% endcomment %}
+
+                          <div class="col-md-12 d-flex justify-content-center mt-3">
+                            <button id="patient-diagnosis-form-hider" class="abort-accordion-field-button secondary">
+                              No agregar
+                            </button>
                           </div>
 
                         </div>
 
-                        <div class="row">
-                          <div class="col-md-10 col-sm-10 col-9">
+                        <div class="row diagnosis-search-box">
+                          {% comment %} <div class="col-md-10 col-sm-10 col-9"> {% endcomment %}
+                          <div class="col-md-12">
                             <div class="select-search-wrapper">
-                              <div class="search-container">
+                              <div id="diagnosis-search-container" class="search-container">
                                 <div class="search-input-header">
                                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <circle cx="11" cy="11" r="8"/>
                                     <line x1="21" y1="21" x2="16.65" y2="16.65"/>
                                   </svg>
-                                  <input class="search-input" type="search" placeholder="Buscar...">
+                                  <input id="diagnosis-search-input" class="search-input" type="search" placeholder="Buscar...">
                                 </div>
                                 
                                 <div class="option-container">
@@ -308,7 +489,7 @@
 
                   </div>
 
-                  <div id="diagnosis-form-page" class="d-none">
+                  {% comment %} <div id="diagnosis-form-page" class="d-none">
 
                     <div class="card fetch-form">
 
@@ -357,7 +538,7 @@
 
                     </div>
 
-                  </div>
+                  </div> {% endcomment %}
 
                 </div>  
 
@@ -372,7 +553,7 @@
 
                       <div class="col-md-12">
   
-                        <div class="accordion" id="accordionExample">
+                        <div class="accordion" id="accordionEvolucion">
                           {% for record in evolution_records %}
                           <div class="accordion-item">
                             <h2 class="accordion-header">
@@ -398,7 +579,7 @@
                       <div class="col-md-12">
   
                         <button id="evolution-form-displayer" class="w-100 add-accordion-field-button">
-                          Agregar evolución
+                          Agregar registro
                         </button>
   
                       </div>
@@ -456,7 +637,7 @@
   
                       <div class="col-md-12">
   
-                        <div class="accordion" id="accordionExample">
+                        <div class="accordion" id="accordionTest">
                           {% for patient_test in patient_tests %}
                           <div class="accordion-item">
                             <h2 class="accordion-header">
@@ -493,30 +674,76 @@
 
                       <div class="col-md-2"></div>
 
-                      <div class="col-md-8">
+                      <div class="col-md-8 position-relative">
+
+                        {% comment %} <div id="test-detail-container" class="help-text test-help-text">
+                          <div class="help-content">
+                            <h5>test 3 ddddddddddd dddddddddd</h5>
+                            <p>Hello!
+                              I want to build Edit Profile from different models.
+                              I think it will be kind of major models Profile with Foreign Key in different models. I can have build view which post data excellent but when user reopen edit profile page fields doesnt show content.
+                              For example, Models have fields about University name, position etc. I open a page when to want to update information about me. I write name my university. Fields saves good. But when I reopen this forms, I dont see name my university.
+                              I have been trying to create it with Class-Based View, but it worked not good. So now Im trying to create it with Function-Based View.</p>
+                          </div>
+                        </div> {% endcomment %}
 
                         <div class="row">
   
-                          <div class="col-md-10 col-sm-10 col-9">
+                          <div class="col-md-12">
   
-                            <div class="form-field">
+                            {% comment %} <div class="form-field">
                               <label for={{ patient_test_form.test.id_for_label }}>{{ patient_test_form.test.label }}</label>
+                              {{ patient_test_form.test }}
+                            </div> {% endcomment %}
+
+                            <label for={{ patient_test_form.test.id_for_label }}>{{ patient_test_form.test.label }}</label>
+                            <div class="d-none">
                               {{ patient_test_form.test }}
                             </div>
   
                           </div>
   
-                          <div class="col-md-2 col-sm-2 col-3 d-flex align-items-center justify-content-center">
-                            <button id="test-form-displayer" class="plus-button">
-                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" fill="rgb(255, 255, 255)">
-                                <path d="M19 11H13V5a1 1 0 0 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2z"/>
-                              </svg>
-                            </button>
-                          </div>
-  
                         </div>
 
+                        
+                        
+
                         <div class="row">
+                          <div class="col-md-12">
+                            <div id="select-test" class="select-diagnosis">
+                              <button id="test-select">
+                                <div>Seleccionar</div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="15.6" height="15.6" viewBox="0 0 24 24">
+                                  <path d="M12 17.414L3.293 8.707l1.414-1.414L12 14.586l7.293-7.293 1.414 1.414L12 17.414z"/>
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row diagnosis-search-box">
+                          <div class="col-md-12">
+                            <div class="select-search-wrapper">
+                              <div id="test-search-container" class="search-container">
+
+                                {% comment %} <div class="search-input-header">
+                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"/>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                                  </svg>
+                                  <input id="test-search-input" class="search-input" type="search" placeholder="Buscar...">
+                                </div> {% endcomment %}
+                                
+                                <div class="option-container test-option-container">
+                                  <ul>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row mt-3 test-form-secondary">
 
                           <div class="col-md-12">
 
@@ -529,7 +756,7 @@
 
                         </div>
 
-                        <div class="row">
+                        <div class="row test-form-secondary">
 
                           <div class="col-md-12 d-flex justify-content-center mt-3">
                             <button id="patient-test-form-hider" class="abort-accordion-field-button secondary">
@@ -547,7 +774,7 @@
   
                   </div>
   
-                  <div id="test-form-page" class="d-none">
+                  {% comment %} <div id="test-form-page" class="d-none">
   
                     <div class="card fetch-form">
 
@@ -631,7 +858,7 @@
                     
                     </div>
   
-                  </div>
+                  </div> {% endcomment %}
 
                 </div>
                 
@@ -644,8 +871,35 @@
           </form>
           
         </div>
-        {% if patient_id %}
-        <button id="patient-deleter" type="button" class="btn pull-left delete-button secondary">Eliminar</button>
+
+        {% if patient %}
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-outline-danger delete-button pull-left" data-toggle="modal" data-target="#exampleModalCenter">
+          Eliminar
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">¿Eliminar paciente?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Confirma que quieres eliminar al paciente.
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button id="patient-deleter" type="button" class="btn delete-button confirmation-button">Eliminar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {% endif %}
 
       </div>

@@ -65,7 +65,7 @@ class Migration(migrations.Migration):
                 ('deleted_at', models.DateTimeField(blank=True, editable=False, null=True)),
                 ('conclusion', models.TextField(blank=True, null=True, verbose_name='conclusión')),
                 ('documento_adjunto', models.FileField(blank=True, null=True, upload_to=home.models.Patient.user_directory_path, verbose_name='Adjuntar documento')),
-                ('diagnosiso', models.ForeignKey(blank=True, default=None, null=True, on_delete=django.db.models.deletion.SET_DEFAULT, to='home.diagnosis', verbose_name='diagnóstico médico')),
+                ('diagnostico', models.ForeignKey(blank=True, default=None, null=True, on_delete=django.db.models.deletion.SET_DEFAULT, to='home.diagnosis', verbose_name='diagnóstico médico')),
             ],
             options={
                 'verbose_name': 'Paciente',

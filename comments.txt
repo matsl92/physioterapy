@@ -1,5 +1,18 @@
 TO DO
 
+Attribute name for AttachedFile model
+
+Pagination controls
+
+
+DONE
+
+Test 
+
+    help text for description
+
+Table header link
+
 Archivo adjunto
 
     Created at
@@ -8,26 +21,21 @@ Archivo adjunto
 
     Muestra lista y añadir
 
+add AttachedFileInline to Patient
+
 PatientDiagnosis
 
     patient
     created_at
     diagnosis
 
-Test 
+Add patient str in card header
 
-    help text for description
+tabular inline for patient_diagnosis in patient
 
 Delete confirmation dialog
 
 ELIMINAR with danger outline class
-
-Pagination controls
-
-Search bar for diagnosis select default
-
-
-DONE
 
 LOGIN MINUSCULA
 
@@ -75,20 +83,79 @@ Fetch for diagnosis as well as selecting and adding in diagnosis options
 OTHER
 
 
+Change diagnosis_form for patient_diagnosis_form
+
+create PatientDiagnosisForm
+
+    add django_patient_diagnosis_form
+
+    then JS
+
+list of patient_diagnoses
+
+form.html
+
+    home page 
+
+    form page
+
+JavaScript
+
+    Submit button should take into account the new class 
+
+    displayer and hider
 
 
 
 
+patient_form
+patient_diagnosis_form
+evolution_form
+patient_test_form
+evolution_records
+patient_diagnoses
+patient_tests
+
+diagnosis_form
+test_form
+
+diagnosis form page
 
 
 
 
+file = request.FILES.get('file')
+        print(file)
+        
+        complete_data = {
+                **request.POST,
+                **request.FILES,
+                **{'patient': Patient.objects.first()}
+            }
+        print(complete_data)
 
 
+def file_test(request):
+    if request.method == 'POST':
+        attached_file_form = AttachedFileForm(request.POST, request.FILES)
+        if attached_file_form.is_valid():
+            attached_file_form.save()
+            return redirect('home:patients')
+        else:
+            return HttpResponse(attached_file_form.errors.as_json())
+    if request.method == 'GET':
+        return render(request, 'home/file.html', {'form': AttachedFileForm()})
 
-
-
-
-
-
-
+class AttachedFile(models.Model):
+    patient = models.ForeignKey(Patient, models.CASCADE, verbose_name='paciente')
+    
+    def get_patient_directory_path(instance, filename):
+        # instance.name = filename
+        return f"paciente_{instance.patient.cedula}/{filename}"
+    
+    file = models.FileField('documento', upload_to=get_patient_directory_path)
+    create_at = models.DateField('fecha de adición', auto_now_add=True)
+    
+    class Meta:
+        verbose_name = 'documento adjunto'
+        verbose_name_plural = 'documentos adjuntos'
