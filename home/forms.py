@@ -67,11 +67,6 @@ class PatientForm(forms.ModelForm):
             'seguridad_social': forms.TextInput(attrs={
                 'class': 'django-patient-form'
             }),
-            # 'diagnostico': forms.Select(
-            #     choices=[get_diagnosis_options()],
-            #     attrs={
-            #     'class': 'django-patient-form'
-            # }),
             'motivo_consulta': forms.Textarea(attrs={
                 'rows': "3",
                 'class': 'django-patient-form'
@@ -95,10 +90,6 @@ class PatientForm(forms.ModelForm):
                 'rows': "3",
                 'class': 'django-patient-form'    
             }),
-            # 'documento_adjunto': forms.FileInput(attrs={
-            #     'class': 'django-patient-form',
-            # })
-            
         }
 
 class DiagnosisForm(forms.ModelForm):  # Fetch

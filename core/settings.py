@@ -24,7 +24,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'django-insecure-z&utwwg^#ds=&fondk4c!ia!&7m=p)^24fg3e*@(dn%@oi(c@3'
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -146,4 +145,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/login/'
 
-CSRF_TRUSTED_ORIGINS = [os.getenv('ROOT_URL'), 'https://ed9b-152-203-118-196.ngrok-free.app']
+CSRF_TRUSTED_ORIGINS = [os.getenv('ROOT_URL')]

@@ -224,6 +224,10 @@ input[type="file"] {
     margin: 10px 19px;
 }
 
+.accordion-button {
+    font-size: 14px;
+}
+
 /*--------------------------- Search input -----------------------------*/
 
 .diagnosis-search-box {
@@ -370,7 +374,7 @@ input[type="file"] {
     right: 20px;
     display: flex;
     justify-content: center;
-    padding: 10px;
+    padding: 10px 10px;
     z-index: 3;
     opacity: 1;
 }
@@ -378,7 +382,7 @@ input[type="file"] {
 .test-help-text {
     background-color: rgb(233 205 243);
     border-radius: 3px;
-    height: 143px;
+    height: 148px;
 }
 
 .help-text .help-content {
@@ -387,4 +391,12 @@ input[type="file"] {
 
 .help-content h5, .help-content p {
     text-align: center;
+}
+
+.help-content h5 {
+    font-size: 13px;
+}
+
+.help-content p {
+    font-size: 12px;
 }

@@ -2,7 +2,7 @@ const data = JSON.parse(document.getElementById('js-variables').textContent);
 const proxyURL = data.root_url;
 let headerHeight;
 let rowHeight;
-if (window.innerWidth > 606) {
+if (window.innerWidth > 610) {
     rowHeight = 46;
     headerHeight = 50;
 } else {

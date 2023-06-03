@@ -130,10 +130,6 @@ function validateMarkedInputs(tagClass) {
 
     if (inputs.length > 0) {
 
-        // for (let input of inputs) {
-        //     console.log(input, input.validity.valid);
-        // }
-
         let formIsValid = true
         for (let input of inputs) {
 
@@ -174,21 +170,8 @@ function validateMarkedInputs(tagClass) {
 // Submit functions
 function submitMainForm() {
     if (validateMarkedInputs('.django-patient-form')) {
-
-        // const secundaryInputs = document.querySelectorAll(
-        //     `.django-diagnosis-form,
-        //     .django-evolution-form,
-        //     .django-patient-test-form,
-        //     .django-patient-diagnosis-form`
-        // );
-
-        // secundaryInputs.forEach(input => {
-        //     input.required = false;
-        // })
-
         const mainForm = document.getElementById('main-form');
         mainForm.submit();
-
     }
 }
 
@@ -218,7 +201,6 @@ function clearMarkedFields(formLabel) {
 
 const diagnoses = [];
 const diagnosisOptionContainer = document.querySelector('#diagnosis-search-container .option-container ul');
-// const options = diagnosisOptionContainer.querySelectorAll('li');
 const diagnosisSearchInput = document.querySelector('#diagnosis-search-input');
 const selectDiagnosisButton = document.getElementById('diagnosis-select');
 const diagnosisSearchContainer = document.querySelector('#diagnosis-search-container');
@@ -306,7 +288,7 @@ function showTextDetails(id) {
         testDetailContainer.querySelector('div p').textContent = test.description;
     }
     else {
-        console.log(id)
+        console.log('No test found.')
     }
 }
 
@@ -323,21 +305,6 @@ function selectTest(id) {
     }
 }
 
-function filterAndAppendOptions(string) {
-    filteredOptions = tests.filter(test => {
-        return test.description.toLowerCase().includes(string.toLowerCase()) || 
-        test.code.toLowerCase().includes(string.toLowerCase());
-    })
-    testOptionContainer.innerHTML = "";
-    var option;
-    filteredOptions.forEach(test => {
-        option = document.createElement('li');
-        option.textContent = `${test.code} - ${test.description}`;
-        option.addEventListener('click', () => selectTest(test.id))
-        testOptionContainer.appendChild(option);
-    })
-}
-
 async function getTestOptions() {
     const response = await fetch(`${proxyURL}/test/lista`);
     const data = await response.json();
@@ -346,7 +313,6 @@ async function getTestOptions() {
     data.forEach(test => {
         tests.push(test);
     })
-    console.log(tests)
 
     testOptionContainer.innerHTML = '';
     var option;
@@ -364,15 +330,6 @@ async function getTestOptions() {
     })
 }
 
-async function setTestDefault() {
-    await getTestOptions();
-    let test = tests.find(test => test.id == testInput.value);
-    if (test) {
-        testButtonText.textContent = test.description;
-    }
-}
-
-// testSearchInput.addEventListener('input', (e) => filterAndAppendOptions(e.target.value));
 selectTestButton.addEventListener('click', (e) => {
     e.preventDefault()
     testFormSecondary.forEach(element => {
@@ -383,7 +340,6 @@ selectTestButton.addEventListener('click', (e) => {
 
 })
 window.addEventListener('load', () => {
-    // setTestDefault();
     getDiagnosisOptions();
     getTestOptions();
 })

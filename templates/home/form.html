@@ -14,12 +14,8 @@
 
           <div id="test-detail-container" class="help-text test-help-text d-none">
             <div class="help-content">
-              <h5>test 3 ddddddddddd dddddddddd</h5>
-              <p>Hello!
-                I want to build Edit Profile from different models.
-                I think it will be kind of major models Profile with Foreign Key in different models. I can have build view which post data excellent but when user reopen edit profile page fields doesnt show content.
-                For example, Models have fields about University name, position etc. I open a page when to want to update information about me. I write name my university. Fields saves good. But when I reopen this forms, I dont see name my university.
-                I have been trying to create it with Class-Based View, but it worked not good. So now Im trying to create it with Function-Based View.</p>
+              <h5></h5>
+              <p></p>
             </div>
           </div>
 
@@ -55,7 +51,7 @@
             </ul>
           </div>
 
-          <form id="main-form" action="" method="post" enctype="multipart/form-data">
+          <form id="main-form" action="" method="post" enctype="multipart/form-data" class="mb-5">
             {% csrf_token %}
 
             <div class="tab-content" id="pills-tabContent">
@@ -263,12 +259,13 @@
                           <div class="accordion-item">
                             <h2 class="accordion-header">
                               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-file-{{ forloop.counter }}" aria-expanded="true" aria-controls="collapseOne">
-                                {{ file }}
+                                {{ file.created_at }}
                               </button>
                             </h2>
                             <div id="collapse-file-{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                               <div class="accordion-body">
-                                {{ file.created_at }}
+                                {{ file.name }}
+                                <a href={{ file.file }}>{{ file.name }}</a>
                               </div>
                             </div>
                           </div>
@@ -309,7 +306,7 @@
                         </div>
 
                         <div class="row">
-                          <div class="col-md-12 d-flex justify-content-center">
+                          <div class="col-md-12 d-flex">
 
                             {{ attached_file_form.file }}
                             {% if patient %}
@@ -327,29 +324,6 @@
                           </div>
 
                         </div>
-
-                        
-
-                        {% comment %} <div class="row diagnosis-search-box">
-                          <div class="col-md-12">
-                            <div class="select-search-wrapper">
-                              <div class="search-container">
-                                <div class="search-input-header">
-                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="11" cy="11" r="8"/>
-                                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                                  </svg>
-                                  <input class="search-input" type="search" placeholder="Buscar...">
-                                </div>
-                                
-                                <div class="option-container">
-                                  <ul>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div> {% endcomment %}
 
                       </div>
 
@@ -378,12 +352,13 @@
                           <div class="accordion-item">
                             <h2 class="accordion-header">
                               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-patient-diagnosis{{ forloop.counter }}" aria-expanded="true" aria-controls="collapseOne">
-                                {{ patient_diagnosis }}
+                                {{ patient_diagnosis.created_at }}
                               </button>
                             </h2>
                             <div id="collapse-patient-diagnosis{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                               <div class="accordion-body">
-                                {{ patient_diagnosis.diagnosis }}
+                                <strong>{{ patient_diagnosis.diagnosis.diagnosis_code }}</strong> 
+                                {{ patient_diagnosis.diagnosis.diagnosis_description }}
                               </div>
                             </div>
                           </div>
@@ -430,7 +405,6 @@
                         
                         <div class="row">
 
-                          {% comment %} <div class="col-md-10 col-sm-10 col-9"> {% endcomment %}
                           <div class="col-md-12">
                             <div id="select-diagnosis" class="select-diagnosis">
                               <button id="diagnosis-select">
@@ -441,14 +415,6 @@
                               </button>
                             </div>
                           </div>
-    
-                          {% comment %} <div class="col-md-2 col-sm-2 col-3 d-flex align-items-center justify-content-center9">
-                            <button id="diagnosis-form-displayer" class="plus-button">
-                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40" fill="rgb(255, 255, 255)">
-                                <path d="M19 11H13V5a1 1 0 0 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2z"/>
-                              </svg>
-                            </button>
-                          </div> {% endcomment %}
 
                           <div class="col-md-12 d-flex justify-content-center mt-3">
                             <button id="patient-diagnosis-form-hider" class="abort-accordion-field-button secondary">
@@ -459,7 +425,6 @@
                         </div>
 
                         <div class="row diagnosis-search-box">
-                          {% comment %} <div class="col-md-10 col-sm-10 col-9"> {% endcomment %}
                           <div class="col-md-12">
                             <div class="select-search-wrapper">
                               <div id="diagnosis-search-container" class="search-container">
@@ -489,57 +454,6 @@
 
                   </div>
 
-                  {% comment %} <div id="diagnosis-form-page" class="d-none">
-
-                    <div class="card fetch-form">
-
-                      <div class="card-header card-header-primary">
-                        <h4 class="card-title">
-                          Nuevo diagnóstico
-                        </h4>
-                      </div>
-                      <div class="card-body">
-
-                        <div class="row">
-                      
-                          <div class="col-md-3">
-                            <div class="form-field">
-                              <label for={{ diagnosis_form.diagnosis_code.id_for_label }}>{{ diagnosis_form.diagnosis_code.label }}</label>
-                              {{ diagnosis_form.diagnosis_code }}
-                            </div>
-                          </div>
-    
-                          <div class="col-md-9">
-                            <div class="form-field">
-                              <label for={{ diagnosis_form.diagnosis_description.id_for_label }}>{{ diagnosis_form.diagnosis_description.label }}</label>
-                              {{ diagnosis_form.diagnosis_description }}
-                            </div>
-                          </div>
-    
-                        </div>
-
-                        <div class="row">
-
-                          <div class="col-md-12 d-flex justify-content-center mt-4">
-
-                            <button id="diagnosis-form-hider" class="fetch-control-button secondary">
-                              Cancelar
-                            </button>
-
-                            <button id="diagnosis-form-submitter" class="fetch-control-button primary">
-                              Guardar
-                            </button>
-
-                          </div>
-                          
-                        </div>
-
-                      </div>
-
-                    </div>
-
-                  </div> {% endcomment %}
-
                 </div>  
 
               </div>
@@ -558,7 +472,7 @@
                           <div class="accordion-item">
                             <h2 class="accordion-header">
                               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-evolucion-{{ forloop.counter }}" aria-expanded="true" aria-controls="collapseOne">
-                                {{ record }}
+                                {{ record.created_at }}
                               </button>
                             </h2>
                             <div id="collapse-evolucion-{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
@@ -642,7 +556,7 @@
                           <div class="accordion-item">
                             <h2 class="accordion-header">
                               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-test-{{ forloop.counter }}" aria-expanded="true" aria-controls="collapseOne">
-                                {{ patient_test }}
+                                {{ patient_test.test }}
                               </button>
                             </h2>
                             <div id="collapse-test-{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
@@ -676,25 +590,9 @@
 
                       <div class="col-md-8 position-relative">
 
-                        {% comment %} <div id="test-detail-container" class="help-text test-help-text">
-                          <div class="help-content">
-                            <h5>test 3 ddddddddddd dddddddddd</h5>
-                            <p>Hello!
-                              I want to build Edit Profile from different models.
-                              I think it will be kind of major models Profile with Foreign Key in different models. I can have build view which post data excellent but when user reopen edit profile page fields doesnt show content.
-                              For example, Models have fields about University name, position etc. I open a page when to want to update information about me. I write name my university. Fields saves good. But when I reopen this forms, I dont see name my university.
-                              I have been trying to create it with Class-Based View, but it worked not good. So now Im trying to create it with Function-Based View.</p>
-                          </div>
-                        </div> {% endcomment %}
-
                         <div class="row">
   
                           <div class="col-md-12">
-  
-                            {% comment %} <div class="form-field">
-                              <label for={{ patient_test_form.test.id_for_label }}>{{ patient_test_form.test.label }}</label>
-                              {{ patient_test_form.test }}
-                            </div> {% endcomment %}
 
                             <label for={{ patient_test_form.test.id_for_label }}>{{ patient_test_form.test.label }}</label>
                             <div class="d-none">
@@ -704,9 +602,6 @@
                           </div>
   
                         </div>
-
-                        
-                        
 
                         <div class="row">
                           <div class="col-md-12">
@@ -725,15 +620,6 @@
                           <div class="col-md-12">
                             <div class="select-search-wrapper">
                               <div id="test-search-container" class="search-container">
-
-                                {% comment %} <div class="search-input-header">
-                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="11" cy="11" r="8"/>
-                                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                                  </svg>
-                                  <input id="test-search-input" class="search-input" type="search" placeholder="Buscar...">
-                                </div> {% endcomment %}
-                                
                                 <div class="option-container test-option-container">
                                   <ul>
                                   </ul>

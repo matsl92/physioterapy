@@ -1,6 +1,13 @@
 from django.contrib import admin
-from .models import (Category, Patient, Test, PatientTest, 
-                     Evolution, Diagnosis, PatientDiagnosis, AttachedFile
+from .models import (
+    Category, 
+    Patient, 
+    Test, 
+    PatientTest, 
+    Evolution, 
+    Diagnosis, 
+    PatientDiagnosis, 
+    AttachedFile
 )
 
 class EvolutionInline(admin.TabularInline):

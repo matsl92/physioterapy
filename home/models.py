@@ -31,11 +31,6 @@ class Diagnosis(models.Model):
     created_at = models.DateField('fecha de creación', auto_now_add=True)
     is_active = models.BooleanField('activo', default=True)
     
-    """
-    foranea a diagnostico
-    activo bool mostrar solo activos
-    """
-    
     def __str__(self):
         return f"{self.diagnosis_code} - {self.diagnosis_description}"
     
@@ -150,18 +145,21 @@ class PatientDiagnosis(models.Model):
         verbose_name_plural = 'diagnósticos de pacientes'
 
 class AttachedFile(models.Model):
-    # name = models.CharField('nombre del archivo', max_length=100, editable=False, default=None, null=True)
-    patient = models.ForeignKey(Patient, models.CASCADE, verbose_name='paciente')
+    name = models.CharField('nombre del archivo', max_length=100, editable=False, default=None, null=True)
+    patient = models.ForeignKey(Patient, models.CASCADE, verbose_name='paciente', null=True, blank=True)
     
     def get_patient_directory_path(instance, filename):
-        # instance.name = filename
         return f"paciente_{instance.patient.cedula}/{filename}"
     
     file = models.FileField('documento', upload_to=get_patient_directory_path)
     created_at = models.DateField('fecha de adición', auto_now_add=True)
     
-    # def __str__(self):
-    #     return str(self.name)
+    def __str__(self):
+        return self.name
+    
+    def save(self, *args, **kwargs):
+        self.name = self.file.name.split('/')[-1]
+        super().save()
     
     class Meta:
         verbose_name = 'documento adjunto'

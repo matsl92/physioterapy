@@ -111,19 +111,13 @@ def create_patient(request):
             msgs.append("Se guardó el nuevo paciente.")
             
             if request.FILES.get('file') != None:
-                data = {
-                    # **request.FILES,
-                    **request.POST,
-                    **{'patient': patient,
-                       'file': request.FILES.get('file')}
-                }
-                # print('data: ', data)
-                attached_file_form = AttachedFileForm(data)
+                attached_file_form = AttachedFileForm(request.POST, request.FILES)
                 if attached_file_form.is_valid():
-                    attached_file_form.save()
+                    attached_file = attached_file_form.save(commit=False)
+                    attached_file.patient = patient
+                    attached_file.save()
                     msgs.append("Se añadió un archivo al paciente.")
                 else:
-                    # print('errors: ', attached_file_form.errors.as_data())
                     errors['No_se_añadió_un_archivo_al_paciente'] = attached_file_form.errors
             
             if request.POST.get('diagnosis') != '':
