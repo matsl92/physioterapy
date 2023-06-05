@@ -1,5 +1,27 @@
 TO DO
 
+Favicon
+
+Add gradient in login logo
+
+logo in home insted of "Inicio"
+
+fetch for attachedfile
+
+Quitar campo actividad fisica
+
+Simplify messages when everything
+
+Result field type should be variable
+
+Fix scroll for diagnoses and tests
+
+Poner documentos en historia clínica
+
+Add number of patients lowest left color gray
+
+Add serach filter
+
 Pagination controls
 
 
@@ -124,38 +146,82 @@ diagnosis form page
 
 
 
-file = request.FILES.get('file')
-        print(file)
-        
-        complete_data = {
-                **request.POST,
-                **request.FILES,
-                **{'patient': Patient.objects.first()}
-            }
-        print(complete_data)
+
+nPages = 20
+
+nControlsPerPagination = 5
+
+currentLowestControlIndex = 1
+
+currenthighestControlIndex = currentLowestControlIndex + nControlsPerPagination - 1
+
+if nPages > 5:
+
+    createPaginationForPaginationControls
 
 
-def file_test(request):
-    if request.method == 'POST':
-        attached_file_form = AttachedFileForm(request.POST, request.FILES)
-        if attached_file_form.is_valid():
-            attached_file_form.save()
-            return redirect('home:patients')
-        else:
-            return HttpResponse(attached_file_form.errors.as_json())
-    if request.method == 'GET':
-        return render(request, 'home/file.html', {'form': AttachedFileForm()})
 
-class AttachedFile(models.Model):
-    patient = models.ForeignKey(Patient, models.CASCADE, verbose_name='paciente')
-    
-    def get_patient_directory_path(instance, filename):
-        # instance.name = filename
-        return f"paciente_{instance.patient.cedula}/{filename}"
-    
-    file = models.FileField('documento', upload_to=get_patient_directory_path)
-    create_at = models.DateField('fecha de adición', auto_now_add=True)
-    
-    class Meta:
-        verbose_name = 'documento adjunto'
-        verbose_name_plural = 'documentos adjuntos'
+function getNextPageOfButtons
+    currenthighestControlIndex = currenthighestControlIndex + nControlsPerPagination <= nPages ? 
+    currenthighestControlIndex + nControlsPerPagination : nPages;
+
+    currentLowestControlIndex = currenthighestControlIndex - nControlsPerPagination + 1;
+
+function getPreviousPageOfButtons
+    currentLowestControlIndex = currentLowestControlIndex - nControlsPerPagination <= 1 ?
+    currentLowestControlIndex - nControlsPerPagination : 1;
+
+    currenthighestControlIndex = currentLowestControlIndex + nControlsPerPagination - 1;
+
+function appendCurrentPaginationButtons(first, last) {
+
+}
+
+
+----------------------------------------------------------
+currentLowestControlIndex
+
+nPages
+
+hideAndDisplayButtons(lowest)
+    const paginationControls = document.querySelectorAll()
+    paginationControls.forEach((control, index) => {
+        if (index >= lowest && index < lowest + nControlsPerPagination)
+            control.classList.remove('d-none')
+        else
+            control.classList.add('d-none')
+
+    })
+
+
+goToNextPage
+   
+    if (currentLowestControlIndex + nControlsPerPagination * 2 < nPages)
+        currentLowestControlIndex += nControlsPerPagination * 2
+    else
+        currentLowestControlIndex = nPages - nControlsPerPagination + 1
+
+goToPreviousPage
+
+    if (currentLowestControlIndex - nControlsPerPagination > 0)
+        currentLowestControlIndex -= nControlsPerPagination
+    else
+        currentLowestControlIndex = 11
+
+
+
+appendPaginationControls
+
+
+
+
+
+addPaginationControls
+
+    if nPages > nControlsPerPagination
+        prev
+        appendPaginationControls
+        next
+    else
+        appendPaginationControls
+

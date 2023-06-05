@@ -6,7 +6,8 @@ from django.template import loader
 from django import template
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
-from django.forms.models import model_to_dict
+import json
+import os
 from .forms import (
     PatientForm, 
     DiagnosisForm, 
@@ -16,9 +17,14 @@ from .forms import (
     PatientDiagnosisForm,
     AttachedFileForm
 )
-from .models import Patient, Evolution, PatientTest, PatientDiagnosis, AttachedFile, Test
-import json
-import os
+from .models import (
+    Patient, 
+    Evolution, 
+    PatientTest, 
+    PatientDiagnosis, 
+    AttachedFile, 
+    Test
+)
 from dotenv import load_dotenv
 
 # For web scraping. Used in populate_database view.
@@ -26,6 +32,7 @@ from bs4 import BeautifulSoup
 import requests
 from .models import Diagnosis
 
+# Variables
 load_dotenv()
 root_url = os.getenv('ROOT_URL')
 
@@ -382,7 +389,7 @@ def populatate_database(request):
     for diagnosis in list(Diagnosis.objects.all())]
     return JsonResponse(data, safe=False)
         
-def file_test(request):
+
     
     # if request.method == 'POST':
     #     patient = Patient.objects.first()

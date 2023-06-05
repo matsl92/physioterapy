@@ -1,3 +1,13 @@
+:root {
+    --purple: rgb(107, 100, 151);
+    --blue: rgb(100, 161, 212);
+}
+
+.logo a img{
+    height: 52px;
+    width: 52px;
+}
+
 .content {
     height: calc(100vh - 68px);
 }

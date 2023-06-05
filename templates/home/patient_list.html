@@ -64,16 +64,22 @@
 
 
 
-        <nav id="paginate-navbar" class="" aria-label="Page navigation example">
+        {% comment %} <nav id="paginate-navbar" class="" aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
 
             
                 </ul>
             </ul>
+        </nav> {% endcomment %}
+
+        <nav id="paginate-navbar" class="" aria-label="Page navigation example">
+            <div class="d-flex justify-content-center">
+                <ul class="pagination nav nav-pills mb-3" id="pills-tab" role="tablist">
+                
+                </ul>
+            </div>
         </nav>
-
-
 
         <div class="components d-none">
 
@@ -93,6 +99,21 @@
 
         </div>
 
+        {% comment %} <template id="pagination-control-container">
+            <nav id="paginate-navbar" class="" aria-label="Page navigation example">
+                <div class="pagination justify-content-center">
+                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    
+                    </ul>
+                </div>
+            </nav>
+        </template> {% endcomment %}
+            
+        <template id="pagination-control">
+            <div class="page-item control-button">
+                <a class="page-link" data-bs-toggle="pill" role="tab" id="pills-2-tab" data-bs-target="#pills-2" aria-controls="pills-2" aria-selected="false" tabindex="-1">2</a>
+            </div>
+        </template>
 
 
 {% endblock content %}

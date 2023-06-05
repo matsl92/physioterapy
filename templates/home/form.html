@@ -25,7 +25,7 @@
 
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
               <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="pills-demograficos-tab" data-bs-toggle="pill" data-bs-target="#pills-demograficos" type="button" role="tab" aria-controls="pills-demograficos" aria-selected="true">Demográficos</button>
+                <button class="nav-link active" id="pills-demograficos-tab" data-bs-toggle="pill" data-bs-target="#pills-demograficos" type="button" role="tab" aria-controls="pills-demograficos" aria-selected="true">Datos demográficos</button>
               </li>
               <li class="nav-item" role="presentation">
                 <button class="nav-link" id="pills-acompanante-tab" data-bs-toggle="pill" data-bs-target="#pills-acompanante" type="button" role="tab" aria-controls="pills-acompanante" aria-selected="false">Acompañante</button>
@@ -264,8 +264,7 @@
                             </h2>
                             <div id="collapse-file-{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                               <div class="accordion-body">
-                                {{ file.name }}
-                                <a href={{ file.file }}>{{ file.name }}</a>
+                                <a href={{ MEDIA_URL }}{{ file.file }}>{{ file.name }}</a>
                               </div>
                             </div>
                           </div>

@@ -13,15 +13,16 @@ const pad = 15; // padding card-body
 const cardBodyHeight = window.innerHeight - 265;
 const availableHeight = cardBodyHeight - pad - headerHeight;
 const nPatientPerPage = availableHeight >= rowHeight ? Math.floor(availableHeight / rowHeight) : 1;
-
+let nPages;
 
 async function getPatients() {
     const response = await fetch(`${proxyURL}/paciente/lista`);
     const data = await response.json();
-    const totalPages = Math.ceil(data.length / nPatientPerPage);
+    nPages = Math.ceil(data.length / nPatientPerPage);
     if (data.length > nPatientPerPage) {
-        createPagination(data, totalPages);
-        createPaginationControls(totalPages);
+        createPagination(data, nPages);
+        // createPaginationControls(nPages);
+        addPaginationControls();
     } else {
         populateTableBody(data);
     }
@@ -60,14 +61,14 @@ function populateTableBody(data) {
     
 }
 
-function createPagination(data, totalPages) {
+function createPagination(data, nPages) {
 
     
 
     const tabContent = document.getElementById('pills-tabContent');
     
     // Iterate over the pages
-    for (let page = 1; page <= totalPages; page++) {
+    for (let page = 1; page <= nPages; page++) {
         const tableHead = document.getElementById('head-template').content.cloneNode(true);
 
         const tabPane = document.createElement('div');
@@ -121,47 +122,79 @@ function createPagination(data, totalPages) {
     // activeTabPane.classList.add('show', 'active');
 }
 
-function createPaginationControls(totalPages) {
 
-    const unorderedList = document.querySelector('.nav.nav-pills');
+// --------------------------- Pagination for paginating buttons --------------------------
 
-    function addPaginationLinks() {
-        const liTag = document.createElement('a');
-        liTag.classList.add('page-item');
-        const aTag = document.createElement('a');
-        aTag.classList.add('page-link');
-        aTag.setAttribute('data-bs-toggle', 'pill');
-        aTag.setAttribute('role', 'tab');
+const nControlsPerPagination = 5;
 
-        var liElement;
-        var aElement;
-        for (let index = 1; index <= totalPages; index++) {
-            aElement = aTag.cloneNode();
-            aElement.id = `pills-${index}-tab`;
-            aElement.setAttribute('data-bs-target', `#pills-${index}`);
-            aElement.setAttribute('aria-controls', `pills-${index}`);
-            aElement.textContent = index;
-            liElement = liTag.cloneNode();
-            if (index == 1) {
-                aElement.classList.add('active');
-                aElement.setAttribute('aria-selected', 'true');
-            } else {
-                aElement.setAttribute('aria-selected', 'false');
-            }
-            liElement.appendChild(aElement);
-            unorderedList.appendChild(liElement)
+let currentLowestControlIndex = 1;
+
+const unorderedList = document.querySelector('.nav.nav-pills');
+
+function hideAndDisplayButtons() {
+    const paginationControls = unorderedList.querySelectorAll('.page-item.control-button');
+    paginationControls.forEach((control, index) => {
+        if ((index + 1 >= currentLowestControlIndex) && (index + 1 < currentLowestControlIndex + nControlsPerPagination)) {
+            control.classList.remove('d-none');
+        } else {
+            control.classList.add('d-none');
         }
-    }
+    })
+}
 
-    if (totalPages > 3) {
-        const previousControl = document.querySelector('.arrow-paginator.previous');
-        const nextControl = document.querySelector('.arrow-paginator.next');
-        unorderedList.appendChild(previousControl);
-        addPaginationLinks();
-        unorderedList.appendChild(nextControl);
+function goToNextPage() {
+    if (currentLowestControlIndex + nControlsPerPagination * 2 < nPages) {
+        currentLowestControlIndex += nControlsPerPagination;
     } else {
-        addPaginationLinks()
+        currentLowestControlIndex = nPages - nControlsPerPagination + 1;
+    }
+    hideAndDisplayButtons();
+}
+
+function goToPreviousPage() {
+    if (currentLowestControlIndex - nControlsPerPagination > 0) {
+        currentLowestControlIndex -= nControlsPerPagination;
+    } else {
+        currentLowestControlIndex = 1;
+    }
+    hideAndDisplayButtons();
+}
+
+function appendPaginationControls() {
+    let paginationControl;
+    let paginationLink;
+    for (let i = 1; i <= nPages; i++) {
+        paginationControl = document.getElementById('pagination-control').content.cloneNode(true).querySelector('.page-item.control-button').cloneNode(true);
+        paginationLink = paginationControl.querySelector('.page-link');
+        paginationLink.setAttribute('id', `pills-${i}-tab`);
+        paginationLink.setAttribute('data-bs-target', `#pills-${i}`);
+        paginationLink.setAttribute('aria-controls', `pills-${i}`);
+        paginationLink.textContent = i;
+        if (i == 1) {
+            paginationLink.classList.add('active');
+            paginationLink.setAttribute('aria-selected', 'true');
+        } else {
+            paginationLink.setAttribute('aria-selected', 'false');
+        }
+        unorderedList.appendChild(paginationControl);
     }
 }
+
+function addPaginationControls() {
+    if (nPages > nControlsPerPagination) {
+        const previousControl = document.querySelector('.arrow-paginator.previous');
+        const nextControl = document.querySelector('.arrow-paginator.next');
+        previousControl.addEventListener('click', goToPreviousPage);
+        nextControl.addEventListener('click', goToNextPage);
+        unorderedList.appendChild(previousControl);
+        appendPaginationControls();
+        unorderedList.appendChild(nextControl);
+        hideAndDisplayButtons();
+    } else {
+        appendPaginationControls();
+    }
+}
+
+
 
 window.addEventListener('load', getPatients);

@@ -5,7 +5,9 @@
         Tip 2: you can also add an image using data-image tag
       -->
       <div class="logo">
-        <a href={% url 'home:patients' %} class="simple-text logo-normal">Inicio</a>
+        <a href={% url 'home:patients' %} class="simple-text logo-normal">
+          <img src={% static 'assets/img/PneumaLogo-2-favicon.png' %} alt="">
+        </a>
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
