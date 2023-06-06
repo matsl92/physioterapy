@@ -7,14 +7,16 @@ if (window.innerWidth > 610) {
     rowHeight = 46;
     headerHeight = 50;
     nControlsPerPagination = 5;
+    document.querySelector('.position-absolute.patient-count').classList.remove('d-none');
 } else {
     rowHeight = 67;
     headerHeight = 75.5;
     nControlsPerPagination = 3;
 }
+const searchInputHight = 25;
 const pad = 15; // padding card-body
 const cardBodyHeight = window.innerHeight - 265;
-const availableHeight = cardBodyHeight - pad - headerHeight;
+const availableHeight = cardBodyHeight - pad - headerHeight - searchInputHight;
 const nPatientPerPage = availableHeight >= rowHeight ? Math.floor(availableHeight / rowHeight) : 1;
 let nPages;
 

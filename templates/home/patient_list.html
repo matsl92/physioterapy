@@ -17,6 +17,28 @@
                         <p class="card-category">Orden por última actualización</p>
                     </div>
                     <div class="card-body patient-list-container">
+
+
+                        <div class="search-input-header d-flex justify-content-end">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <circle cx="11" cy="11" r="8"></circle>
+                              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                            <input id="patient-search-input" class="search-input" type="search" placeholder="Buscar...">
+                        </div>
+
+                        {% comment %} <div class="search-bar">
+                            <input type="search" class="search-input">
+                        </div> {% endcomment %}
+
+                        {% comment %} <nav class="navbar navbar-light bg-light justify-content-between">
+                            <a class="navbar-brand">Navbar</a>
+                            <form class="form-inline">
+                              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                            </form>
+                        </nav> {% endcomment %}
+
                         <div class="table-responsive">
 
                             <div class="tab-content" id="pills-tabContent">
@@ -73,11 +95,14 @@
             </ul>
         </nav> {% endcomment %}
 
-        <nav id="paginate-navbar" class="" aria-label="Page navigation example">
+        <nav id="paginate-navbar" class="position-relative" aria-label="Page navigation example">
             <div class="d-flex justify-content-center">
                 <ul class="pagination nav nav-pills mb-3" id="pills-tab" role="tablist">
                 
                 </ul>
+            </div>
+            <div class="position-absolute patient-count d-none">
+                <i>Total de pacientes {{ list_length }}</i>
             </div>
         </nav>
 

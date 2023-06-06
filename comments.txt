@@ -10,12 +10,12 @@ Fix scroll for diagnoses and tests
 
 Poner documentos en historia clínica
 
-Add number of patients lowest left color gray
-
 Add serach filter
 
 
 DONE
+
+Add number of patients lowest left color gray
 
 Simplify messages when everything goes fine
 

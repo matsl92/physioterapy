@@ -381,8 +381,28 @@ input[type="file"] {
 }
 
 .patient-list-container {
-    /* min-height: calc(100vh - 265px); */
     height: calc(100vh - 265px);
+}
+
+.patient-list-container .search-input-header svg {
+    transform: scale(0.6);
+    position: absolute;
+    right: 25px;
+}
+
+.patient-list-container .search-input-header .search-input {
+    margin-right: 23px;
+    border: 1px solid rgb(202 200 203);
+    border-radius: 5px;
+    padding-left: 6px;
+    color: rgb(132 126 135);
+    
+}
+
+.patient-count {
+    right: 5px;
+    top: 5px;
+    color: rgb(118 118 118);
 }
 
 /* ------------------------------ Test ---------------------------------- */
