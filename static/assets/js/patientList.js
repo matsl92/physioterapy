@@ -177,7 +177,8 @@ function appendPaginationControls() {
     let paginationControl;
     let paginationLink;
     for (let i = 1; i <= nPages; i++) {
-        paginationControl = document.getElementById('pagination-control').content.cloneNode(true).querySelector('.page-item.control-button').cloneNode(true);
+        const templateElements = document.getElementById('template-elements').content.cloneNode(true);
+        paginationControl = templateElements.querySelector('.page-item.control-button').cloneNode(true);
         paginationLink = paginationControl.querySelector('.page-link');
         paginationLink.setAttribute('id', `pills-${i}-tab`);
         paginationLink.setAttribute('data-bs-target', `#pills-${i}`);
@@ -195,8 +196,9 @@ function appendPaginationControls() {
 
 function addPaginationControls() {
     if (nPages > nControlsPerPagination) {
-        const previousControl = document.querySelector('.arrow-paginator.previous');
-        const nextControl = document.querySelector('.arrow-paginator.next');
+        const templateElements = document.getElementById('template-elements').content.cloneNode(true);
+        const previousControl = templateElements.querySelector('.arrow-paginator.previous');
+        const nextControl = templateElements.querySelector('.arrow-paginator.next');
         previousControl.addEventListener('click', goToPreviousPage);
         nextControl.addEventListener('click', goToNextPage);
         unorderedList.appendChild(previousControl);
