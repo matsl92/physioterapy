@@ -18,26 +18,41 @@ const pad = 15; // padding card-body
 const cardBodyHeight = window.innerHeight - 265;
 const availableHeight = cardBodyHeight - pad - headerHeight - searchInputHight;
 const nPatientPerPage = availableHeight >= rowHeight ? Math.floor(availableHeight / rowHeight) : 1;
+const patients = [];
 let nPages;
 
 async function getPatients() {
     const response = await fetch(`${proxyURL}/paciente/lista`);
     const data = await response.json();
-    nPages = Math.ceil(data.length / nPatientPerPage);
-    if (data.length > nPatientPerPage) {
-        createPagination(data, nPages);
-        // createPaginationControls(nPages);
+    data.forEach(patient => {
+        patients.push(patient);
+    })
+    addPatients(patients);
+
+    // nPages = Math.ceil(data.length / nPatientPerPage);
+    // if (data.length > nPatientPerPage) {
+    //     createPagination(data, nPages);
+    //     addPaginationControls();
+    // } else {
+    //     populateTableBody(data);
+    // }
+}
+
+function addPatients(patients) {
+    nPages = Math.ceil(patients.length / nPatientPerPage);
+    if (patients.length > nPatientPerPage) {
+        createPagination(patients, nPages);
         addPaginationControls();
     } else {
-        populateTableBody(data);
+        populateTableBody(patients);
     }
 }
 
-function populateTableBody(data) {
+function populateTableBody(patients) {
     const tableBody = document.createElement('tbody');
     const tableHead = document.getElementById('head-template').content.cloneNode(true);
 
-    data.forEach(patient => {
+    patients.forEach(patient => {
         var row = document.createElement('tr');
         var cedula = document.createElement('td');
         cedula.textContent = patient.cedula;
@@ -66,7 +81,7 @@ function populateTableBody(data) {
     
 }
 
-function createPagination(data, nPages) {
+function createPagination(patients, nPages) {
 
     
 
@@ -86,10 +101,10 @@ function createPagination(data, nPages) {
         const endIndex = startIndex + nPatientPerPage;
         
         // Slice the data to get objects for the current page
-        const pageData = data.slice(startIndex, endIndex);
+        const pagePatients = patients.slice(startIndex, endIndex);
         
         // Create a table row for each object on the current page
-        pageData.forEach(patient => {
+        pagePatients.forEach(patient => {
             const row = document.createElement('tr');
             
             // Add table cells with patient information
@@ -118,13 +133,6 @@ function createPagination(data, nPages) {
         }
         tabContent.appendChild(tabPane);
     }
-
-    // const navLink = document.getElementById("pills-1-tab");
-
-
-    // navLink.classList.add('active');
-    // const activeTabPane = document.getElementById('pills-1');
-    // activeTabPane.classList.add('show', 'active');
 }
 
 
@@ -198,6 +206,24 @@ function addPaginationControls() {
     }
 }
 
+
+// ------------------------------------- Search bar ---------------------------------------
+
+function filterAndAddPatients() {
+    const filter = searchInput.value.toLowerCase();
+    const matchingPatients = patients.filter(patient => {
+        return String(patient.cedula).includes(filter) ||
+        String(patient.nombre).toLowerCase().includes(filter) ||
+        String(patient.apellidos).toLowerCase().includes(filter) ||
+        String(patient.telefono).toLowerCase().includes(filter) ||
+        String(patient.updated_at).toLowerCase().includes(filter)
+    })
+    console.log(matchingPatients);
+    // addPatients(matchingPatients);
+}
+
+const searchInput = document.getElementById('patient-search-input');
+searchInput.addEventListener('input', filterAndAddPatients)
 
 
 window.addEventListener('load', getPatients);
