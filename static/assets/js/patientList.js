@@ -49,8 +49,11 @@ function addPatients(patients) {
 }
 
 function populateTableBody(patients) {
+    const tabContent = document.getElementById('pills-tabContent');
+    const templateElements = document.getElementById('template-elements').content.cloneNode(true);
+    const tableHead = templateElements.getElementById('head-template');
+    const table = templateElements.querySelector('table');
     const tableBody = document.createElement('tbody');
-    const tableHead = document.getElementById('head-template').content.cloneNode(true);
 
     patients.forEach(patient => {
         var row = document.createElement('tr');
@@ -75,9 +78,9 @@ function populateTableBody(patients) {
         tableBody.appendChild(row);
     })
 
-    const table = document.querySelector('table');
     table.appendChild(tableHead);
     table.appendChild(tableBody);
+    tabContent.appendChild(table);
     
 }
 

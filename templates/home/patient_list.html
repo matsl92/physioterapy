@@ -29,10 +29,10 @@
 
                         <div class="table-responsive">
 
-                            <div class="tab-content" id="pills-tabContent">   <!-- Referenced -->
+                            {% comment %} <div class="tab-content" id="pills-tabContent">   <!-- Referenced -->
                                 {% if list_length %}
 
-                                {% comment %} <table class="table table-hover mb-0">  <!-- Copied -->
+                                <table class="table table-hover mb-0">  <!-- Copied -->
                                     
                                     <template id="head-template">  <!-- Copied -->
                                         <thead class="text-primary">
@@ -57,7 +57,7 @@
                                         </thead>
                                     </template>
                                     
-                                </table> {% endcomment %}
+                                </table>
 
                                 {% else %}
                                 <div class="d-flex justify-content-center">
@@ -66,7 +66,7 @@
                                 {% endif %}
                     
                             
-                            </div>
+                            </div> {% endcomment %}
 
 
 
@@ -114,7 +114,7 @@
                                     </thead>
                                 </table>
 
-                                
+
 
                             </template>
                                 
