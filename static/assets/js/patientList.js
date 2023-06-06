@@ -13,6 +13,7 @@ if (window.innerWidth > 610) {
     headerHeight = 75.5;
     nControlsPerPagination = 3;
 }
+const tabContent = document.getElementById('pills-tabContent');
 const searchInputHight = 25;
 const pad = 15; // padding card-body
 const cardBodyHeight = window.innerHeight - 265;
@@ -49,7 +50,6 @@ function addPatients(patients) {
 }
 
 function populateTableBody(patients) {
-    const tabContent = document.getElementById('pills-tabContent');
     const templateElements = document.getElementById('template-elements').content.cloneNode(true);
     const tableHead = templateElements.getElementById('head-template');
     const table = templateElements.querySelector('table');
@@ -85,11 +85,6 @@ function populateTableBody(patients) {
 }
 
 function createPagination(patients, nPages) {
-
-    
-
-    const tabContent = document.getElementById('pills-tabContent');
-    
     // Iterate over the pages
     for (let page = 1; page <= nPages; page++) {
         const templateElements = document.getElementById('template-elements').content.cloneNode(true);
@@ -222,8 +217,9 @@ function filterAndAddPatients() {
         String(patient.telefono).toLowerCase().includes(filter) ||
         String(patient.updated_at).toLowerCase().includes(filter)
     })
-    console.log(matchingPatients);
-    // addPatients(matchingPatients);
+    unorderedList.setHTML('');
+    tabContent.setHTML('');
+    addPatients(matchingPatients);
 }
 
 const searchInput = document.getElementById('patient-search-input');
