@@ -27,25 +27,14 @@
                             <input id="patient-search-input" class="search-input" type="search" placeholder="Buscar...">
                         </div>
 
-                        {% comment %} <div class="search-bar">
-                            <input type="search" class="search-input">
-                        </div> {% endcomment %}
-
-                        {% comment %} <nav class="navbar navbar-light bg-light justify-content-between">
-                            <a class="navbar-brand">Navbar</a>
-                            <form class="form-inline">
-                              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                            </form>
-                        </nav> {% endcomment %}
-
                         <div class="table-responsive">
 
-                            <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-content" id="pills-tabContent">   <!-- Referenced -->
                                 {% if list_length %}
-                                <table class="table table-hover mb-0">
+
+                                {% comment %} <table class="table table-hover mb-0">  <!-- Copied -->
                                     
-                                    <template id="head-template">
+                                    <template id="head-template">  <!-- Copied -->
                                         <thead class="text-primary">
                                             <th>
                                                 Cédula
@@ -68,7 +57,8 @@
                                         </thead>
                                     </template>
                                     
-                                </table>
+                                </table> {% endcomment %}
+
                                 {% else %}
                                 <div class="d-flex justify-content-center">
                                     <h4>No hay pacientes registrados</h4>
@@ -77,6 +67,60 @@
                     
                             
                             </div>
+
+
+
+
+
+
+
+
+                            <div class="tab-content" id="pills-tabContent">   <!-- Referenced -->
+                                {% if list_length %}
+                                
+                                {% else %}
+                                <div class="d-flex justify-content-center">
+                                    <h4>No hay pacientes registrados</h4>
+                                </div>
+                                {% endif %}
+                    
+                            
+                            </div>
+
+
+
+                            <template id="template-elements"> 
+
+                                <table class="table table-hover mb-0">  <!-- Copied -->
+                                    <thead id="head-template" class="text-primary">
+                                        <th>
+                                            Cédula
+                                        </th>
+                                        <th>
+                                            Nombre
+                                        </th>
+                                        <th>
+                                            Apellidos
+                                        </th>
+                                        <th>
+                                            Teléfono
+                                        </th>
+                                        <th>
+                                            Última actualización
+                                        </th>
+                                        <th>
+                                            Link
+                                        </th>
+                                    </thead>
+                                </table>
+
+                                
+
+                            </template>
+                                
+
+
+                            
                             
                         </div>
                     </div>
@@ -102,7 +146,7 @@
                 </ul>
             </div>
             <div class="position-absolute patient-count d-none">
-                <i>Total de pacientes {{ list_length }}</i>
+                <i>Total de pacientes: {{ list_length }}</i>
             </div>
         </nav>
 

@@ -89,11 +89,12 @@ function createPagination(patients, nPages) {
     
     // Iterate over the pages
     for (let page = 1; page <= nPages; page++) {
-        const tableHead = document.getElementById('head-template').content.cloneNode(true);
+        const templateElements = document.getElementById('template-elements').content.cloneNode(true);
+        const tableHead = templateElements.getElementById('head-template').cloneNode(true);
 
         const tabPane = document.createElement('div');
         // const table = document.querySelector('table').cloneNode(true);
-        const table = document.querySelector('table').cloneNode();
+        const table = templateElements.querySelector('table').cloneNode();
         const tableBody = document.createElement('tbody');
 
         // Determine the start and end index of objects for the current page
@@ -107,7 +108,6 @@ function createPagination(patients, nPages) {
         pagePatients.forEach(patient => {
             const row = document.createElement('tr');
             
-            // Add table cells with patient information
             row.innerHTML = `
             <td>${patient.cedula}</td>
             <td>${patient.nombre}</td>
@@ -117,7 +117,6 @@ function createPagination(patients, nPages) {
             <th><a href="/paciente/actualizar/${patient.cedula}">Ver</a></th>
             `;
             
-            // Append the row to the table body
             tableBody.appendChild(row);
         });
         table.appendChild(tableHead);
