@@ -123,7 +123,7 @@ def create_patient(request):
                     attached_file = attached_file_form.save(commit=False)
                     attached_file.patient = patient
                     attached_file.save()
-                    msgs.append("Se añadió un archivo al paciente.")
+                    # msgs.append("Se añadió un archivo al paciente.")
                 else:
                     errors['No_se_añadió_un_archivo_al_paciente'] = attached_file_form.errors
             
@@ -134,7 +134,7 @@ def create_patient(request):
                 })
                 if patient_diagnosis_form.is_valid():
                     patient_diagnosis_form.save()
-                    msgs.append("Se añadió un diagnóstico al paciente.")
+                    # msgs.append("Se añadió un diagnóstico al paciente.")
                 else:
                     errors['No_se_añadió_un_diagnóstico_al_paciente'] = patient_diagnosis_form.errors
             
@@ -145,7 +145,7 @@ def create_patient(request):
                 })
                 if evolution_form.is_valid():
                     evolution_form.save()
-                    msgs.append("Se añadió una evolución al paciente.")
+                    # msgs.append("Se añadió una evolución al paciente.")
                 else:
                     errors['No_se_añadió_una_evolución_al_paciente'] = evolution_form.errors
             
@@ -156,7 +156,7 @@ def create_patient(request):
                 })
                 if patient_test_form.is_valid():
                     patient_test_form.save()
-                    msgs.append("Se añadió un test al paciente.")
+                    # msgs.append("Se añadió un test al paciente.")
                 else:
                     errors['No_se_añadió_un_test_al_paciente'] = patient_test_form.errors
             
@@ -212,7 +212,7 @@ def update_patient(request, id):
                 )
                 if attached_file_form.is_valid():
                     attached_file_form.save()
-                    msgs.append("Se añadió un archivo al paciente.")
+                    # msgs.append("Se añadió un archivo al paciente.")
                 else:
                     errors['No_se_añadió_un_archivo_al_paciente'] = attached_file_form.errors
             
@@ -223,7 +223,7 @@ def update_patient(request, id):
                 })
                 if patient_diagnosis_form.is_valid():
                     patient_diagnosis_form.save()
-                    msgs.append("Se añadió un diagnóstico al paciente.")
+                    # msgs.append("Se añadió un diagnóstico al paciente.")
                 else:
                     errors['No_se_añadió_un_diagnóstico_al_paciente'] = patient_diagnosis_form.errors
             
@@ -234,7 +234,7 @@ def update_patient(request, id):
                 })
                 if evolution_form.is_valid():
                     evolution_form.save()
-                    msgs.append("Se añadió una evolución al paciente.")
+                    # msgs.append("Se añadió una evolución al paciente.")
                 else:
                     errors["No_se_añadió_una_evolución_al_paciente: "] = evolution_form.errors
             
@@ -245,7 +245,7 @@ def update_patient(request, id):
                 })
                 if patient_test_form.is_valid():
                     patient_test_form.save()
-                    msgs.append("Se añadió un test al paciente.")
+                    # msgs.append("Se añadió un test al paciente.")
                 else:
                     errors["No_se_añadió_un_test_al_paciente:"] = patient_test_form.errors
                     
@@ -266,7 +266,8 @@ def update_patient(request, id):
 @login_required            
 def patient_list(request):
     context = {
-        'object_list': len(Patient.objects.all()) != 0,
+        # 'object_list': len(Patient.objects.all()) != 0,
+        'list_length': len(Patient.objects.all()),
         'segment': 'patient_list',
         'js_variables': {'root_url': root_url}
     }
@@ -389,43 +390,5 @@ def populatate_database(request):
     for diagnosis in list(Diagnosis.objects.all())]
     return JsonResponse(data, safe=False)
         
-
-    
-    # if request.method == 'POST':
-    #     patient = Patient.objects.first()
-    #     form = AttachedFileForm(request.POST, request.FILES, initial={'patient': patient})
-    #     if form.is_valid():
-    #         file_instance = form.save(commit=False)
-    #         patient = Patient.objects.first()
-    #         if patient:
-    #             file_instance.patient = patient
-    #             file_instance.save()
-    #             return redirect('home:patients')  # Redirect to success page or appropriate URL
-    #         else:
-    #             return HttpResponse("No patient found.")
-    #     else:
-    #         return HttpResponse("form is not valid"+form.errors.as_json())
-    # else:
-    #     form = AttachedFileForm()
-    
-    # return render(request, 'home/file.html', {'form': form})
-
-    if request.method == 'POST':
-        # attached_file_form = AttachedFileForm({
-        #     **{'patient': Patient.objects.first()},
-        #     **request.FILES,
-        #     # **request.POST, 
-        # })
-        # for field in attached_file_form:
-        #     print(field.value())
-        
-        attached_file_form = AttachedFileForm(request.POST, request.FILES)
-        for field in attached_file_form:
-            print(field.value())
-        if attached_file_form.is_valid():
-            attached_file_form.save()
-            return redirect('home:patients')
-        else:
-            return HttpResponse(attached_file_form.errors.as_json())
-    if request.method == 'GET':
-        return render(request, 'home/file.html', {'form': AttachedFileForm()})
+def test(request):
+    return render(request, 'accounts/login2.html', {})  

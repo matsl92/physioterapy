@@ -1,16 +1,8 @@
 TO DO
 
-Favicon
-
-Add gradient in login logo
-
-logo in home insted of "Inicio"
-
 fetch for attachedfile
 
 Quitar campo actividad fisica
-
-Simplify messages when everything
 
 Result field type should be variable
 
@@ -22,10 +14,18 @@ Add number of patients lowest left color gray
 
 Add serach filter
 
-Pagination controls
-
 
 DONE
+
+Simplify messages when everything goes fine
+
+Pagination controls
+
+Add gradient in login logo
+
+logo in home insted of "Inicio"
+
+Favicon
 
 Attribute name for AttachedFile model
 

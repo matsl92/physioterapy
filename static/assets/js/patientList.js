@@ -2,12 +2,15 @@ const data = JSON.parse(document.getElementById('js-variables').textContent);
 const proxyURL = data.root_url;
 let headerHeight;
 let rowHeight;
+let nControlsPerPagination;
 if (window.innerWidth > 610) {
     rowHeight = 46;
     headerHeight = 50;
+    nControlsPerPagination = 5;
 } else {
     rowHeight = 67;
     headerHeight = 75.5;
+    nControlsPerPagination = 3;
 }
 const pad = 15; // padding card-body
 const cardBodyHeight = window.innerHeight - 265;
@@ -125,8 +128,6 @@ function createPagination(data, nPages) {
 
 // --------------------------- Pagination for paginating buttons --------------------------
 
-const nControlsPerPagination = 5;
-
 let currentLowestControlIndex = 1;
 
 const unorderedList = document.querySelector('.nav.nav-pills');
@@ -143,7 +144,7 @@ function hideAndDisplayButtons() {
 }
 
 function goToNextPage() {
-    if (currentLowestControlIndex + nControlsPerPagination * 2 < nPages) {
+    if (currentLowestControlIndex + nControlsPerPagination * 2 <= nPages) {
         currentLowestControlIndex += nControlsPerPagination;
     } else {
         currentLowestControlIndex = nPages - nControlsPerPagination + 1;

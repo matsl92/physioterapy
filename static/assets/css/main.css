@@ -3,9 +3,29 @@
     --blue: rgb(100, 161, 212);
 }
 
+.background-purple {
+    background-color: var(--purple);
+}
+
 .logo a img{
     height: 52px;
     width: 52px;
+}
+
+.register-box {
+    width: 300px;
+}
+
+@media screen and (min-width: 600px) {
+    .register-box {
+        width: 400px
+    }
+}
+
+.authentication-logo img {
+    height: 170px;
+    width: auto;
+    margin-bottom: 34px;
 }
 
 .content {
