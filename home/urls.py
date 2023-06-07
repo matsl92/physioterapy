@@ -14,6 +14,7 @@ urlpatterns = [
     path('diagnostico/lista', views.get_diagnosis_list),
     path('test/lista', views.get_test_list),
     path('paciente/lista', views.get_patient_list, name='get_patient_list'),
+    path('documento_adjunto/crear', views.create_attached_file),
     # path('test/crear', views.create_test, name="create_test"),
     # path('diagnostico/crear', views.create_diagnosis, name='create_diagnosis'),
     

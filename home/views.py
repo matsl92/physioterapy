@@ -6,6 +6,7 @@ from django.template import loader
 from django import template
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
+from django.core.handlers.wsgi import WSGIRequest
 import json
 import os
 from .forms import (
@@ -205,16 +206,16 @@ def update_patient(request, id):
             patient = patient_form.save()
             msgs.append("Se actualizaron los datos del paciente.")
             
-            if request.FILES.get('file') != None:
-                attached_file_form = AttachedFileForm(
-                    request.POST, 
-                    request.FILES
-                )
-                if attached_file_form.is_valid():
-                    attached_file_form.save()
-                    # msgs.append("Se añadió un archivo al paciente.")
-                else:
-                    errors['No_se_añadió_un_archivo_al_paciente'] = attached_file_form.errors
+            # if request.FILES.get('file') != None:
+            #     attached_file_form = AttachedFileForm(
+            #         request.POST, 
+            #         request.FILES
+            #     )
+            #     if attached_file_form.is_valid():
+            #         attached_file_form.save()
+            #         # msgs.append("Se añadió un archivo al paciente.")
+            #     else:
+            #         errors['No_se_añadió_un_archivo_al_paciente'] = attached_file_form.errors
             
             if request.POST.get('diagnosis') != '':
                 patient_diagnosis_form = PatientDiagnosisForm({
@@ -302,7 +303,22 @@ def create_test(request):
             })
         else:
             return JsonResponse(test_form.errors.as_json(), safe=False)
-  
+ 
+def create_attached_file(request):
+    if request.method == 'POST':
+        attached_file_form = AttachedFileForm(request.POST, request.FILES)
+        if attached_file_form.is_valid():
+            attached_file = attached_file_form.save()
+            return JsonResponse({
+                'id': attached_file.id,
+                'name': attached_file.name,
+                'file': str(attached_file.file),
+                'created_at': attached_file.created_at,
+                'patient': attached_file.patient.cedula
+            })
+        else:
+            return JsonResponse({'error': attached_file_form.errors.as_json()})
+       
 def get_patient_list(request):
     data = [
         {
@@ -389,6 +405,6 @@ def populatate_database(request):
         }
     for diagnosis in list(Diagnosis.objects.all())]
     return JsonResponse(data, safe=False)
-        
+   
 def test(request):
     return render(request, 'accounts/login2.html', {})  

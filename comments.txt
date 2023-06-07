@@ -1,19 +1,19 @@
 TO DO
 
-fetch for attachedfile
-
 Quitar campo actividad fisica
 
 Result field type should be variable
 
 Fix scroll for diagnoses and tests
 
-Poner documentos en historia clínica
-
-Add serach filter
-
 
 DONE
+
+fetch for attachedfile
+
+Move attached files to clinic history
+
+Add search filter
 
 Add number of patients lowest left color gray
 

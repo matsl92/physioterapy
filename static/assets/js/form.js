@@ -38,12 +38,12 @@ patientTestFormDisplayer.addEventListener('click', (e) =>{
     patientTestFormPage.classList.remove('d-none');
 });
 
-const documentFormDisplayer = document.getElementById('document-form-displayer');
-documentFormDisplayer.addEventListener('click', (e) => {
-    e.preventDefault();
-    documentHomePage.classList.add('d-none');
-    documentFormPage.classList.remove('d-none');
-})
+// const documentFormDisplayer = document.getElementById('document-form-displayer');
+// documentFormDisplayer.addEventListener('click', (e) => {
+//     e.preventDefault();
+//     documentHomePage.classList.add('d-none');
+//     documentFormPage.classList.remove('d-none');
+// })
 
 // Hiders
 const patientDiagnosisFormHider = document.getElementById('patient-diagnosis-form-hider');
@@ -72,13 +72,13 @@ patientTestFormHider.addEventListener('click', (e) => {
     testHomePage.classList.remove('d-none');
 })
 
-const documentFormHider = document.getElementById('document-form-hider');
-documentFormHider.addEventListener('click', (e) => {
-    e.preventDefault();
-    clearMarkedFields('.django-attached-file-form');
-    documentFormPage.classList.add('d-none');
-    documentHomePage.classList.remove('d-none');
-})
+// const documentFormHider = document.getElementById('document-form-hider');
+// documentFormHider.addEventListener('click', (e) => {
+//     e.preventDefault();
+//     clearMarkedFields('.django-attached-file-form');
+//     documentFormPage.classList.add('d-none');
+//     documentHomePage.classList.remove('d-none');
+// })
 
 // functions related to input validation
 function setActiveTab(tabId) {
@@ -175,6 +175,42 @@ function submitMainForm() {
     }
 }
 
+async function submitAttachedFileForm() {
+    if (validateMarkedInputs('.django-attached-file-form')) {
+        const fileInput = document.getElementById('id_file');
+        const payload = new FormData();
+        payload.append('patient', Number(document.getElementById('id_patient').value));
+        payload.append('file', fileInput.files[0])
+        const response = await fetch(
+            `${proxyURL}/documento_adjunto/crear`,
+            {
+                method: 'post',
+                headers: {
+                    'X-CSRFToken': CSRFToken
+                },
+                body: payload
+            }
+        );
+        const data = await response.json();
+        const fileContainer = document.querySelector('.file-container');
+        const element = document.createElement('div');
+        element.setHTML(
+            `
+            <div class="d-flex flex-row justify-content-between">
+                <div><a href=/media/${data.file}>${data.name}</a></div>
+                <div><i>${data.created_at}</i></div>
+            </div>
+            
+            `
+        );
+        fileContainer.appendChild(element);
+        fileInput.value = "";
+        HideModal();
+    }
+}
+
+// Submitters
+
 const patientFormSubmitter =document.getElementById('patient-form-submitter');
 patientFormSubmitter.addEventListener('click', (e) =>{
     e.preventDefault()
@@ -189,12 +225,44 @@ if (patientDeleter) {
     })
 }
 
+const attachedFileFormSubmitter = document.getElementById('attached-file-form-submitter');
+if (attachedFileFormSubmitter) {
+    attachedFileFormSubmitter.addEventListener('click', submitAttachedFileForm);
+}
+
 // Other functions
 function clearMarkedFields(formLabel) {
     const fields = document.querySelectorAll(formLabel);
     fields.forEach(field => {
         field.value = "";
     })
+}
+
+function HideModal() {
+
+    closeButton = document.getElementById('attached_file_form_hider');
+    closeButton.click();
+
+    // var myModalEl = document.getElementById('exampleModalCenter');
+    // console.log(myModalEl);
+    // console.log(bootstrap);
+    // var modal = bootstrap.Modal.getInstance(myModalEl)
+    // modal.hide();
+
+    // const modalContainers = document.querySelectorAll('#exampleModalCenter');
+    // const modalBackdrop = document.querySelector('.modal-backdrop.fade');
+    // modalContainers.forEach(modal => {
+    //     modal.classList.remove('show');
+    //     setTimeout(() => {
+    //         modal.setAttribute('aria-hidden', 'true');
+    //         modal.style.display = 'none';
+    //     }, 500)
+    //     document.querySelector('body').classList.remove('modal-open');
+    // })
+    // modalBackdrop.classList.remove('show');
+    // setTimeout(() => {
+    //     modalBackdrop.style.display = 'none';
+    // }, 500)
 }
 
 // ----------------------------------- Diagnosis search input ------------------------------------------
@@ -339,6 +407,7 @@ selectTestButton.addEventListener('click', (e) => {
     testSearchContainer.classList.toggle('active');
 
 })
+
 window.addEventListener('load', () => {
     getDiagnosisOptions();
     getTestOptions();

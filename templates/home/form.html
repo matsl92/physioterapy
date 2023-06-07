@@ -1,6 +1,13 @@
 {% extends 'layouts/base.html' %}
 {% load static %}
 
+{% block title %}
+{% if patient %}{{ patient }}
+{% else %}Nuevo paciente
+{% endif %}
+{% endblock title %}
+
+
 {% block content %}
 
   <div class="row">
@@ -36,9 +43,9 @@
               <li class="nav-item" role="presentation">
                 <button class="nav-link" id="pills-clinica-tab" data-bs-toggle="pill" data-bs-target="#pills-clinica" type="button" role="tab" aria-controls="pills-clinica" aria-selected="false">Historia clínica</button>
               </li>
-              <li class="nav-item" role="presentation">
+              {% comment %} <li class="nav-item" role="presentation">
                 <button class="nav-link" id="pills-archivos-tab" data-bs-toggle="pill" data-bs-target="#pills-archivos" type="button" role="tab" aria-controls="pills-archivos" aria-selected="false">Documentos</button>
-              </li>
+              </li> {% endcomment %}
               <li class="nav-item" role="presentation">
                 <button class="nav-link" id="pills-diagnostico-tab" data-bs-toggle="pill" data-bs-target="#pills-diagnostico" type="button" role="tab" aria-controls="pills-diagnostico" aria-selected="false">Diagnósticos</button>
               </li>
@@ -235,8 +242,81 @@
                     </div>
 
                     <div class="col-md-6">
-                      <label for={{ patient_form.documento_adjunto.id_for_label }} for={{ patient_form.documento_adjunto.id_for_label }}>{{ patient_form.documento_adjunto.label }}</label>
-                      {{ patient_form.documento_adjunto }}
+                      {% if patient %}
+                      {% comment %} <label>Documentos adjuntos</label> {% endcomment %}
+
+
+                      <div class="accordion my-2" id="accordionDocument">
+                        <div class="accordion-item">
+                          <h2 class="accordion-header">
+                            <button class="accordion-button collapsed py-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-file-1" aria-expanded="true" aria-controls="collapseOne">
+                              <label class="m-0">Documentos adjuntos</label>
+                            </button>
+                          </h2>
+                          <div id="collapse-file-1" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                              <div class="file-container">
+                                {% for file in patient_attached_files %}
+                                <div class="d-flex flex-row justify-content-between">
+                                  <div><a href={{ MEDIA_URL }}{{ file.file }}>{{ file.name }}</a></div>
+                                  <div><i>{{ file.created_at }}</i></div>
+                                </div>
+                                {% endfor %}
+                              </div>
+
+                              <button type="button" class="btn btn-outline-primary add-button mt-3" data-toggle="modal" data-target="#exampleModalCenter">
+                                Agregar
+                              </button>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+                      {% comment %} <div class="file-container">
+                        {% for file in patient_attached_files %}
+                        <div class="d-flex flex-row justify-content-between">
+                          <div><a href={{ MEDIA_URL }}{{ file.file }}>{{ file.name }}</a></div>
+                          <div><i>{{ file.created_at }}</i></div>
+                        </div>
+                        {% endfor %}
+                      </div> {% endcomment %}
+                      <!-- Button trigger modal -->
+
+                      {% comment %}                       
+                      <button type="button" class="btn btn-outline-primary add-button mt-1" data-toggle="modal" data-target="#exampleModalCenter">
+                        Agregar
+                      </button> {% endcomment %}
+
+                      <!-- Modal -->
+                      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLongTitle">Agregar documento</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body py-5">
+                              <input type="hidden" name="patient" value={{ patient.cedula }} id="id_patient" class="django-attached-file-form">
+                              <label for={{ attached_file_form.file.id_for_label }} class="d-block">Adjuntar documento</label>
+                              {{ attached_file_form.file }}
+                              {% comment %} <div class="detected-as-invalid">Este campo es requerido</div> {% endcomment %}
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" id="attached_file_form_hider" data-dismiss="modal">Cerrar</button>
+                              <button type="button" class="btn btn-primary" id="attached-file-form-submitter">Guardar</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {% else %}
+                      <label class="d-block" for={{ attached_file_form.file.id_for_label }} for={{ attached_file_form.file.id_for_label }}>Adjuntar documento</label>
+                      {{ attached_file_form.file }}
+                      {% endif %}
                     </div>
 
                   </div>
@@ -244,7 +324,7 @@
                 </div>
 
               </div>
-              <div class="tab-pane fade" id="pills-archivos" role="tabpanel" aria-labelledby="pills-archivos-tab" tabindex="0">
+              {% comment %} <div class="tab-pane fade" id="pills-archivos" role="tabpanel" aria-labelledby="pills-archivos-tab" tabindex="0">
 
                 <div class="form-section-container">
 
@@ -306,8 +386,6 @@
 
                         <div class="row">
                           <div class="col-md-12 d-flex">
-
-                            {{ attached_file_form.file }}
                             {% if patient %}
                             <input type="hidden" name="patient" value={{ patient.pk }}>
                             {% endif %}
@@ -335,7 +413,7 @@
 
                 </div>  
 
-              </div>
+              </div> {% endcomment %}
               <div class="tab-pane fade" id="pills-diagnostico" role="tabpanel" aria-labelledby="pills-diagnostico-tab" tabindex="0">
 
                 <div class="form-section-container">
