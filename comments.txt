@@ -1,13 +1,13 @@
 TO DO
 
-Quitar campo actividad fisica
-
-Result field type should be variable
-
 Fix scroll for diagnoses and tests
 
 
 DONE
+
+Result field type should be variable
+
+Quitar campo actividad fisica
 
 fetch for attachedfile
 

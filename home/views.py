@@ -355,7 +355,8 @@ def get_test_list(request):
             'name': test.test_name,
             'description': test.test_description,
             'category': test.category.category_name,
-            'subcategory': test.subcategory
+            'subcategory': test.subcategory,
+            'result_type': test.result_type
         } for test in Test.objects.all()],
         safe=False
     )

@@ -16,6 +16,10 @@ const patientTestFormPage = document.querySelector('#patient-test-form-page');
 const documentHomePage = document.querySelector('#document-home-page');
 const documentFormPage = document.querySelector('#document-form-page');
 
+const pAS = document.getElementById('physical-activity-specifications');
+
+const resultFieldContainer = document.getElementById('result-field-container');
+
 // Displayers
 const patientDiagnosisFormDisplayer = document.getElementById('patient-diagnosis-form-displayer');
 patientDiagnosisFormDisplayer.addEventListener('click', (e) => {
@@ -70,7 +74,19 @@ patientTestFormHider.addEventListener('click', (e) => {
     document.querySelector('#test-select div').textContent = "Seleccionar";
     patientTestFormPage.classList.add('d-none');
     testHomePage.classList.remove('d-none');
+    resultFieldContainer.setHTML('');
 })
+
+// Other elements
+
+const physicalActivityInput = document.getElementById('id_actividad_fisica');
+physicalActivityInput.addEventListener('change', (e) => {
+    togglePAS();
+})
+
+const frequency = document.getElementById('id_frecuencia_actividad_fisica');
+    
+const type = document.getElementById('id_tipo_actividad_fisica');
 
 // const documentFormHider = document.getElementById('document-form-hider');
 // documentFormHider.addEventListener('click', (e) => {
@@ -265,6 +281,21 @@ function HideModal() {
     // }, 500)
 }
 
+function togglePAS() {
+    if (!physicalActivityInput.checked) {
+        frequency.value = "no";
+        frequency.required = false;
+        type.value = "";
+        type.required = false;
+        pAS.classList.add('d-none');
+    } else if (physicalActivityInput.checked) {
+        pAS.classList.remove('d-none');
+        frequency.required = true;
+        type.required = true;
+    }
+}
+
+
 // ----------------------------------- Diagnosis search input ------------------------------------------
 
 const diagnoses = [];
@@ -336,6 +367,8 @@ selectDiagnosisButton.addEventListener('click', (e) => {
     diagnosisSearchContainer.classList.toggle('active');
 
 })
+
+
 // ----------------------------------- Test search input ------------------------------------------
 
 const tests = [];
@@ -370,6 +403,37 @@ function selectTest(id) {
         testSearchContainer.classList.remove('active');
         testSvg.classList.remove('active');
         testInput.value = test.id;
+        let resultField;
+        if (test.result_type === 'bool') {
+            resultField = `
+            <div class="form-field">
+                <label for="id_result">Resultado</label>
+                <select name="result" class="django-patient-test-form" id="id_result">
+                    <option value="Aprobado">Aprobado</option>
+                    <option value="No aprobado">No aprobado</option>
+                </select>
+            </div>
+            `;
+            resultFieldContainer.setHTML('');
+            resultFieldContainer.setHTML(resultField);
+
+        } else {
+            resultField = document.createElement('div');
+            resultField.classList.add('form-field');
+            const label = document.createElement('label')
+            label.setAttribute('for', 'id_result');
+            label.textContent = 'Resultado';
+            const textArea = document.createElement('textarea');
+            textArea.setAttribute('name', 'result');
+            textArea.classList.add('django-patient-test-form');
+            textArea.id = 'id_result';
+            textArea.setAttribute('cols', '40');
+            textArea.setAttribute('rows', '3');
+            resultField.appendChild(label);
+            resultField.appendChild(textArea);
+            resultFieldContainer.setHTML('');
+            resultFieldContainer.appendChild(resultField);
+        }
     }
 }
 
@@ -411,6 +475,7 @@ selectTestButton.addEventListener('click', (e) => {
 window.addEventListener('load', () => {
     getDiagnosisOptions();
     getTestOptions();
+    togglePAS();
 })
 
 

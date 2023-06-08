@@ -183,22 +183,31 @@
                 <div class="form-section-container">
 
                   <div class="row">
-
                     <div class="col-md-2">
                       <div class="form-field">
                         <label for={{ patient_form.actividad_fisica.id_for_label }}>{{ patient_form.actividad_fisica.label }}</label>
                         {{ patient_form.actividad_fisica }}
                       </div>
                     </div>
+                  </div>
+
+                  <div id="physical-activity-specifications" class="row">
+
+                    {% comment %} <div class="col-md-2">
+                      <div class="form-field">
+                        <label for={{ patient_form.actividad_fisica.id_for_label }}>{{ patient_form.actividad_fisica.label }}</label>
+                        {{ patient_form.actividad_fisica }}
+                      </div>
+                    </div> {% endcomment %}
       
-                    <div class="col-md-5">
+                    <div class="col-md-6">
                       <div class="form-field">
                         <label for={{ patient_form.tipo_actividad_fisica.id_for_label }}>{{ patient_form.tipo_actividad_fisica.label }}</label>
                         {{ patient_form.tipo_actividad_fisica }}
                       </div>
                     </div>
       
-                    <div class="col-md-5">
+                    <div class="col-md-6">
                       <div class="form-field">
                         <label for={{ patient_form.frecuencia_actividad_fisica.id_for_label }}>{{ patient_form.frecuencia_actividad_fisica.label }}</label>
                         {{ patient_form.frecuencia_actividad_fisica }}
@@ -708,13 +717,10 @@
 
                         <div class="row mt-3 test-form-secondary">
 
-                          <div class="col-md-12">
+                          <div id="result-field-container" class="col-md-12">
 
-                            <div class="form-field">
-                              <label for={{ patient_test_form.result.id_for_label }}>{{ patient_test_form.result.label }}</label>
-                              {{ patient_test_form.result }}
-                            </div>
 
+                            
                           </div>
 
                         </div>
