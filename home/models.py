@@ -28,7 +28,7 @@ TEST_RESPONSE_TYPE = [
 class Diagnosis(models.Model):
     diagnosis_code = models.CharField('código', max_length=20)
     diagnosis_description = models.CharField('descripción', max_length=200)
-    created_at = models.DateField('fecha de creación', auto_now_add=True)
+    # created_at = models.DateField('fecha de creación', auto_now_add=True)
     is_active = models.BooleanField('activo', default=True)
     
     def __str__(self):
@@ -124,6 +124,7 @@ class PatientTest(models.Model):
     patient = models.ForeignKey(Patient, on_delete = models.CASCADE, verbose_name='paciente')
     test = models.ForeignKey(Test, on_delete = models.CASCADE)
     result = models.TextField('resultado')
+    created_at = models.DateTimeField('fecha de creación', auto_now_add=True)
 
     def __str__(self):
         return f'{self.test} - {self.result}'
@@ -135,7 +136,7 @@ class PatientTest(models.Model):
 class PatientDiagnosis(models.Model):
     patient = models.ForeignKey(Patient, on_delete = models.CASCADE, verbose_name='paciente')
     diagnosis = models.ForeignKey(Diagnosis, models.CASCADE, verbose_name='diagnóstico')
-    created_at = models.DateField(auto_now_add=True)
+    created_at = models.DateTimeField('fecha de creación', auto_now_add=True)
     
     def __str__(self):
         return f"{self.diagnosis.diagnosis_code} - {self.diagnosis.diagnosis_description}"
@@ -152,7 +153,7 @@ class AttachedFile(models.Model):
         return f"paciente_{instance.patient.cedula}/{filename}"
     
     file = models.FileField('documento', upload_to=get_patient_directory_path)
-    created_at = models.DateField('fecha de adición', auto_now_add=True)
+    created_at = models.DateTimeField('fecha de adición', auto_now_add=True)
     
     def __str__(self):
         return self.name

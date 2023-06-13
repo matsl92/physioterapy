@@ -268,7 +268,7 @@
                                 {% for file in patient_attached_files %}
                                 <div class="d-flex flex-row justify-content-between">
                                   <div><a href={{ MEDIA_URL }}{{ file.file }}>{{ file.name }}</a></div>
-                                  <div><i>{{ file.created_at }}</i></div>
+                                  <div><i>{{ file.created_at.date }}</i></div>
                                 </div>
                                 {% endfor %}
                               </div>

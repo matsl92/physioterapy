@@ -182,17 +182,17 @@ def update_patient(request, id):
         context = {
             'segment': 'patient_list', 
             'patient': patient,
-            'patient_form': PatientForm(instance=patient), 
+            'patient_form': PatientForm(instance=patient),
             # 'diagnosis_form': DiagnosisForm(),
             'patient_diagnosis_form': PatientDiagnosisForm(),
             'evolution_form': EvolutionForm(),
             'patient_test_form': PatientTestForm(),
             'attached_file_form': AttachedFileForm(),
             # 'test_form': TestForm(),
-            'evolution_records': Evolution.objects.filter(patient=patient),
-            'patient_tests': PatientTest.objects.filter(patient=patient),
-            'patient_diagnoses': PatientDiagnosis.objects.filter(patient=patient),
-            'patient_attached_files': AttachedFile.objects.filter(patient=patient),
+            'evolution_records': Evolution.objects.filter(patient=patient).order_by('-id'),
+            'patient_tests': PatientTest.objects.filter(patient=patient).order_by('-id'),
+            'patient_diagnoses': PatientDiagnosis.objects.filter(patient=patient).order_by('-id'),
+            'patient_attached_files': AttachedFile.objects.filter(patient=patient).order_by('-id'),
             'js_variables': {'root_url': root_url}
         }
         
@@ -239,7 +239,9 @@ def update_patient(request, id):
                 else:
                     errors["No_se_añadió_una_evolución_al_paciente: "] = evolution_form.errors
             
-            if request.POST.get('test') != '' or request.POST.get('result') != '':
+            if request.POST.get('test') != '' or (request.POST.get('result') != '' and request.POST.get('result') != None):
+                print('test: ', request.POST.get('test'))
+                print('result: ', request.POST.get('result'))
                 patient_test_form = PatientTestForm({
                     **request.POST.dict(),
                     **{'patient': patient}
@@ -313,7 +315,7 @@ def create_attached_file(request):
                 'id': attached_file.id,
                 'name': attached_file.name,
                 'file': str(attached_file.file),
-                'created_at': attached_file.created_at,
+                'created_at': localtime(attached_file.created_at).date(),
                 'patient': attached_file.patient.cedula
             })
         else:
