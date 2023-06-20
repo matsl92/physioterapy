@@ -11,7 +11,7 @@
   <link rel="canonical" href="https://appseed.us/admin-dashboards/django-dashboard-material">
 
   <title>
-    Iniciar sesión
+    Histora Clínica
   </title>
 
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
@@ -32,11 +32,9 @@
 
 </head>
 
-<body class="">
+<body>
+  {% include 'includes/messages.html' %}
   <div class="wrapper d-flex justify-content-center align-items-center flex-column">
-
-    {% comment %} <div class="row">
-        <div class="col-md-5"> {% endcomment %}
 
             <div class="authentication-logo">
                 <img src={% static 'assets/img/PneumaLogo-3.png' %} alt="">
@@ -45,7 +43,7 @@
           <div class="card register-box">
             <div class="card-header card-header-primary">
               <h4 class="card-title">
-                Iniciar sesión
+                Historias clínicas
               </h4>
             </div>
             <div class="card-body">
@@ -66,43 +64,25 @@
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-field">
-                      <label for={{ form.username.id_for_label }}>Nombre de usuario</label>
-                      {{ form.username }}
+                      <label for='id_number'>Número de identidad</label>
+                      <input type="search" name="patient_id" id="id_number">
                     </div>
                   </div>
                 </div>
     
                 <br />
     
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-field">
-                      <label for={{ form.password.id_for_label }}>Contraseña</label>                        
-                      {{ form.password }}
-                    </div>
-                  </div>
-                </div>
-    
-                <br />
-    
-                <button type="submit" name="login" class="btn btn-primary pull-right">Login</button>
+                <button type="submit" name="login" class="btn btn-primary pull-right">Descargar</button>
     
                 &nbsp; &nbsp; 
-                {% comment %} <span class="pull-right">
-                  Don't have an account? <a href="{% url 'authentication:register' %}" class="text-primary">Create</a>
-                </span> {% endcomment %}
     
                 <div class="clearfix"></div>
     
               </form>
             </div>
           </div>
-        {% comment %} </div>
-    </div> {% endcomment %}
 
   </div>
-
-  {% comment %} {% include 'includes/fixed-plugin.html' %} {% endcomment %}
 
   {% include 'includes/scripts.html' %}
 

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="pdf.css">
+    <title>Document</title>
+    {% comment %} <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        
+        .w-50 {
+            width: 50%;
+        }
+        
+        body {
+            padding: 40px;
+            background-color: aliceblue;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: 200;
+            font-style: normal;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            background-color: rgb(255, 255, 255);
+            margin-bottom: 50px;
+        }
+        
+        .header-logo {
+            height: 40px;
+        }
+        
+        .row {
+            display: block;
+            width: 100%;
+        }
+        
+        .section-header {
+            width: 100%;
+            height: 26px;
+            background-color: rgba(107, 100, 151, .6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 6px;
+            color: white;
+            font-size: 16px;
+        }
+        
+        .section-body {
+            display: flex;
+            flex-wrap: nowrap;
+            background-color: azure;
+            width: 100%;
+        }
+        
+        .field {
+            display: inline-block;
+            background-color: rgb(204, 231, 231);
+            margin-right: 50px;
+        }
+        
+        .label {
+            font-size: 12px;
+            margin-bottom: 3px;
+        }
+        
+        .value {
+            margin-bottom: 3px;
+            font-style: italic;
+            font-weight: 500;
+        }
+    </style> {% endcomment %}
+    <link rel="stylesheet" href="http://127.0.0.1:8000/media/pdf/pdf.css">
+</head>
+<body>
+    <header>
+        <div>
+            <img class="header-logo" src="img/PneumaLogo-3.png" alt="">
+        </div>
+        <div>
+            <h1>Historia Clínica prueba</h1>
+        </div>
+    </header>
+    <main>
+        <div class="row">
+            <section class="w-50">
+                <div class="section-header">
+                    Datos demográficos
+                </div>
+                <div class="section-body">
+                    <div class="field">
+                        <div class="label">
+                            Nombre:
+                        </div>
+                        <div class="value">
+                            Mateo
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="label">
+                            Apellidos:
+                        </div>
+                        <div class="value">
+                            Salazar Betancur
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="label">
+                            Fecha de nacimiento:
+                        </div>
+                        <div class="value">
+                            1997/05/02
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

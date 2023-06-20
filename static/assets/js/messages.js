@@ -9,9 +9,9 @@ messages.forEach(message => {
 
     setTimeout(() => {
         message.classList.add('fadeOutUp');
-    }, 16000)
+    }, 10000)
 
     setTimeout(() => {
         message.remove();
-    }, 18000)
+    }, 12000)
 })
