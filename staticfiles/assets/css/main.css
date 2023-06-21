@@ -1,0 +1,510 @@
+:root {
+    --purple: rgb(107, 100, 151);
+    --blue: rgb(100, 161, 212);
+}
+
+.background-purple {
+    background-color: var(--purple);
+}
+
+/* ----------------------------------- index ------------------------------ */
+
+.index-navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.index-navbar .nav-item {
+    width: 50%;
+}
+
+.index-navbar .nav-link {
+    width: 100%;
+    color: white;
+    border-radius: 0;
+    background-color: var(--purple);
+    height: 10vh;
+}
+
+.index-navbar .nav-link:hover {
+    background-color: rgba(107, 100, 151, .9);
+}
+
+.index-navbar .nav-link.active {
+    background-color: var(--blue);
+}
+
+.index-navbar .nav-link.active:hover {
+    background-color: rgba(100, 161, 212, .9);
+}
+
+.tab-pane .wrapper {
+    height: 90vh;
+}
+
+.logo a img{
+    height: 52px;
+    width: 52px;
+}
+
+.register-box {
+    width: 300px;
+}
+
+.authentication-logo img {
+    height: 170px;
+    width: auto;
+    margin-bottom: 34px;
+}
+
+.authentication-logo .index-logo {
+    width: 90vw;
+    height: auto;
+}
+
+@media screen and (min-width: 600px) {
+    .register-box {
+        width: 400px
+    }
+
+    .authentication-logo .index-logo {
+        width: 500px;
+        height: auto;
+    }
+}
+
+.content {
+    height: calc(100vh - 68px);
+}
+
+.main-panel > .content {
+    padding: 0 15px 30px 15px;
+}
+
+.card-body.main-card {
+    min-height: calc(68vh - 0px);
+    position: relative;
+}
+
+.card-body.patient-list-container {
+    padding-bottom: 0;
+}
+
+.tab-content {
+    height: 100%;
+}
+
+.form-section-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 41vh;
+    margin-top: 20px;
+}
+
+.fetch-form-header {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: -22px;
+    left: 33px;
+    width: 210px;
+    height: 45px;
+    background-color: aqua;
+    color: black;
+    border-radius: 6px;
+    border: 1px solid black;
+}
+
+.fetch-form-header h6 {
+    text-align: center;
+    margin: auto 0;
+}
+
+.fetch-form.card {
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.fetch-form [class*="card-header-"]:not(.card-header-icon):not(.card-header-text):not(.card-header-image) {
+    padding: 6px;
+}
+
+.fetch-form .card-header .card-title {
+    margin-bottom: 0;
+
+}
+
+.fetch-form .card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+#diagnosis-form-page {
+    height: 40vh;
+}
+
+.fetch-control-button {
+    display: inline-block;
+    width: 113px;
+    height: 30px;
+    border: none;
+    border-radius: 4px;
+    margin: 10px 19px;
+}
+
+button.secondary {
+    background-color: rgb(144 180 191);
+    color: white;
+}
+
+button.secondary:hover {
+    background-color: rgb(151, 190, 202);
+    color: white;
+}
+
+button.primary {
+    background-color: #0d6efd;
+    color: white;
+}
+
+button.success {
+    background-color: rgb(90, 69, 182);
+    color: white;
+}
+
+.btn.delete-button:hover {
+    color: white;
+    background-color: #f44336;
+}
+
+.btn.confirmation-button {
+    position: static;
+    border: 1px solid #f44336;
+    color: #f44336;
+}
+
+.delete-button {
+    position: absolute;
+    bottom: 0;
+    left: 14px;
+}
+
+button[name="login"], .add-button {
+    text-transform: none;
+}
+
+/* .btn.btn-primary.add-button {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    color: #0d6efd;
+} */
+
+.form-field {
+    background-color: rgba(156, 39, 176, 0);
+    height: 60px;
+    display: flex;
+    align-items: end;
+    position: relative;
+}
+
+.form-field input,
+.form-field textarea,
+.form-field select {
+    background: transparent;
+    margin-bottom: 8px;
+    border: none;
+    border-bottom: 2px solid rgba(156, 39, 176, 0.9);
+    width: 100%;
+}
+
+input[type="file"] {
+    color: black;
+}
+
+.form-field:has(textarea) {
+    height: 80px;
+    margin-top: 30px;
+}
+
+.form-field:has(textarea) label {
+    bottom: 63px;
+}
+
+.form-field label {
+    position: absolute;
+    padding: 0 3px;
+    bottom: 6px;
+    transition: .5s;
+    transform: translateY(-90%);
+}
+
+.form-field input:focus ~ label{
+    transform: translateY(-90%);
+}
+
+.form-field:has(.detected-as-invalid) {
+    border-top: 1px solid #ff9e0f;
+}
+
+.detected-as-invalid {
+    background-color: #ff9e0f;
+    position: absolute;
+    right: 0;
+    top: 54px;
+    width: 100%;
+    min-height: 29px;
+    z-index: 1;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    border-radius: 0 0 4px 4px;
+}
+
+input[type="file"] + .detected-as-invalid {
+    top: 120px;
+    border-radius: 0;
+}
+
+.submitting-button {
+    position: absolute;
+    bottom: 0;
+    right: 14px;
+}
+
+.plus-button {
+    border: none;
+    height: 40px;
+    width: 40px;
+    border-radius: 4px;
+    background-color: rgb(211 211 211);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.plus-button:hover {
+    background-color: rgb(230, 230, 230);
+}
+
+.add-accordion-field-button {
+    border: 1px solid rgb(229 229 229);
+    border-radius: 0 0 4px 4px;
+    background-color: transparent;
+    height: 52px;
+}
+
+.add-accordion-field-button:hover {
+    background-color: rgb(200 229 247);
+    border-color: #b2e3e9;
+    border-width: 3px;
+}
+
+.abort-accordion-field-button {
+    border: none;
+    width: 110px;
+    border-radius: 4px;
+    height: 30px;
+    margin: 10px 19px;
+}
+
+.accordion-button {
+    font-size: 14px;
+}
+
+/*--------------------------- Search input -----------------------------*/
+
+.diagnosis-search-box {
+    position: absolute;
+    width: 100%;
+    top: 65px;
+    z-index: 1;
+}
+
+.select-diagnosis button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: none;
+    border: 1px solid #bbbbbb;
+    border-radius: 4px;
+    width: 100%;
+    height: 40px;
+}
+
+.select-diagnosis button div {
+    padding-left: 7px;
+    width: calc(100% - 10px);
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    text-align: start;
+}
+
+.select-diagnosis button svg {
+    transition: .3s;
+}
+
+.select-diagnosis button svg.active {
+    transform: rotate(180deg);
+}
+
+.search-container {
+    display: none;
+    background-color: white;
+    margin-top: 16px;
+    padding: 9px;
+    width: 100%;
+    border: 1px solid #bbbbbb;
+    border-radius: 4px;
+}
+
+.search-container.active {
+    display: block;
+}
+
+.search-input-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-container div:nth-child(1) svg {
+    transform: scale(0.6);
+    position: absolute;
+    left: 4px;
+    top: 4px;
+}
+
+.search-container input {
+    width: 100%;
+    border: 1px solid #bbbbbb;
+    border-radius: 2px;
+    height: 30px;
+    padding: 0 20px 0 30px;
+}
+
+.option-container ul {
+    padding: 0;
+    max-height: 120px;
+    overflow: scroll;
+    margin: 10px 0 0 0;
+}
+
+.option-container ul li {
+    height: 30px;
+    width: calc(100% - 24px);
+    cursor: pointer;
+    padding: 0 15px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.option-container ul li:hover {
+    background-color: rgb(238, 238, 238);
+}
+
+.select-search-wrapper {
+    color: black;
+}
+
+.option-container ul::-webkit-scrollbar{
+    width: 9px;
+    height: 9px;
+}
+.option-container ul::-webkit-scrollbar-track{
+    background: #f1f1f1;
+    border-radius: 25px;
+}
+.option-container ul::-webkit-scrollbar-thumb{
+    background: #ccc;
+    border-radius: 25px;
+}
+.option-container ul::-webkit-scrollbar-thumb:hover{
+    background: #b3b3b3;
+}
+
+
+/*--------------------------- Patient list -----------------------------*/
+
+.frame {
+    height: 65vh;
+    border: 1px solid red;
+    overflow: auto;
+}
+
+.patient-list-container {
+    height: calc(100vh - 265px);
+}
+
+.patient-list-container .search-input-header svg {
+    transform: scale(0.6);
+    position: absolute;
+    right: 25px;
+}
+
+.patient-list-container .search-input-header .search-input {
+    margin-right: 23px;
+    border: 1px solid rgb(202 200 203);
+    border-radius: 5px;
+    padding-left: 6px;
+    color: rgb(132 126 135);
+    
+}
+
+.patient-count {
+    right: 5px;
+    top: 5px;
+    color: rgb(118 118 118);
+}
+
+/* ------------------------------ Test ---------------------------------- */
+
+.option-container.test-option-container ul::-webkit-scrollbar{
+    width: 9px;
+    height: 0;
+}
+
+.help-text.d-none {
+    opacity: 0;
+    transition: .3s;
+}
+
+.help-text {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: center;
+    padding: 10px 10px;
+    z-index: 3;
+    opacity: 1;
+}
+
+.test-help-text {
+    background-color: rgb(233 205 243);
+    border-radius: 3px;
+    height: 148px;
+}
+
+.help-text .help-content {
+    overflow: hidden;
+}
+
+.help-content h5, .help-content p {
+    text-align: center;
+}
+
+.help-content h5 {
+    font-size: 13px;
+}
+
+.help-content p {
+    font-size: 12px;
+}
