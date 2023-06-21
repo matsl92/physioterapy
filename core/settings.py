@@ -144,6 +144,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # URLS
 
-LOGIN_URL = '/login/'
+LOGIN_URL = '/index'
 
 CSRF_TRUSTED_ORIGINS = [os.getenv('ROOT_URL')]

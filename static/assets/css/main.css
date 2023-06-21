@@ -7,6 +7,42 @@
     background-color: var(--purple);
 }
 
+/* ----------------------------------- index ------------------------------ */
+
+.index-navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.index-navbar .nav-item {
+    width: 50%;
+}
+
+.index-navbar .nav-link {
+    width: 100%;
+    color: white;
+    border-radius: 0;
+    background-color: var(--purple);
+    height: 10vh;
+}
+
+.index-navbar .nav-link:hover {
+    background-color: rgba(107, 100, 151, .9);
+}
+
+.index-navbar .nav-link.active {
+    background-color: var(--blue);
+}
+
+.index-navbar .nav-link.active:hover {
+    background-color: rgba(100, 161, 212, .9);
+}
+
+.tab-pane .wrapper {
+    height: 90vh;
+}
+
 .logo a img{
     height: 52px;
     width: 52px;
@@ -16,16 +52,26 @@
     width: 300px;
 }
 
-@media screen and (min-width: 600px) {
-    .register-box {
-        width: 400px
-    }
-}
-
 .authentication-logo img {
     height: 170px;
     width: auto;
     margin-bottom: 34px;
+}
+
+.authentication-logo .index-logo {
+    width: 90vw;
+    height: auto;
+}
+
+@media screen and (min-width: 600px) {
+    .register-box {
+        width: 400px
+    }
+
+    .authentication-logo .index-logo {
+        width: 500px;
+        height: auto;
+    }
 }
 
 .content {

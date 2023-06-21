@@ -225,3 +225,15 @@ addPaginationControls
     else
         appendPaginationControls
 
+
+                          INDEX TABS AND PANES
+---------------------------------------------------------------------
+
+toggle tab
+
+toggle pane
+
+if not active
+    index active
+else
+    index inactive

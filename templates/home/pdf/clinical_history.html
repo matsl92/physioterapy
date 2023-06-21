@@ -84,7 +84,7 @@
             <img class="header-logo" src="img/PneumaLogo-3.png" alt="">
         </div>
         <div>
-            <h1>Historia Clínica prueba</h1>
+            <h1>Historia Clínica</h1>
         </div>
     </header>
     <main>
@@ -96,10 +96,18 @@
                 <div class="section-body">
                     <div class="field">
                         <div class="label">
+                            Cédula:
+                        </div>
+                        <div class="value">
+                            {{ patient.cedula }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="label">
                             Nombre:
                         </div>
                         <div class="value">
-                            Mateo
+                            {{ patient.nombre }}
                         </div>
                     </div>
                     <div class="field">
@@ -107,7 +115,7 @@
                             Apellidos:
                         </div>
                         <div class="value">
-                            Salazar Betancur
+                            {{ patient.apellidos }}
                         </div>
                     </div>
                     <div class="field">
@@ -115,12 +123,203 @@
                             Fecha de nacimiento:
                         </div>
                         <div class="value">
-                            1997/05/02
+                            {{ patient.fecha_nacimiento }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="label">
+                            Teléfono:
+                        </div>
+                        <div class="value">
+                            {{ patient.telefono }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="label">
+                            Email:
+                        </div>
+                        <div class="value">
+                            {{ patient.email }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="label">
+                            Ocupación:
+                        </div>
+                        <div class="value">
+                            {{ patient.ocupacion }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="label">
+                            Profesión:
+                        </div>
+                        <div class="value">
+                            {{ patient.profesion }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="label">
+                            Seguridad social:
+                        </div>
+                        <div class="value">
+                            {{ patient.seguridad_social }}
                         </div>
                     </div>
                 </div>
             </section>
-        </main>
-    </div>
+        </div>
+        <div class="row">
+            <section class="w-50">
+                <div class="section-header">
+                    Datos del acompañante
+                </div>
+                <div class="section-body">
+                    <div class="field">
+                        <div class="label">
+                            Nombre
+                        </div>
+                        <div class="value">
+                            {{ patient.acompanante }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="label">
+                            Parentesco
+                        </div>
+                        <div class="value">
+                            {{ patient.parentesco }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="label">
+                            Teléfono
+                        </div>
+                        <div class="value">
+                            {{ patient.telefono_acompanante }}
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="w-50">
+                <div class="section-header">
+                    Hábitos del paciente
+                </div>
+                <div class="section-body">
+                    <div class="field">
+                        <div class="label">
+                            Actividad física
+                        </div>
+                        <div class="value">
+                            {{ patient.actividad_fisica }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="label">
+                            Tipo de actividad física
+                        </div>
+                        <div class="value">
+                            {{ patient.tipo_actividad_fisica }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="label">
+                            Frecuencia de la actividad física
+                        </div>
+                        <div class="value">
+                            {{ patient.frecuencia_actividad_fisica }}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="row">
+            <section class="w-100">
+                <div class="section-header">
+                    Historia clínica
+                </div>
+                <div class="section-body">
+                    <div class="field">
+                        <div class="label">
+                            Motivo de consulta
+                        </div>
+                        <div class="value">
+                            {{ patient.motivo_consulta }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="label">
+                            Cronología de la patología
+                        </div>
+                        <div class="value">
+                            {{ patient.cronologia_de_patologia }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="label">
+                            Conclusión
+                        </div>
+                        <div class="value">
+                            {{ patient.conslusion }}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="row">
+            <section class="w-100">
+                <div class="section-header">
+                    Diagnósticos
+                </div>
+                <div class="section-body">
+                    <div class="field">
+                        <div class="label">
+                            {{ patient.patientdiagnosis_set.first.created_at }}
+                        </div>
+                        <div class="value">
+                            {{ patient.patientdiagnosis_set.first.diagnosis }}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="row">
+            <section class="w-100">
+                <div class="section-header">
+                    Evolución
+                </div>
+                <div class="section-body">
+                    <div class="field">
+                        <div class="label">
+                            {{ patient.evolution_set.first.created_at }}
+                        </div>
+                        <div class="value">
+                            {{ patient.evolution_set.first.evolution_record }}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="row">
+            <section class="w-100">
+                <div class="section-header">
+                    Tests
+                </div>
+                <div class="section-body">
+                    <div class="field">
+                        <div class="label">
+                            {{ patient.patienttest_set.first.created_at }}
+                        </div>
+                        <div class="value">
+                            {{ patient.patienttest_set.first.test }}
+                        </div>
+                        <div class="value">
+                            {{ patient.patienttest_set.first.result }}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
 </body>
 </html>

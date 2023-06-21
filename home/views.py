@@ -490,15 +490,20 @@ def render_pdf_view(request):
         cedula = request.POST.get('patient_id')
         try:
             patient = Patient.objects.get(cedula=cedula)
+            print(patient.patientdiagnosis_set.all())
             print('*'*20)
             print(dir(patient))
             # for attr in dir(patient):
             #     print(attr, ' / ', getattr(patient, attr))
             template_path = 'home/pdf/clinical_history.html'
-            context = {'myvar': 'this is your template context', 'name': 'Mateo'}
+            context = {
+                'myvar': 'this is your template context', 
+                'name': 'Mateo',
+                'patient': patient
+            }
             # Create a Django response object, and specify content_type as pdf
             response = HttpResponse(content_type='application/pdf')
-            response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+            response['Content-Disposition'] = 'attachment; filename="historia_clinica.pdf"'
             # find the template and render it.
             template = get_template(template_path)
             html = template.render(context)
