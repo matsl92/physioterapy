@@ -389,7 +389,7 @@ input[type="file"] + .detected-as-invalid {
 
 .option-container ul {
     padding: 0;
-    max-height: 120px;
+    max-height: 25vh;
     overflow: scroll;
     margin: 10px 0 0 0;
 }
@@ -494,7 +494,7 @@ input[type="file"] + .detected-as-invalid {
 }
 
 .help-text .help-content {
-    overflow: hidden;
+    overflow: auto;
 }
 
 .help-content h5, .help-content p {

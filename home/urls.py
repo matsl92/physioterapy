@@ -4,13 +4,10 @@ from . import views
 app_name = 'home'
 urlpatterns = [
     # Views
-    path('test', views.test),
     path('', views.patient_list, name="patients"),
-    # path('index', views.index, name="index"),
     path('paciente/crear', views.create_patient, name='create_patient'),
     path('paciente/actualizar/<int:id>', views.update_patient, name="update_patient"),
     path('paciente/eliminar/<int:id>', views.delete_patient, name="delete_patient"),
-    # path('pdf', views.render_pdf_view, name='pdf'),
     
     # APIs
     path('diagnostico/lista', views.get_diagnosis_list),
