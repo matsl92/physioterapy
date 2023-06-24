@@ -13,7 +13,7 @@ from home.models import Patient
 
 # Define your data
 source_html = "<html><body><p>To PDF or not to PDF</p></body></html>"
-output_filename = "test.pdf"
+output_filename = "historia_clinica.pdf"
 
 # Utility function
 def convert_html_to_pdf(source_html, output_filename):
