@@ -31,7 +31,6 @@ def convert_html_to_pdf(source_html, output_filename):
     # return False on success and True on errors
     return pisa_status.err
 
-
 def link_callback(uri, rel):
     """
     Convert HTML URIs to absolute system paths so xhtml2pdf can access those

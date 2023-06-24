@@ -20,6 +20,7 @@ urlpatterns = [
     # path('test/crear', views.create_test, name="create_test"),
     # path('diagnostico/crear', views.create_diagnosis, name='create_diagnosis'),
     
-    # Used to populate the Diagnosis table in the database
+    # Used to populate Diagnosis table in the database
     # path('populate', views.populatate_database, name="populate_database"),
+    path('populate_test_table', views.populate_test_table),
 ]
