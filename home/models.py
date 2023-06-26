@@ -27,7 +27,7 @@ TEST_RESPONSE_TYPE = [
 
 class Diagnosis(models.Model):
     diagnosis_code = models.CharField('código', max_length=20)
-    diagnosis_description = models.CharField('descripción', max_length=200)
+    diagnosis_description = models.CharField('descripción', max_length=255)
     # created_at = models.DateField('fecha de creación', auto_now_add=True)
     is_active = models.BooleanField('activo', default=True)
     

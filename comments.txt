@@ -1,3 +1,9 @@
+COMMENTS
+
+The app uses a Postgres database hosted on railway which can be accessed via psql 
+and pgadmin. It has a low performance though, at least while working on localhost.
+
+
 TO DO
 
 Fix scroll for diagnoses and tests

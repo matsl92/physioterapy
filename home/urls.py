@@ -19,5 +19,5 @@ urlpatterns = [
     
     # Used to populate database
     # path('populate', views.populatate_database, name="populate_database"),
-    # path('populate_test_table', views.populate_test_table), commit 8b0cd21e66683633cffa83afd4d8c00ffa93b419
+    # path('populate_test_table', views.populate_test_table), # commit 8b0cd21e66683633cffa83afd4d8c00ffa93b419
 ]
