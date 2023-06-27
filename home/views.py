@@ -241,8 +241,6 @@ def update_patient(request, id):
                     errors["No_se_añadió_una_evolución_al_paciente: "] = evolution_form.errors
             
             if request.POST.get('test') != '' or (request.POST.get('result') != '' and request.POST.get('result') != None):
-                print('test: ', request.POST.get('test'))
-                print('result: ', request.POST.get('result'))
                 patient_test_form = PatientTestForm({
                     **request.POST.dict(),
                     **{'patient': patient}
