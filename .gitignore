@@ -3,7 +3,7 @@
 *.pot
 *.pyc
 __pycache__
-# db.sqlite3
+# pneuma_db.sqlite3
 notes.txt
 media
 
@@ -56,7 +56,7 @@ coverage.xml
 .hypothesis/ 
 
 # Environments 
-.env 
+# .env 
 env/ 
 ENV/ 
 env.bak/ 
