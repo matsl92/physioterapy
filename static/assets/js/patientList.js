@@ -217,8 +217,8 @@ function filterAndAddPatients() {
         String(patient.telefono).toLowerCase().includes(filter) ||
         String(patient.updated_at).toLowerCase().includes(filter)
     })
-    unorderedList.setHTML('');
-    tabContent.setHTML('');
+    unorderedList.innerHTML = '';
+    tabContent.innerHTML = '';
     addPatients(matchingPatients);
 }
 

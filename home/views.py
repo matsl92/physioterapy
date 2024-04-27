@@ -151,7 +151,7 @@ def create_patient(request):
                 else:
                     errors['No_se_añadió_una_evolución_al_paciente'] = evolution_form.errors
             
-            if request.POST.get('test') != '' or request.POST.get('result') != '':
+            if request.POST.get('test') != '':
                 patient_test_form = PatientTestForm({
                     **request.POST.dict(),
                     **{'patient': patient}
