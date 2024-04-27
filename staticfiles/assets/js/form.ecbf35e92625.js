@@ -74,7 +74,7 @@ patientTestFormHider.addEventListener('click', (e) => {
     document.querySelector('#test-select div').textContent = "Seleccionar";
     patientTestFormPage.classList.add('d-none');
     testHomePage.classList.remove('d-none');
-    resultFieldContainer.setHTML('');
+    resultFieldContainer.innerHTML = '';
 })
 
 // Other elements
@@ -210,7 +210,7 @@ async function submitAttachedFileForm() {
         const data = await response.json();
         const fileContainer = document.querySelector('.file-container');
         const element = document.createElement('div');
-        element.setHTML(
+        element.innerHTML =
             `
             <div class="d-flex flex-row justify-content-between">
                 <div><a href=/media/${data.file}>${data.name}</a></div>
@@ -218,7 +218,7 @@ async function submitAttachedFileForm() {
             </div>
             
             `
-        );
+        ;
         fileContainer.appendChild(element);
         fileInput.value = "";
         HideModal();
@@ -414,8 +414,8 @@ function selectTest(id) {
                 </select>
             </div>
             `;
-            resultFieldContainer.setHTML('');
-            resultFieldContainer.setHTML(resultField);
+            resultFieldContainer.innerHTML ='';
+            resultFieldContainer.innerHTML = resultField;
 
         } else {
             resultField = document.createElement('div');
@@ -431,7 +431,7 @@ function selectTest(id) {
             textArea.setAttribute('rows', '3');
             resultField.appendChild(label);
             resultField.appendChild(textArea);
-            resultFieldContainer.setHTML('');
+            resultFieldContainer.innerHTML = '';
             resultFieldContainer.appendChild(resultField);
         }
     }
