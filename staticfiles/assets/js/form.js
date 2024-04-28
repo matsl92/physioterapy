@@ -337,7 +337,7 @@ function selectDiagnosis(id) {
     }
 }
 
-function filterAndAppendOptions(string) {
+function filterAndAppendDiagnosisOptions(string) {
     filteredOptions = diagnoses.filter(diagnosis => {
         return diagnosis.description.toLowerCase().includes(string.toLowerCase()) || 
         diagnosis.code.toLowerCase().includes(string.toLowerCase());
@@ -360,7 +360,7 @@ async function setDiagnosisDefault() {
     }
 }
 
-diagnosisSearchInput.addEventListener('input', (e) => filterAndAppendOptions(e.target.value));
+diagnosisSearchInput.addEventListener('input', (e) => filterAndAppendDiagnosisOptions(e.target.value));
 selectDiagnosisButton.addEventListener('click', (e) => {
     e.preventDefault()
     diagnosisSvg.classList.toggle('active');
@@ -373,6 +373,7 @@ selectDiagnosisButton.addEventListener('click', (e) => {
 
 const tests = [];
 const testOptionContainer = document.querySelector('#test-search-container .option-container ul');
+const testSearchInput = document.querySelector('#test-search-input');
 const selectTestButton = document.getElementById('test-select');
 const testSearchContainer = document.querySelector('#test-search-container');
 const testSvg = document.querySelector('#select-test button svg');
@@ -462,6 +463,30 @@ async function getTestOptions() {
     })
 }
 
+function filterAndAppendTestOptions(string) {
+    filteredOptions = tests.filter(test => {
+        return test.description.toLowerCase().includes(string.toLowerCase()) || 
+        test.category.toLowerCase().includes(string.toLowerCase()) ||
+        test.subcategory.toLowerCase().includes(string.toLowerCase()) ||
+        test.name.toLowerCase().includes(string.toLowerCase());
+    })
+    testOptionContainer.innerHTML = "";
+    var option;
+    filteredOptions.forEach(test => {
+        option = document.createElement('li');
+        option.textContent = `${test.category} - ${test.subcategory} - ${test.name}`;
+        option.addEventListener('click', () => selectTest(test.id))
+        option.addEventListener('mouseover', () => {
+            showTextDetails(test.id);
+        });
+        option.addEventListener('mouseout', () => {
+            testDetailContainer.classList.add('d-none');
+        });
+        testOptionContainer.appendChild(option);
+    })
+}
+
+testSearchInput.addEventListener('input', (e) => filterAndAppendTestOptions(e.target.value));
 selectTestButton.addEventListener('click', (e) => {
     e.preventDefault()
     testFormSecondary.forEach(element => {
